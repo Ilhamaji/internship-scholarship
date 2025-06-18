@@ -9,26 +9,22 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@heroui/navbar";
-import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
-import { ThemeSwitch } from "./theme-switch";
+import { ThemeSwitch } from "@/components/theme-switch";
 import { Image } from "@heroui/image";
+import { Avatar } from "@heroui/avatar";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
+} from "@heroui/dropdown";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
-  ];
+  const menuItems = ["Dashboard", "Laporan Monev", "Riwayat Laporan"];
 
   return (
     <>
@@ -50,28 +46,39 @@ export default function App() {
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
             <Link color="foreground" href="#">
-              Features
+              Dashboard
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link color="foreground" href="#">
-              Customers
+              Laporan Monev
             </Link>
           </NavbarItem>
           <NavbarItem>
             <Link color="foreground" href="#">
-              Integrations
+              Riwayat Laporan
             </Link>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem className="flex">
-            <ThemeSwitch />
-          </NavbarItem>
           <NavbarItem>
-            <Button as={Link} color="warning" href={"/login"} variant="flat">
-              Masuk
-            </Button>
+            <Dropdown>
+              <DropdownTrigger>
+                <button className="bg-transparent w-fit">
+                  <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                </button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem key="new">Profil</DropdownItem>
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  color="danger"
+                >
+                  Keluar
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
           </NavbarItem>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -81,18 +88,7 @@ export default function App() {
         <NavbarMenu className="z-50">
           {menuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                className="w-full"
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === menuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
-              >
+              <Link className="w-full" color={"foreground"} href="#" size="lg">
                 {item}
               </Link>
             </NavbarMenuItem>

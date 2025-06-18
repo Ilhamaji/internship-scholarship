@@ -1,10 +1,10 @@
 import { Image } from "@heroui/image";
 import React from "react";
 
-export default function homeContent() {
+export default function content() {
   return (
     <div className="text-center">
-      <div className="flex w-full items-center justify-center mt-8 md:mt-16 lg:px-24 xl:px-36">
+      <div className="flex w-full items-center justify-center pt-8 md:pt-16 lg:px-24 xl:px-36">
         <div className="bg-[#09697E] mx-auto text-white text-center py-2 px-4 rounded-2xl text-sm">
           Tentang Beasiswa
         </div>
@@ -25,7 +25,10 @@ export default function homeContent() {
           </p>
         </div>
       </div>
-      <div className="bg-neutral-100 dark:bg-neutral-900 w-full text-2xl md:text-4xl lg:text-6xl font-bold py-12 lg:px-24 xl:px-36">
+      <div
+        id="jenis-beasiswa"
+        className="bg-neutral-100 dark:bg-neutral-900 w-full text-2xl md:text-4xl lg:text-6xl font-bold py-12 lg:px-24 xl:px-36"
+      >
         <div className="px-6">
           Semangat kuliah bersama beasiswa di
           <span className="text-[#09697E]"> Tiga Serangkai University!</span>
@@ -70,7 +73,10 @@ export default function homeContent() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-full items-center justify-center bg-yellow-500 py-12 mt-8 md:mt-16 px-6 lg:px-24 xl:px-56">
+      <div
+        id="cara-mendaftar"
+        className="flex flex-col w-full items-center justify-center bg-yellow-500 py-12 mt-8 md:mt-16 px-6 lg:px-24 xl:px-56"
+      >
         <div className="bg-[#09697E] mx-auto text-white text-center py-2 px-4 rounded-2xl mb-4 text-sm">
           Cara Mendaftar Beasiswa
         </div>

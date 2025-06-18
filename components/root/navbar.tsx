@@ -11,23 +11,17 @@ import {
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
-import { ThemeSwitch } from "./theme-switch";
+import { ThemeSwitch } from "@/components/theme-switch";
 import { Image } from "@heroui/image";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-  const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
+  const menuItems = ["Tentang", "Jenis", "Cara Mendaftar"];
+  const menuItemsLink = [
+    "#tentang-beasiswa",
+    "#jenis-beasiswa",
+    "#cara-mendaftar",
   ];
 
   return (
@@ -49,25 +43,22 @@ export default function App() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Features
+            <Link color="foreground" href="#tentang-beasiswa">
+              Tentang
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Customers
+            <Link color="foreground" href="#jenis-beasiswa">
+              Jenis
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
+            <Link color="foreground" href="#cara-mendaftar">
+              Cara Mendaftar
             </Link>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent justify="end">
-          <NavbarItem className="flex">
-            <ThemeSwitch />
-          </NavbarItem>
           <NavbarItem>
             <Button as={Link} color="warning" href={"/login"} variant="flat">
               Masuk
@@ -83,14 +74,8 @@ export default function App() {
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 className="w-full"
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === menuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
+                color={"foreground"}
+                href={menuItemsLink[index]}
                 size="lg"
               >
                 {item}

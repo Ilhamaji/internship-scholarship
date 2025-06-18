@@ -18,7 +18,9 @@ export default function Jumbotron() {
             </div>
             <div className="text-xl lg:text-4xl">
               Beasiswa{" "}
-              <span className="text-[#09697E]">Tiga Serangkai University</span>
+              <span className="text-[#09697E]" id="tentang-beasiswa">
+                Tiga Serangkai University
+              </span>
             </div>
           </div>
         </div>

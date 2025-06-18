@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import DashboardNavbar from "@/components/dashboardNavbar";
+import Navbar from "@/components/dashboard/navbar";
 
 export const metadata: Metadata = {
   title: "Dashboard | Web Monitoring TSU",
@@ -16,9 +16,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <DashboardNavbar />
+    <div className="min-h-screen bg-neutral-100">
+      <Navbar />
       {children}
-    </>
+    </div>
   );
 }

@@ -1,59 +1,21 @@
-"use client";
-
-import type { SVGProps } from "react";
 import React from "react";
 import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-} from "@heroui/table";
-import { Chip, ChipProps } from "@heroui/chip";
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@heroui/modal";
 import { Tooltip } from "@heroui/tooltip";
-import { User } from "@heroui/user";
-import ModalIpk from "@/components/dashboard/modal/ipk";
+import { Button } from "@heroui/button";
+import type { SVGProps } from "react";
+import { Form } from "@heroui/form";
+import { Input } from "@heroui/input";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
-
-export const columns = [
-  { name: "NO", uid: "no" },
-  { name: "NAME", uid: "name" },
-  { name: "ROLE", uid: "role" },
-  { name: "STATUS", uid: "status" },
-  { name: "ACTIONS", uid: "actions" },
-];
-
-export const user = [
-  {
-    id: 1,
-    name: "Tony Reichert",
-    role: "CEO",
-    team: "Management",
-    status: "approve",
-    age: "29",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
-    email: "tony.reichert@example.com",
-  },
-  {
-    id: 2,
-    name: "Zoey Lang",
-    role: "Technical Lead",
-    team: "Development",
-    status: "reject",
-    age: "25",
-    avatar: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
-    email: "zoey.lang@example.com",
-  },
-];
-
-const users = user.map((user, index) => ({
-  ...user,
-  no: index + 1,
-}));
 
 export const EyeIcon = (props: IconSvgProps) => {
   return (
@@ -175,82 +137,66 @@ export const EditIcon = (props: IconSvgProps) => {
     </svg>
   );
 };
-const statusColorMap: Record<string, ChipProps["color"]> = {
-  approve: "success",
-  reject: "danger",
-  vacation: "warning",
-};
 
-type User = (typeof users)[0];
+export default function ipk() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [submitted, setSubmitted] = React.useState(null);
 
-export default function App() {
-  const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
-    const cellValue = user[columnKey as keyof User];
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    // Prevent default browser page refresh.
+    e.preventDefault();
 
-    switch (columnKey) {
-      case "no":
-        return <>{user.no}</>;
-      case "name":
-        return <>{user.name}</>;
-      case "role":
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-          </div>
-        );
-      case "status":
-        return (
-          <Chip
-            className="capitalize"
-            color={statusColorMap[user.status]}
-            size="sm"
-            variant="flat"
-          >
-            {cellValue}
-          </Chip>
-        );
-      case "actions":
-        return (
-          <div className="relative flex gap-2 items-center justify-center">
-            <Tooltip content="Details">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-                <EyeIcon />
-              </span>
-            </Tooltip>
-            <ModalIpk />
-            <Tooltip color="danger" content="Delete user">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon />
-              </span>
-            </Tooltip>
-          </div>
-        );
-      default:
-        return cellValue;
-    }
-  }, []);
+    // Get form data as an object.
+    const data = Object.fromEntries(new FormData(e.currentTarget));
+
+    // Submit data to your backend API.
+    setSubmitted(data);
+  };
 
   return (
-    <Table aria-label="Example table with custom cells">
-      <TableHeader columns={columns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody items={users}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <>
+      <Tooltip content="Edit">
+        <span
+          onClick={onOpen}
+          className="text-lg text-default-400 cursor-pointer active:opacity-50"
+        >
+          <EditIcon />
+        </span>
+      </Tooltip>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <Form onSubmit={onSubmit} className="p-10">
+                <Input
+                  isRequired
+                  errorMessage="Please enter a valid ipk"
+                  label="Ipk"
+                  labelPlacement="outside"
+                  name="ipk"
+                  placeholder="Enter your ipk"
+                  type="ipk"
+                />
+                <Input
+                  isRequired
+                  errorMessage="Please enter a valid ips"
+                  label="Ips"
+                  labelPlacement="outside"
+                  name="ips"
+                  placeholder="Enter your ips"
+                  type="ips"
+                />
+                <Button type="submit">Submit</Button>
+                {submitted && (
+                  <div className="text-small text-default-500">
+                    You submitted: <code>{JSON.stringify(submitted)}</code>
+                  </div>
+                )}
+              </Form>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
