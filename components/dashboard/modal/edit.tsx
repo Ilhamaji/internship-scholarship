@@ -138,7 +138,7 @@ export const EditIcon = (props: IconSvgProps) => {
   );
 };
 
-export default function ipk() {
+export default function edit() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [submitted, setSubmitted] = React.useState(null);
 
@@ -158,7 +158,7 @@ export default function ipk() {
       <Tooltip content="Edit">
         <span
           onClick={onOpen}
-          className="text-lg text-default-400 cursor-pointer active:opacity-50"
+          className="my-auto text-lg text-default-400 cursor-pointer hover:text-default-600 active:opacity-50"
         >
           <EditIcon />
         </span>
