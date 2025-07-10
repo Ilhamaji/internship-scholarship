@@ -1,8 +1,8 @@
 import React from "react";
-import TabelIpk from "@/components/dashboard/mahasiswa/tabelIPK";
-import TabelAkademik from "@/components/dashboard/mahasiswa/tabelAkademik";
-import TambahAkademik from "@/components/dashboard/modal/tambahAkademik";
-import TambahIPK from "@/components/dashboard/modal/tambahIPK";
+import TabelIpk from "@/components/dashboard/mahasiswa/laporan/tabel/tabelAcademicReports";
+import TabelAkademik from "@/components/dashboard/mahasiswa/laporan/tabel/tabelAcademicActivities";
+import TambahAkademik from "@/components/dashboard/mahasiswa/laporan/modal/tambahAkademik";
+import TambahIPK from "@/components/dashboard/mahasiswa/laporan/modal/tambahIPK";
 
 export default function page() {
   return (

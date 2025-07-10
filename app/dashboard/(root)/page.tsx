@@ -3,39 +3,49 @@
 import React, { use, useEffect, useState } from "react";
 import { Card, CardHeader, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
-import UserTable from "@/components/dashboard/table";
+import TableLaporan from "@/components/dashboard/mahasiswa/root/tableLaporan";
 import Ukm from "@/components/dashboard/ukm";
-import { getUserData } from "@/lib/tokenStore";
-import getData from "@/lib/action/getUserData";
+import getUserData from "@/lib/action/getUserData";
+import { Spinner } from "@heroui/spinner";
+import api from "@/lib/axios";
+import Cookies from "js-cookie";
+import TambahLaporan from "@/components/dashboard/mahasiswa/laporan/modal/tambahLaporan";
 
 export default function page() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState();
+  const [monevData, setMonevData] = useState();
 
   useEffect(() => {
-    const fungsi = async () => {
-      const userData = await getUserData();
+    const fetchData = async () => {
+      const resUser = await api.get(`/users/${Cookies.get("userId")}`);
+      setUserData(resUser.data.data);
+      const resMonev = await api.get(`/monev/${Cookies.get("userId")}`);
+      setMonevData(resMonev.data.data.laporan);
+
+      setLoading(false);
     };
 
-    fungsi();
-  }, []);
+    fetchData();
+  }, [monevData]);
 
   if (loading) {
-    return <>Loading...</>;
+    return (
+      <div className="w-full h-screen flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
 
-  if (
-    (!loading && userData !== null) ||
-    userData !== undefined ||
-    userData !== "" ||
-    Object.keys(userData).length !== 0
-  ) {
+  if (!loading) {
     return (
       <div className="w-full">
-        <div className="px-36 flex flex-row gap-4">
-          <div className="flex flex-col border bg-[#fff] px-8 mt-4 w-fit rounded-xl shadow-md">
+        <TambahLaporan />
+        <div className="px-4 md:px-10 lg:px-36 flex flex-row gap-4">
+          <div className="md:flex md:flex-col md:visible hidden invisible border bg-[#fff] px-8 mt-4 w-fit rounded-xl shadow-md">
             <div className="py-6 text-2xl">
-              Selamat datang <span className="font-bold">User !</span> !
+              Selamat datang <span className="font-bold">{userData?.name}</span>{" "}
+              !
             </div>
             <hr />
             <div className="py-6">
@@ -69,7 +79,7 @@ export default function page() {
               <Ukm />
             </div>
             <div className="flex flex-row gap-4 w-full">
-              <UserTable />
+              <TableLaporan monevData={monevData} />
             </div>
           </div>
         </div>

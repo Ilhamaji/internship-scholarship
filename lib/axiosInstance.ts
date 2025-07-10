@@ -1,12 +1,11 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { logout } from "@/lib/auth"; // Import fungsi logout
+import { logout } from "./auth"; // Import fungsi logout
 
 const API_URL = "http://localhost:5000";
 
 const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
@@ -54,7 +53,7 @@ api.interceptors.response.use(
 
         // Simpan access token yang baru
         Cookies.set("accessToken", accessToken, {
-          expires: 15 / (24 * 60),
+          expires: 1 / 24,
           secure: true,
         });
 

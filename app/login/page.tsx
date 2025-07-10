@@ -1,39 +1,23 @@
 "use client";
 
-import api from "@/lib/axios";
-import {
-  getRefreshToken,
-  setAccessToken,
-  setRefreshToken,
-  setUserData,
-} from "@/lib/tokenStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Cookies from "js-cookie";
+import { login } from "@/lib/auth";
 
 export default function page() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await api.post("/auth/login", { identifier, password });
-      setUserData(
-        response.data.data.user.userId,
-        response.data.data.user.name,
-        response.data.data.user.role,
-        response.data.data.user.avatar
-      );
-      setAccessToken(response.data.data.accessToken);
-      setRefreshToken(response.data.data.refreshToken);
-      Cookies.set("refreshToken", response.data.data.refreshToken, {
-        expires: 7,
-      });
+      await login(setError, identifier, password);
+
       router.push("/dashboard");
-    } catch (error) {
-      console.error("Login failed:", error);
+    } catch (error: any) {
+      setError(error.response?.data?.message);
     }
   };
 
@@ -45,6 +29,7 @@ export default function page() {
           <div className="w-50 m-auto">
             <img src="/icon/logo.svg" className="" alt="" />
           </div>
+          {error !== "" ? <div className="mx-auto">{error}</div> : ""}
           <div className="flex p-4 m-auto md:p-8 border rounded-lg w-full md:w-96 lg:w-[30vw]">
             <form onSubmit={(e) => handleLogin(e)} className="w-full block">
               <div className="">
@@ -58,6 +43,7 @@ export default function page() {
                   placeholder="Masukkan NIM anda"
                   className="px-4 py-2 border w-full"
                   onChange={(e) => setIdentifier(e.target.value)}
+                  required
                 />
               </div>
               <div className="mt-6">
@@ -71,6 +57,7 @@ export default function page() {
                   placeholder="Masukkan password anda"
                   className="px-4 py-2 border w-full"
                   onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
               <div className="flex justify-self-end">

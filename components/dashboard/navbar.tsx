@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -10,7 +10,6 @@ import {
   NavbarMenuItem,
 } from "@heroui/navbar";
 import { Link } from "@heroui/link";
-import { ThemeSwitch } from "@/components/theme-switch";
 import { Image } from "@heroui/image";
 import { Avatar } from "@heroui/avatar";
 import {
@@ -20,11 +19,21 @@ import {
   DropdownSection,
   DropdownItem,
 } from "@heroui/dropdown";
+import Cookies from "js-cookie";
+import { Skeleton } from "@heroui/skeleton";
+import { useRouter } from "next/navigation";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
   const menuItems = ["Dashboard", "Laporan Monev", "Riwayat Laporan"];
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (Cookies.get("avatar")) {
+      setLoading(false);
+    }
+  }, []);
 
   return (
     <>
@@ -64,13 +73,20 @@ export default function App() {
           <NavbarItem>
             <Dropdown>
               <DropdownTrigger>
-                <button className="bg-transparent w-fit">
-                  <Avatar src="https://i.pravatar.cc/150?u=a042581f4e29026024d" />
+                <button className="flex my-auto bg-transparent w-fit">
+                  {loading ? (
+                    <Skeleton className="flex rounded-full w-10 h-10" />
+                  ) : (
+                    <Avatar src={Cookies.get("avatar")} />
+                  )}
                 </button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
                 <DropdownItem key="new">Profil</DropdownItem>
                 <DropdownItem
+                  onClick={() => {
+                    router.push("/logout");
+                  }}
                   key="delete"
                   className="text-danger"
                   color="danger"

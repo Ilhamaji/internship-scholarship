@@ -1,16 +1,21 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
-export default async function getLaporanDetailById(id: string) {
+export default async function getUserData(setLoading: any, setUserData: any) {
+  setLoading(true);
   await axios
-    .get(`http://localhost:5000/monev/${id}`, {
+    .get(`http://localhost:5000/users/${Cookies.get("userId")}`, {
       headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIyNTMwMDAxIiwiZW1haWwiOm51bGwsInJvbGUiOiJzdHVkZW50IiwiaWF0IjoxNzUxNjk1NDYyLCJleHAiOjE3NTE3ODE4NjJ9.feyun_KfVTxToFwc95pzpFfSPL3pjhcOPR75kIoPjhI`,
+        Authorization: `Bearer ${Cookies.get("accessToken")}`,
       },
     })
     .then(function (response) {
+      setUserData(response.data.data);
+      setLoading(false);
       return response;
     })
     .catch(function (error) {
-      console.log(error);
+      setLoading(false);
+      return console.log(error);
     });
 }
