@@ -20,6 +20,7 @@ export default function page() {
     const fetchData = async () => {
       const resUser = await api.get(`/users/${Cookies.get("userId")}`);
       setUserData(resUser.data.data);
+
       const resMonev = await api.get(`/monev/${Cookies.get("userId")}`);
       setMonevData(resMonev.data.data.laporan);
 
@@ -27,7 +28,7 @@ export default function page() {
     };
 
     fetchData();
-  }, [monevData]);
+  }, []);
 
   if (loading) {
     return (

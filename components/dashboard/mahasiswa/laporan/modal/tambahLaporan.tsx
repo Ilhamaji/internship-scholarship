@@ -22,22 +22,40 @@ export default function App() {
   const [ips, setIps] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const tambahLaporanHandler = async (e: any) => {
+  const tambahLaporanHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
+    // 1️⃣ Buat object academicReports
+    const academicReports = {
+      semester: semester,
+      ipk: ipk,
+      ips: ips,
+    };
+
+    // 2️⃣ Bungkus ke dalam object dataMonev
+    const dataMonev = {
+      academicReports: academicReports,
+    };
+
+    // 3️⃣ Stringify dataMonev untuk dikirim via FormData
+    const stringDataMonev = JSON.stringify(dataMonev);
+
+    // 4️⃣ Inisialisasi FormData (harus fresh setiap submit)
+    const formData = new FormData();
+    formData.append("dataMonev", stringDataMonev);
+
+    console.log(formData);
+
+    // Jika ingin kirim file bukti:
+    // formData.append("academicReports_bukti", file);
+
     try {
-      await api.post("/monev/draft", {
-        academicReports: {
-          semester: semester,
-          ipk: ipk,
-          ips: ips,
-        },
-      });
+      const response = await api.post("/monev/draft", formData);
+      console.log(response.data);
 
       setLoading(false);
-
-      onOpenChange();
+      onOpenChange(); // Tutup modal jika berhasil
     } catch (error) {
       console.error("Error adding report:", error);
       setLoading(false);
@@ -52,73 +70,74 @@ export default function App() {
     );
   }
 
-  if (!loading) {
-    return (
-      <>
-        <Button onPress={onOpen}>Open Modal</Button>
-        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent>
-            {(onClose) => (
-              <Form onSubmit={(e) => tambahLaporanHandler(e)}>
-                <ModalHeader className="flex flex-col gap-1">
-                  Modal Title
-                </ModalHeader>
-                <ModalBody className="w-full">
-                  <Input
-                    className="w-full"
-                    isRequired
-                    errorMessage="Please enter a valid Semester"
-                    label="Semester"
-                    labelPlacement="outside"
-                    name="semester"
-                    placeholder="Enter your Semester"
-                    type="number"
-                    min={1}
-                    max={8}
-                    onChange={(e) => setSemester(e.target.value)}
-                  />
-                  <Input
-                    className="w-full"
-                    isRequired
-                    errorMessage="Please enter a valid IPK"
-                    label="IPK"
-                    labelPlacement="outside"
-                    name="ipk"
-                    placeholder="Enter your IPK"
-                    type="number"
-                    min={0.0}
-                    max={4.0}
-                    step={0.01}
-                    onChange={(e) => setIpk(e.target.value)}
-                  />
-                  <Input
-                    className="w-full"
-                    isRequired
-                    errorMessage="Please enter a valid IPS"
-                    label="IPS"
-                    labelPlacement="outside"
-                    name="ips"
-                    placeholder="Enter your IPS"
-                    type="number"
-                    min={0.0}
-                    max={4.0}
-                    step={0.01}
-                    onChange={(e) => setIps(e.target.value)}
-                  />
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color="primary" type="submit">
-                    Simpan
-                  </Button>
-                </ModalFooter>
-              </Form>
-            )}
-          </ModalContent>
-        </Modal>
-      </>
-    );
-  }
+  return (
+    <>
+      <Button onPress={onOpen}>Open Modal</Button>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <Form onSubmit={tambahLaporanHandler}>
+              <ModalHeader className="flex flex-col gap-1">
+                Tambah Laporan Monev
+              </ModalHeader>
+              <ModalBody className="w-full space-y-4">
+                <Input
+                  className="w-full"
+                  isRequired
+                  errorMessage="Please enter a valid Semester"
+                  label="Semester"
+                  labelPlacement="outside"
+                  name="semester"
+                  placeholder="Enter your Semester"
+                  type="number"
+                  min={1}
+                  max={8}
+                  value={semester}
+                  onChange={(e) => setSemester(e.target.value)}
+                />
+                <Input
+                  className="w-full"
+                  isRequired
+                  errorMessage="Please enter a valid IPK"
+                  label="IPK"
+                  labelPlacement="outside"
+                  name="ipk"
+                  placeholder="Enter your IPK"
+                  type="number"
+                  min={0.0}
+                  max={4.0}
+                  step={0.01}
+                  value={ipk}
+                  onChange={(e) => setIpk(e.target.value)}
+                />
+                <Input
+                  className="w-full"
+                  isRequired
+                  errorMessage="Please enter a valid IPS"
+                  label="IPS"
+                  labelPlacement="outside"
+                  name="ips"
+                  placeholder="Enter your IPS"
+                  type="number"
+                  min={0.0}
+                  max={4.0}
+                  step={0.01}
+                  value={ips}
+                  onChange={(e) => setIps(e.target.value)}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" type="submit">
+                  Simpan
+                </Button>
+              </ModalFooter>
+            </Form>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+  );
 }

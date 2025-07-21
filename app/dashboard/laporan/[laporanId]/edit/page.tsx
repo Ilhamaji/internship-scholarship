@@ -58,7 +58,7 @@ export default function Page() {
       console.log(res.data.data.detailLaporan);
 
       if (
-        res.data.data.detailLaporan.academicActivities[0].activityName !==
+        res.data.data.detailLaporan.academicActivities[0]?.activityName !==
         "Tidak Ada"
       ) {
         setAcademicActivities(res.data.data.detailLaporan.academicActivities);
