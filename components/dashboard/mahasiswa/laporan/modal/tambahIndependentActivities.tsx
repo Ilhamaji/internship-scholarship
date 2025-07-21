@@ -43,11 +43,29 @@ export default function App({
           activityName: activityName,
           activityType: activityType,
           startDate: startDate,
-          level: level,
+          level:
+            activityType === "Juri" ||
+            activityType === "Wasit" ||
+            activityType === "Pelatih" ||
+            activityType === "Kegiatan Forum Ilmiah" ||
+            activityType === "Karya Yang Didanai" ||
+            activityType === "Karya Populer Yang Diterbitkan" ||
+            activityType === "Bidang Sosial, Kerohanian, dan Lainnya" ||
+            activityType === "Pengakuan Dari Institusi Luar PT" ||
+            activityType === "Publikasi Jurnal"
+              ? level
+              : "",
           endDate: endDate,
           place: place,
           buktiUrl: buktiUrl,
-          participation: participation,
+          participation:
+            activityType === "Kegiatan Forum Ilmiah" ||
+            activityType === "Bidang Sosial, Kerohanian, dan Lainnya" ||
+            activityType === "Karya Yang Didanai" ||
+            activityType === "Karya Populer Yang Diterbitkan" ||
+            activityType === "Publikasi Jurnal"
+              ? participation
+              : "",
         },
       ]);
     } else {
@@ -101,7 +119,11 @@ export default function App({
                     label="Jenis Kegiatan"
                     labelPlacement="inside"
                     placeholder="Pilih jenis kegiatan"
-                    onChange={(e) => setActivityType(e.target.value)}
+                    onChange={(e) => {
+                      setLevel("");
+                      setParticipation("");
+                      setActivityType(e.target.value);
+                    }}
                     required
                   >
                     <SelectItem key={"Magang"}>Magang</SelectItem>
@@ -122,168 +144,173 @@ export default function App({
                     <SelectItem key={"Riset/Penelitian"}>
                       Riset/Penelitian
                     </SelectItem>
+                    <SelectItem key={"Juri"}>Juri</SelectItem>
+                    <SelectItem key={"Wasit"}>Wasit</SelectItem>
+                    <SelectItem key={"Pelatih"}>Pelatih</SelectItem>
+                    <SelectItem key={"Anggota Tim Dalam Penelitian/Pengabdian"}>
+                      Anggota Tim Dalam Penelitian/Pengabdian
+                    </SelectItem>
+                    <SelectItem key={"Kuliah Umum/Tamu"}>
+                      Kuliah Umum/Tamu
+                    </SelectItem>
+                    <SelectItem key={"Penulis Buku Ber-ISBN"}>
+                      Penulis Buku Ber-ISBN
+                    </SelectItem>
+                    <SelectItem key={"Hak Paten/Paten Sementara"}>
+                      Hak Paten/Paten Sementara
+                    </SelectItem>
+                    <SelectItem key={"Kegiatan Forum Ilmiah"}>
+                      Kegiatan Forum Ilmiah
+                    </SelectItem>
+                    <SelectItem key={"Karya Yang Didanai"}>
+                      Karya Yang Didanai
+                    </SelectItem>
+                    <SelectItem key={"Karya Populer Yang Diterbitkan"}>
+                      Karya Populer Yang Diterbitkan
+                    </SelectItem>
+                    <SelectItem key={"Publikasi Jurnal"}>
+                      Publikasi Jurnal
+                    </SelectItem>
+                    <SelectItem key={"Bidang Sosial, Kerohanian, dan Lainnya"}>
+                      Bidang Sosial, Kerohanian, dan Lainnya
+                    </SelectItem>
+                    <SelectItem key={"Pengakuan Dari Institusi Luar PT"}>
+                      Pengakuan Dari Institusi Luar PT
+                    </SelectItem>
                   </Select>
-                  {activityType === "Pelatihan Kepemimpinan" ? (
-                    <>
-                      <Input
-                        onChange={(e) => setActivityName(e.target.value)}
-                        errorMessage="Masukkan nama kegiatan dengan benar"
-                        label="Nama kegiatan"
-                        labelPlacement="outside"
-                        placeholder="Masukkan nama kegiatan"
-                        type="text"
-                        required
-                      />
-                      <Select
-                        className="w-full"
-                        errorMessage="Pilih tingkatan dengan benar"
-                        label="Tingkatan"
-                        labelPlacement="inside"
-                        placeholder="Pilih tingkatan"
-                        onChange={(e) => setLevel(e.target.value)}
-                        required
-                      >
-                        <SelectItem key={"Pra-Dasar"}>Pra-Dasar</SelectItem>
-                        <SelectItem key={"Dasar"}>Dasar</SelectItem>
-                        <SelectItem key={"Menengah"}>Menengah</SelectItem>
-                        <SelectItem key={"Lanjut"}>Lanjut</SelectItem>
-                      </Select>
-                      <Select
-                        className="w-full"
-                        errorMessage="Pilih keikutsertaan dengan benar"
-                        label="Keikutsertaan"
-                        labelPlacement="inside"
-                        placeholder="Pilih keikutsertaan"
-                        onChange={(e) => setParticipation(e.target.value)}
-                        required
-                      >
-                        <SelectItem key={"Ketua"}>Ketua</SelectItem>
-                        <SelectItem key={"Wakil Ketua"}>Wakil Ketua</SelectItem>
-                        <SelectItem key={"Sekertaris"}>Sekertaris</SelectItem>
-                        <SelectItem key={"Bendahara"}>Bendahara</SelectItem>
-                        <SelectItem key={"Divisi"}>Divisi</SelectItem>
-                        <SelectItem key={"Anggota"}>Anggota</SelectItem>
-                      </Select>
-                      <Input
-                        onChange={(e) => setPlace(e.target.value)}
-                        errorMessage="Masukkan tempat kegiatan dengan benar"
-                        label="Tempat"
-                        labelPlacement="outside"
-                        placeholder="Masukkan tempat kegiatan"
-                        type="text"
-                        required
-                      />
-                      <div className="flex flex-row gap-2">
-                        <Input
-                          onChange={(e) => setStartDate(e.target.value)}
-                          errorMessage="Masukkan tanggal mulai dengan benar"
-                          label="Tanggal Mulai"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                        <Input
-                          onChange={(e) => setEndDate(e.target.value)}
-                          errorMessage="Masukkan tanggal berakhir dengan benar"
-                          label="Tanggal Berakhir"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                      </div>
-                      <Input
-                        onChange={(e) => setBuktiUrl(e.target.value)}
-                        errorMessage="Masukkan bukti kegiatan dengan benar"
-                        label="Bukti"
-                        labelPlacement="outside"
-                        placeholder="Masukkan bukti kegiatan"
-                        type="file"
-                        required
-                      />
-                    </>
+                  {activityType === "Juri" ||
+                  activityType === "Wasit" ||
+                  activityType === "Pelatih" ||
+                  activityType === "Kegiatan Forum Ilmiah" ||
+                  activityType === "Karya Yang Didanai" ||
+                  activityType === "Karya Populer Yang Diterbitkan" ||
+                  activityType === "Bidang Sosial, Kerohanian, dan Lainnya" ||
+                  activityType === "Pengakuan Dari Institusi Luar PT" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih tingkatan dengan benar"
+                      label="Tingkatan"
+                      labelPlacement="inside"
+                      placeholder="Pilih tingkatan"
+                      onChange={(e) => {
+                        setParticipation("");
+                        setLevel(e.target.value);
+                      }}
+                      required
+                    >
+                      <SelectItem key={"Perguruan Tinggi"}>
+                        Perguruan Tinggi
+                      </SelectItem>
+                      <SelectItem key={"Regional"}>Regional</SelectItem>
+                      <SelectItem key={"Nasional"}>Nasional</SelectItem>
+                      <SelectItem key={"Internasional"}>
+                        Internasional
+                      </SelectItem>
+                    </Select>
+                  ) : activityType === "Publikasi Jurnal" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih tingkatan dengan benar"
+                      label="Tingkatan"
+                      labelPlacement="inside"
+                      placeholder="Pilih tingkatan"
+                      onChange={(e) => {
+                        setParticipation("");
+                        setLevel(e.target.value);
+                      }}
+                      required
+                    >
+                      <SelectItem key={"Internasional"}>
+                        Internasional
+                      </SelectItem>
+                      <SelectItem key={"Nasional Terakreditasi"}>
+                        Nasional Terakreditasi
+                      </SelectItem>
+                      <SelectItem key={"Regional Tidak Terakreditasi"}>
+                        Regional Tidak Terakreditasi
+                      </SelectItem>
+                    </Select>
                   ) : (
-                    <>
-                      <Input
-                        onChange={(e) => setActivityName(e.target.value)}
-                        errorMessage="Masukkan nama kegiatan dengan benar"
-                        label="Nama kegiatan"
-                        labelPlacement="outside"
-                        placeholder="Masukkan nama kegiatan"
-                        type="text"
-                        required
-                      />
-                      <Select
-                        className="w-full"
-                        errorMessage="Pilih tingkatan dengan benar"
-                        label="Tingkatan"
-                        labelPlacement="inside"
-                        placeholder="Pilih tingkatan"
-                        onChange={(e) => setLevel(e.target.value)}
-                        required
-                      >
-                        <SelectItem key={"Perguruan Tinggi"}>
-                          Perguruan Tinggi
-                        </SelectItem>
-                        <SelectItem key={"Regional"}>Regional</SelectItem>
-                        <SelectItem key={"Nasional"}>Nasional</SelectItem>
-                        <SelectItem key={"Internasional"}>
-                          Internasional
-                        </SelectItem>
-                      </Select>
-                      <Select
-                        className="w-full"
-                        errorMessage="Pilih keikutsertaan dengan benar"
-                        label="Keikutsertaan"
-                        labelPlacement="inside"
-                        placeholder="Pilih keikutsertaan"
-                        onChange={(e) => setParticipation(e.target.value)}
-                        required
-                      >
-                        <SelectItem key={"Ketua"}>Ketua</SelectItem>
-                        <SelectItem key={"Wakil Ketua"}>Wakil Ketua</SelectItem>
-                        <SelectItem key={"Sekertaris"}>Sekertaris</SelectItem>
-                        <SelectItem key={"Bendahara"}>Bendahara</SelectItem>
-                        <SelectItem key={"Divisi"}>Divisi</SelectItem>
-                        <SelectItem key={"Anggota"}>Anggota</SelectItem>
-                      </Select>
-                      <Input
-                        onChange={(e) => setPlace(e.target.value)}
-                        errorMessage="Masukkan tempat kegiatan dengan benar"
-                        label="Tempat"
-                        labelPlacement="outside"
-                        placeholder="Masukkan tempat kegiatan"
-                        type="text"
-                        required
-                      />
-                      <div className="flex flex-row gap-2">
-                        <Input
-                          onChange={(e) => setStartDate(e.target.value)}
-                          errorMessage="Masukkan tanggal mulai dengan benar"
-                          label="Tanggal Mulai"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                        <Input
-                          onChange={(e) => setEndDate(e.target.value)}
-                          errorMessage="Masukkan tanggal berakhir dengan benar"
-                          label="Tanggal Berakhir"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                      </div>
-                      <Input
-                        onChange={(e) => setBuktiUrl(e.target.value)}
-                        errorMessage="Masukkan bukti kegiatan dengan benar"
-                        label="Bukti"
-                        labelPlacement="outside"
-                        placeholder="Masukkan bukti kegiatan"
-                        type="file"
-                        required
-                      />
-                    </>
+                    ""
                   )}
+                  <Input
+                    onChange={(e) => setActivityName(e.target.value)}
+                    errorMessage="Masukkan nama kegiatan dengan benar"
+                    label="Nama Kegiatan"
+                    labelPlacement="outside"
+                    placeholder="Masukkan nama kegiatan"
+                    type="text"
+                    required
+                  />
+                  <Input
+                    onChange={(e) => setPlace(e.target.value)}
+                    errorMessage="Masukkan tempat kegiatan dengan benar"
+                    label="Tempat"
+                    labelPlacement="outside"
+                    placeholder="Masukkan tempat kegiatan"
+                    type="text"
+                    required
+                  />
+                  {activityType === "Kegiatan Forum Ilmiah" ||
+                  activityType === "Bidang Sosial, Kerohanian, dan Lainnya" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih keikutsertaan dengan benar"
+                      label="Keikutsertaan"
+                      labelPlacement="inside"
+                      placeholder="Pilih keikutsertaan"
+                      onChange={(e) => setParticipation(e.target.value)}
+                      required
+                    >
+                      <SelectItem key={"Pembicara"}>Pembicara</SelectItem>
+                      <SelectItem key={"Moderator"}>Moderator</SelectItem>
+                      <SelectItem key={"Peserta"}>Peserta</SelectItem>
+                    </Select>
+                  ) : activityType === "Karya Yang Didanai" ||
+                    activityType === "Karya Populer Yang Diterbitkan" ||
+                    activityType === "Publikasi Jurnal" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih keikutsertaan dengan benar"
+                      label="Keikutsertaan"
+                      labelPlacement="inside"
+                      placeholder="Pilih keikutsertaan"
+                      onChange={(e) => setParticipation(e.target.value)}
+                      required
+                    >
+                      <SelectItem key={"Ketua"}>Ketua</SelectItem>
+                      <SelectItem key={"Anggota"}>Anggota</SelectItem>
+                    </Select>
+                  ) : (
+                    ""
+                  )}
+                  <div className="flex flex-row gap-2">
+                    <Input
+                      onChange={(e) => setStartDate(e.target.value)}
+                      errorMessage="Masukkan tanggal mulai dengan benar"
+                      label="Tanggal Mulai"
+                      labelPlacement="outside"
+                      type="date"
+                      required
+                    />
+                    <Input
+                      onChange={(e) => setEndDate(e.target.value)}
+                      errorMessage="Masukkan tanggal berakhir dengan benar"
+                      label="Tanggal Berakhir"
+                      labelPlacement="outside"
+                      type="date"
+                      required
+                    />
+                  </div>
+                  <Input
+                    onChange={(e) => setBuktiUrl(e.target.value)}
+                    errorMessage="Masukkan bukti kegiatan dengan benar"
+                    label="Bukti"
+                    labelPlacement="outside"
+                    placeholder="Masukkan bukti kegiatan"
+                    type="file"
+                    required
+                  />
                 </ModalBody>
                 <ModalFooter className="w-full">
                   <Button color="danger" variant="light" onPress={onClose}>

@@ -24,19 +24,59 @@ export default function edit({
   setIndependentActivities: any;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [activityName, setActivityName] = useState("");
-  const [activityType, setActivityType] = useState("");
-  const [level, setLevel] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [place, setPlace] = useState("");
-  const [buktiUrl, setBuktiUrl] = useState("");
-  const [participation, setParticipation] = useState("");
+  const [activityOnChange, setActivityOnChange] = useState(false);
+  const [activityName, setActivityName] = useState(
+    independentActivities[index].activityName
+  );
+  const [activityType, setActivityType] = useState(
+    independentActivities[index].activityType
+  );
+  const [level, setLevel] = useState(independentActivities[index].level);
+  const [participation, setParticipation] = useState(
+    independentActivities[index].participation
+  );
+  const [place, setPlace] = useState(independentActivities[index].place);
+  const [startDate, setStartDate] = useState(
+    independentActivities[index].startDate
+  );
+  const [endDate, setEndDate] = useState(independentActivities[index].endDate);
+  const [buktiUrl, setBuktiUrl] = useState(
+    independentActivities[index].buktiUrl
+  );
 
   const tambahAcademicActivity = async (
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+
+    if (
+      activityType.toLowerCase() === "juri" ||
+      activityType.toLowerCase() === "wasit" ||
+      activityType.toLowerCase() === "pelatih" ||
+      activityType.toLowerCase() === "kegiatan forum ilmiah" ||
+      activityType.toLowerCase() === "karya yang didanai" ||
+      activityType.toLowerCase() === "karya populer yang diterbitkan" ||
+      activityType.toLowerCase() === "bidang sosial, kerohanian, dan lainnya" ||
+      activityType.toLowerCase() === "pengakuan dari institusi luar pt" ||
+      activityType.toLowerCase() === "publikasi jurnal"
+    ) {
+      setActivityType(activityType);
+    } else {
+      setLevel("");
+      setParticipation("");
+    }
+
+    if (
+      activityType.toLowerCase() === "kegiatan forum ilmiah" ||
+      activityType.toLowerCase() === "bidang sosial, kerohanian, dan lainnya" ||
+      activityType.toLowerCase() === "karya yang didanai" ||
+      activityType.toLowerCase() === "karya populer yang diterbitkan" ||
+      activityType.toLowerCase() === "publikasi jurnal"
+    ) {
+      setParticipation(participation);
+    } else {
+      setParticipation("");
+    }
 
     const newArray = independentActivities.map((v: any, i: any) => {
       if (i === index) {
@@ -49,8 +89,7 @@ export default function edit({
             activityType.length === 0
               ? independentActivities[index].activityType
               : activityType,
-          level:
-            level.length === 0 ? independentActivities[index].level : level,
+          level: activityOnChange ? level : independentActivities[index].level,
           startDate:
             startDate.length === 0
               ? independentActivities[index].startDate
@@ -65,10 +104,9 @@ export default function edit({
             buktiUrl.length === 0
               ? independentActivities[index].buktiUrl
               : buktiUrl,
-          participation:
-            participation.length === 0
-              ? independentActivities[index].participation
-              : participation,
+          participation: activityOnChange
+            ? participation
+            : independentActivities[index].participation,
         };
 
         return data;
@@ -103,6 +141,132 @@ export default function edit({
                 className="w-full flex flex-col gap-4"
               >
                 <ModalBody className="w-full">
+                  <Select
+                    className="w-full"
+                    errorMessage="Pilih jenis kegiatan dengan benar"
+                    label="Jenis Kegiatan"
+                    labelPlacement="inside"
+                    placeholder="Pilih jenis kegiatan"
+                    onChange={(e) => {
+                      setLevel("");
+                      setParticipation("");
+                      setActivityOnChange(true);
+                      setActivityType(e.target.value);
+                    }}
+                    defaultSelectedKeys={[
+                      `${independentActivities[index].activityType}`,
+                    ]}
+                    required
+                  >
+                    <SelectItem key={"Magang"}>Magang</SelectItem>
+                    <SelectItem key={"Studi Independen"}>
+                      Studi Independen
+                    </SelectItem>
+                    <SelectItem key={"Kampus Mengajar"}>
+                      Kampus Mengajar
+                    </SelectItem>
+                    <SelectItem key={"IISMA"}>IISMA</SelectItem>
+                    <SelectItem key={"Pertukaran Mahasiswa Merdeka"}>
+                      Pertukaran Mahasiswa Merdeka
+                    </SelectItem>
+                    <SelectItem key={"KKN Tematik"}>KKN Tematik</SelectItem>
+                    <SelectItem key={"Proyek Kemanusiaan"}>
+                      Proyek Kemanusiaan
+                    </SelectItem>
+                    <SelectItem key={"Riset/Penelitian"}>
+                      Riset/Penelitian
+                    </SelectItem>
+                    <SelectItem key={"Juri"}>Juri</SelectItem>
+                    <SelectItem key={"Wasit"}>Wasit</SelectItem>
+                    <SelectItem key={"Pelatih"}>Pelatih</SelectItem>
+                    <SelectItem key={"Anggota Tim Dalam Penelitian/Pengabdian"}>
+                      Anggota Tim Dalam Penelitian/Pengabdian
+                    </SelectItem>
+                    <SelectItem key={"Kuliah Umum/Tamu"}>
+                      Kuliah Umum/Tamu
+                    </SelectItem>
+                    <SelectItem key={"Penulis Buku Ber-ISBN"}>
+                      Penulis Buku Ber-ISBN
+                    </SelectItem>
+                    <SelectItem key={"Hak Paten/Paten Sementara"}>
+                      Hak Paten/Paten Sementara
+                    </SelectItem>
+                    <SelectItem key={"Kegiatan Forum Ilmiah"}>
+                      Kegiatan Forum Ilmiah
+                    </SelectItem>
+                    <SelectItem key={"Karya Yang Didanai"}>
+                      Karya Yang Didanai
+                    </SelectItem>
+                    <SelectItem key={"Karya Populer Yang Diterbitkan"}>
+                      Karya Populer Yang Diterbitkan
+                    </SelectItem>
+                    <SelectItem key={"Publikasi Jurnal"}>
+                      Publikasi Jurnal
+                    </SelectItem>
+                    <SelectItem key={"Bidang Sosial, Kerohanian, dan Lainnya"}>
+                      Bidang Sosial, Kerohanian, dan Lainnya
+                    </SelectItem>
+                    <SelectItem key={"Pengakuan Dari Institusi Luar PT"}>
+                      Pengakuan Dari Institusi Luar PT
+                    </SelectItem>
+                  </Select>
+                  {activityType === "Juri" ||
+                  activityType === "Wasit" ||
+                  activityType === "Pelatih" ||
+                  activityType === "Kegiatan Forum Ilmiah" ||
+                  activityType === "Karya Yang Didanai" ||
+                  activityType === "Karya Populer Yang Diterbitkan" ||
+                  activityType === "Bidang Sosial, Kerohanian, dan Lainnya" ||
+                  activityType === "Pengakuan Dari Institusi Luar PT" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih tingkatan dengan benar"
+                      label="Tingkatan"
+                      labelPlacement="inside"
+                      placeholder="Pilih tingkatan"
+                      onChange={(e) => {
+                        setParticipation("");
+                        setLevel(e.target.value);
+                      }}
+                      defaultSelectedKeys={[`${level}`]}
+                      required
+                    >
+                      <SelectItem key={"Perguruan Tinggi"}>
+                        Perguruan Tinggi
+                      </SelectItem>
+                      <SelectItem key={"Regional"}>Regional</SelectItem>
+                      <SelectItem key={"Nasional"}>Nasional</SelectItem>
+                      <SelectItem key={"Internasional"}>
+                        Internasional
+                      </SelectItem>
+                    </Select>
+                  ) : activityType === "Publikasi Jurnal" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih tingkatan dengan benar"
+                      label="Tingkatan"
+                      labelPlacement="inside"
+                      placeholder="Pilih tingkatan"
+                      onChange={(e) => {
+                        setParticipation("");
+                        setLevel(e.target.value);
+                      }}
+                      defaultSelectedKeys={[`${level}`]}
+                      required
+                    >
+                      <SelectItem key={"Internasional"}>
+                        Internasional
+                      </SelectItem>
+                      <SelectItem key={"Nasional Terakreditasi"}>
+                        Nasional Terakreditasi
+                      </SelectItem>
+                      <SelectItem key={"Regional Tidak Terakreditasi"}>
+                        Regional Tidak Terakreditasi
+                      </SelectItem>
+                    </Select>
+                  ) : (
+                    ""
+                  )}
                   <Input
                     onChange={(e) => setActivityName(e.target.value)}
                     errorMessage="Masukkan nama kegiatan dengan benar"
@@ -113,49 +277,51 @@ export default function edit({
                     defaultValue={independentActivities[index].activityName}
                     required
                   />
-                  <Select
-                    className="w-full"
-                    errorMessage="Pilih jenis kegiatan dengan benar"
-                    label="Jenis Kegiatan"
+                  <Input
+                    onChange={(e) => setPlace(e.target.value)}
+                    errorMessage="Masukkan tempat kegiatan dengan benar"
+                    label="Tempat"
                     labelPlacement="outside"
-                    placeholder="Pilih jenis kegiatan"
-                    onChange={(e) => setActivityType(e.target.value)}
-                    defaultSelectedKeys={[
-                      `${independentActivities[index].activityType}`,
-                    ]}
+                    placeholder="Masukkan tempat kegiatan"
+                    type="text"
+                    defaultValue={independentActivities[index].place}
                     required
-                  >
-                    <SelectItem key={"Salam Kampus"}>Salam Kampus</SelectItem>
-                    <SelectItem key={"Social Training Camp"}>
-                      Social Training Camp
-                    </SelectItem>
-                    <SelectItem key={"Asistensi Keagamaan"}>
-                      Asistensi Keagamaan
-                    </SelectItem>
-                    <SelectItem key={"Program Kreativitas Mahasiswa"}>
-                      Program Kreativitas Mahasiswa
-                    </SelectItem>
-                    <SelectItem key={"Sertifikasi Internasional Program Studi"}>
-                      Sertifikasi Internasional Program Studi
-                    </SelectItem>
-                  </Select>
-                  <Select
-                    className="w-full"
-                    errorMessage="Pilih tingkatan dengan benar"
-                    label="Tingkatan"
-                    labelPlacement="inside"
-                    placeholder="Pilih tingkatan"
-                    onChange={(e) => setLevel(e.target.value)}
-                    defaultSelectedKeys={[
-                      `${independentActivities[index].level}`,
-                    ]}
-                    required
-                  >
-                    <SelectItem key={"Pra-Dasar"}>Pra-Dasar</SelectItem>
-                    <SelectItem key={"Dasar"}>Dasar</SelectItem>
-                    <SelectItem key={"Menengah"}>Menengah</SelectItem>
-                    <SelectItem key={"Lanjut"}>Lanjut</SelectItem>
-                  </Select>
+                  />
+                  {activityType === "Kegiatan Forum Ilmiah" ||
+                  activityType === "Bidang Sosial, Kerohanian, dan Lainnya" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih keikutsertaan dengan benar"
+                      label="Keikutsertaan"
+                      labelPlacement="inside"
+                      placeholder="Pilih keikutsertaan"
+                      onChange={(e) => setParticipation(e.target.value)}
+                      defaultSelectedKeys={[`${participation}`]}
+                      required
+                    >
+                      <SelectItem key={"Pembicara"}>Pembicara</SelectItem>
+                      <SelectItem key={"Moderator"}>Moderator</SelectItem>
+                      <SelectItem key={"Peserta"}>Peserta</SelectItem>
+                    </Select>
+                  ) : activityType === "Karya Yang Didanai" ||
+                    activityType === "Karya Populer Yang Diterbitkan" ||
+                    activityType === "Publikasi Jurnal" ? (
+                    <Select
+                      className="w-full"
+                      errorMessage="Pilih keikutsertaan dengan benar"
+                      label="Keikutsertaan"
+                      labelPlacement="inside"
+                      placeholder="Pilih keikutsertaan"
+                      onChange={(e) => setParticipation(e.target.value)}
+                      defaultSelectedKeys={[`${participation}`]}
+                      required
+                    >
+                      <SelectItem key={"Ketua"}>Ketua</SelectItem>
+                      <SelectItem key={"Anggota"}>Anggota</SelectItem>
+                    </Select>
+                  ) : (
+                    ""
+                  )}
                   <div className="flex flex-row gap-2">
                     <Input
                       onChange={(e) => setStartDate(e.target.value)}
@@ -176,35 +342,6 @@ export default function edit({
                       required
                     />
                   </div>
-                  <Input
-                    onChange={(e) => setPlace(e.target.value)}
-                    errorMessage="Masukkan tempat kegiatan dengan benar"
-                    label="Tempat"
-                    labelPlacement="outside"
-                    placeholder="Masukkan tempat kegiatan"
-                    type="text"
-                    defaultValue={independentActivities[index].place}
-                    required
-                  />
-                  <Select
-                    className="w-full"
-                    errorMessage="Pilih keikutsertaan dengan benar"
-                    label="Keikutsertaan"
-                    labelPlacement="outside"
-                    placeholder="Pilih keikutsertaan"
-                    onChange={(e) => setParticipation(e.target.value)}
-                    defaultSelectedKeys={[
-                      `${independentActivities[index].participation}`,
-                    ]}
-                    required
-                  >
-                    <SelectItem key={"Ketua"}>Ketua</SelectItem>
-                    <SelectItem key={"Wakil Ketua"}>Wakil Ketua</SelectItem>
-                    <SelectItem key={"Sekertaris"}>Sekertaris</SelectItem>
-                    <SelectItem key={"Bendahara"}>Bendahara</SelectItem>
-                    <SelectItem key={"Divisi"}>Divisi</SelectItem>
-                    <SelectItem key={"Anggota"}>Anggota</SelectItem>
-                  </Select>
                   <Input
                     onChange={(e) => setBuktiUrl(e.target.value)}
                     errorMessage="Masukkan bukti kegiatan dengan benar"

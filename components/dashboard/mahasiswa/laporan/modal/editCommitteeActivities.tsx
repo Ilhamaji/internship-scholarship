@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
@@ -24,13 +24,19 @@ export default function edit({
   setCommitteeActivities: any;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [activityName, setActivityName] = useState("");
-  const [level, setLevel] = useState("");
-  const [participation, setParticipation] = useState("");
-  const [place, setPlace] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [buktiUrl, setBuktiUrl] = useState("");
+  const [activityName, setActivityName] = useState(
+    committeeActivities[index].activityName
+  );
+  const [level, setLevel] = useState(committeeActivities[index].level);
+  const [participation, setParticipation] = useState(
+    committeeActivities[index].participation
+  );
+  const [place, setPlace] = useState(committeeActivities[index].place);
+  const [startDate, setStartDate] = useState(
+    committeeActivities[index].startDate
+  );
+  const [endDate, setEndDate] = useState(committeeActivities[index].endDate);
+  const [buktiUrl, setBuktiUrl] = useState(committeeActivities[index].buktiUrl);
 
   const tambahAcademicActivity = async (
     e: React.FormEvent<HTMLFormElement>

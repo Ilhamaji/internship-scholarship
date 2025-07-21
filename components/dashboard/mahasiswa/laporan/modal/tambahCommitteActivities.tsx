@@ -101,7 +101,10 @@ export default function App({
                     label="Jenis Kegiatan"
                     labelPlacement="inside"
                     placeholder="Pilih jenis kegiatan"
-                    onChange={(e) => setActivityType(e.target.value)}
+                    onChange={(e) => {
+                      setLevel("");
+                      setActivityType(e.target.value);
+                    }}
                     required
                   >
                     <SelectItem key={"Pelatihan Kepemimpinan"}>

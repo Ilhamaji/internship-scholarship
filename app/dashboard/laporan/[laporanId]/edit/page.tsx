@@ -12,6 +12,14 @@ import TabelCommitteeActivities from "@/components/dashboard/mahasiswa/laporan/t
 import TambahCommitteActivities from "@/components/dashboard/mahasiswa/laporan/modal/tambahCommitteActivities";
 import TabelIndependentActivities from "@/components/dashboard/mahasiswa/laporan/tabel/tabelIndependentActivities";
 import TambahIndependentActivities from "@/components/dashboard/mahasiswa/laporan/modal/tambahIndependentActivities";
+import TambahTargetNextSemester from "@/components/dashboard/mahasiswa/laporan/modal/tambahTargetNextSemester";
+import TabelTargetNextSemester from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetNextSemester";
+import TambahTargetAcademicActivities from "@/components/dashboard/mahasiswa/laporan/modal/tambahTargetAcademicActivities";
+import TabelTargetAcademicActivities from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetAcademicActivities";
+import TambahTargetAchievements from "@/components/dashboard/mahasiswa/laporan/modal/tambahTargetAchievements";
+import TabelTargetAchievements from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetAchievements";
+import TambahTargetIndependentActivities from "@/components/dashboard/mahasiswa/laporan/modal/tambahTargetIndependentActivities";
+import TabelTargetIndependentActivities from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetIndependentActivities";
 import { Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import api from "@/lib/axiosInstance";
@@ -26,12 +34,27 @@ export default function Page() {
   const [organizationActivities, setOrganizationActivities] = useState();
   const [committeeActivities, setCommitteeActivities] = useState();
   const [independentActivities, setIndependentActivities] = useState();
+  const [supportFactors, setSupportFactors] = useState();
+  const [barrierFactors, setBarrierFactors] = useState();
+  const [studentEvaluations, setStudentEvaluations] = useState({
+    supportFactors,
+    barrierFactors,
+  });
+  const [targetNextSemester, setTargetNextSemester] = useState();
+  const [targetAcademicActivities, setTargetAcademicActivities] = useState();
+  const [targetAchievements, setTargetAchievements] = useState();
+  const [targetIndependentActivities, setTargetIndependentActivities] =
+    useState();
+  const [fullData, setFullData] = useState();
+
   const params = useParams<{ laporanId: string }>();
 
   useEffect(() => {
     const getLaporan = async () => {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
-      setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
+      setFullData(res.data.data.detailLaporan);
+      setAcademicReports(res.data.data.detailLaporan.academicReports);
+      setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
       console.log(res.data.data.detailLaporan);
 
       if (
@@ -75,11 +98,116 @@ export default function Page() {
         );
       }
 
+      if (
+        res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
+          "Tidak Ada" &&
+        res.data.data.detailLaporan.studentEvaluations[0].barrierFactors !==
+          "Tidak Ada"
+      ) {
+        setIndependentActivities(
+          res.data.data.detailLaporan.studentEvaluations[0]
+        );
+      }
+
+      if (
+        res.data.data.detailLaporan.targetAcademicActivities[0].activityName !==
+          "Tidak Ada" &&
+        res.data.data.detailLaporan.targetAcademicActivities[0].strategy !==
+          "Tidak Ada"
+      ) {
+        setTargetAcademicActivities(
+          res.data.data.detailLaporan.targetAcademicActivities
+        );
+      }
+
+      if (
+        res.data.data.detailLaporan.targetAchievements[0].achievementsName !==
+          "Tidak Ada" &&
+        res.data.data.detailLaporan.targetAchievements[0].award !==
+          "Tidak Ada" &&
+        res.data.data.detailLaporan.targetAchievements[0].level !== "Tidak Ada"
+      ) {
+        setTargetAchievements(res.data.data.detailLaporan.targetAchievements);
+      }
+
+      if (
+        res.data.data.detailLaporan.targetIndependentActivities[0]
+          .activityName !== "Tidak Ada" &&
+        res.data.data.detailLaporan.targetIndependentActivities[0]
+          .participation !== "Tidak Ada"
+      ) {
+        setTargetIndependentActivities(
+          res.data.data.detailLaporan.targetIndependentActivities
+        );
+      }
+
       setLoading(false);
     };
 
     getLaporan();
   }, []);
+
+  const saveData = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    await api.patch(`/monev/draft/${params.laporanId}`, {
+      // academicReports:
+      //   academicReports === undefined
+      //     ? fullData.academicReports
+      //     : academicReports,
+      // academicActivities:
+      //   academicActivities === undefined
+      //     ? fullData.academicActivities
+      //     : academicActivities,
+      // studentsAchievements:
+      //   studentsAchievements === undefined
+      //     ? fullData.studentsAchievements
+      //     : studentsAchievements,
+      // organizationActivities:
+      //   organizationActivities === undefined
+      //     ? fullData.organizationActivities
+      //     : organizationActivities,
+      // committeeActivities:
+      //   committeeActivities === undefined
+      //     ? fullData.committeeActivities
+      //     : committeeActivities,
+      // independentActivities:
+      //   independentActivities === undefined
+      //     ? fullData.independentActivities
+      //     : independentActivities,
+      // targetNextSemester:
+      //   targetNextSemester === undefined
+      //     ? fullData.targetNextSemester
+      //     : targetNextSemester,
+      // targetAcademicActivities:
+      //   targetAcademicActivities === undefined
+      //     ? fullData.targetAcademicActivities
+      //     : targetAcademicActivities,
+      // targetAchievements:
+      //   targetAchievements === undefined
+      //     ? fullData.targetAchievements
+      //     : targetAchievements,
+      // targetIndependentActivities:
+      //   targetIndependentActivities === undefined
+      //     ? fullData.targetIndependentActivities
+      //     : targetIndependentActivities,
+      // studentEvaluations:
+      //   studentEvaluations === undefined
+      //     ? fullData.studentEvaluations
+      //     : studentEvaluations,
+      academicReports: academicReports,
+
+      academicActivities: [
+        {
+          activityName: "Test edit draft 2",
+          startDate: "2025-06-28",
+          endDate: "2025-06-28",
+          place: "Test",
+          buktiUrl: "Test",
+        },
+      ],
+    });
+  };
 
   if (loading) {
     return (
@@ -166,8 +294,6 @@ export default function Page() {
               independentActivities={independentActivities}
               setIndependentActivities={setIndependentActivities}
             />
-
-            {/* <TabelPrestasi /> */}
           </div>
         </div>
 
@@ -178,7 +304,9 @@ export default function Page() {
             <Textarea
               isRequired
               size={"lg"}
-              placeholder="Enter your description"
+              placeholder="Jelaskan faktor pendukung anda"
+              onChange={(e) => setSupportFactors}
+              defaultValue={studentEvaluations?.supportFactors}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -186,7 +314,9 @@ export default function Page() {
             <Textarea
               isRequired
               size={"lg"}
-              placeholder="Enter your description"
+              placeholder="Jelaskan faktor penghambat anda"
+              onChange={(e) => setBarrierFactors}
+              defaultValue={studentEvaluations?.barrierFactors}
             />
           </div>
         </div>
@@ -197,25 +327,50 @@ export default function Page() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-lg">IPS & IPK</div>
-            {/* <TambahIPK /> */}
-            {/* <TabelIpk /> */}
+            <TambahTargetNextSemester
+              semester={academicReports?.semester}
+              targetNextSemester={targetNextSemester}
+              setTargetNextSemester={setTargetNextSemester}
+            />
+            <TabelTargetNextSemester
+              targetNextSemester={targetNextSemester}
+              setTargetNextSemester={setTargetNextSemester}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-lg">Kegiatan Akademik</div>
-            {/* <TambahAkademik /> */}
-            {/* <TabelAkademik /> */}
+            <TambahTargetAcademicActivities
+              targetAcademicActivities={targetAcademicActivities}
+              setTargetAcademicActivities={setTargetAcademicActivities}
+            />
+            <TabelTargetAcademicActivities
+              targetAcademicActivities={targetAcademicActivities}
+              setTargetAcademicActivities={setTargetAcademicActivities}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-lg">
               Prestasi yang diraih selama semester ini
             </div>
-            {/* <TambahPrestasi /> */}
-            {/* <TabelPrestasi /> */}
+            <TambahTargetAchievements
+              targetAchievements={targetAchievements}
+              setTargetAchievements={setTargetAchievements}
+            />
+            <TabelTargetAchievements
+              targetAchievements={targetAchievements}
+              setTargetAchievements={setTargetAchievements}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-lg">Kegiatan mandiri selama satu semester</div>
-            {/* <TambahPrestasi /> */}
-            {/* <TabelPrestasi /> */}
+            <TambahTargetIndependentActivities
+              targetIndependentActivities={targetIndependentActivities}
+              setTargetIndependentActivities={setTargetIndependentActivities}
+            />
+            <TabelTargetIndependentActivities
+              targetIndependentActivities={targetIndependentActivities}
+              setTargetIndependentActivities={setTargetIndependentActivities}
+            />
           </div>
         </div>
 
@@ -249,7 +404,9 @@ export default function Page() {
             Loading
           </Button>
         ) : (
-          <Button color="primary">Simpan</Button>
+          <Button color="primary" onClick={(e: any) => saveData(e)}>
+            Simpan
+          </Button>
         )}
       </div>
     );

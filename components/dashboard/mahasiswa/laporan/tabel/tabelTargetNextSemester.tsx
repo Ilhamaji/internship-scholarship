@@ -7,15 +7,15 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
-import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editAcademicReports";
+import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editTargetNextSemester";
 import ModalDelete from "@/components/dashboard/modal/delete";
 
 export default function App({
-  academicReports,
-  setAcademicReports,
+  targetNextSemester,
+  setTargetNextSemester,
 }: {
-  academicReports: any;
-  setAcademicReports: any;
+  targetNextSemester: any;
+  setTargetNextSemester: any;
 }) {
   return (
     <Table aria-label="Example static collection table">
@@ -26,22 +26,26 @@ export default function App({
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {academicReports.map((item: any, index: any) => (
-          <TableRow key={index}>
-            <TableCell>{item.semester}</TableCell>
-            <TableCell>{item.ips}</TableCell>
-            <TableCell>{item.ipk}</TableCell>
+        {targetNextSemester.semester === null &&
+        targetNextSemester.ipsTarget === null &&
+        targetNextSemester.ipkTarget === null ? (
+          <></>
+        ) : (
+          <TableRow key="1">
+            <TableCell>{targetNextSemester.semester}</TableCell>
+            <TableCell>{targetNextSemester.ipsTarget}</TableCell>
+            <TableCell>{targetNextSemester.ipkTarget}</TableCell>
             <TableCell>
               <div className="flex flex-row gap-2 justify-end">
                 <ModalEdit
-                  setAcademicReports={setAcademicReports}
-                  academicReports={academicReports}
+                  setTargetNextSemester={setTargetNextSemester}
+                  targetNextSemester={targetNextSemester}
                 />
-                <ModalDelete idLaporan={item.idLaporan} />
+                <ModalDelete />
               </div>
             </TableCell>
           </TableRow>
-        ))}
+        )}
       </TableBody>
     </Table>
   );
