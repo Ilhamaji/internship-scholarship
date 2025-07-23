@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editOrganizationActivities";
-import ModalDelete from "@/components/dashboard//mahasiswa/laporan/modal/hapusAcademicActivities";
+import ModalDelete from "@/components/dashboard//mahasiswa/laporan/modal/hapusOrganizationActivities";
 
 export default function App({
   organizationActivities,
@@ -22,9 +22,10 @@ export default function App({
       <TableHeader>
         <TableColumn>NO</TableColumn>
         <TableColumn>NAMA ORGANISASI</TableColumn>
+        <TableColumn>NAMA KEGIATAN</TableColumn>
         <TableColumn>KEIKUTSERTAAN</TableColumn>
         <TableColumn>TINGKAT</TableColumn>
-        <TableColumn>BUKTI</TableColumn>
+        <TableColumn>TANGGAL</TableColumn>
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
@@ -32,9 +33,12 @@ export default function App({
           <TableRow key={index}>
             <TableCell>{index + 1}</TableCell>
             <TableCell className="truncate">{item.ukmName}</TableCell>
+            <TableCell className="truncate">{item.activityName}</TableCell>
             <TableCell>{item.position}</TableCell>
             <TableCell>{item.level}</TableCell>
-            <TableCell>{item.buktiUrl}</TableCell>
+            <TableCell>
+              {item.startDate} - {item.endDate}
+            </TableCell>
             <TableCell>
               <div className="flex flex-row gap-2 justify-end">
                 <ModalEdit
@@ -42,7 +46,11 @@ export default function App({
                   organizationActivities={organizationActivities}
                   setOrganizationActivities={setOrganizationActivities}
                 />
-                <ModalDelete />
+                <ModalDelete
+                  index={index}
+                  organizationActivities={organizationActivities}
+                  setOrganizationActivities={setOrganizationActivities}
+                />
               </div>
             </TableCell>
           </TableRow>

@@ -12,17 +12,17 @@ import { Tooltip } from "@heroui/tooltip";
 
 export default function App({
   index,
-  academicActivities,
-  setAcademicActivities,
+  organizationActivities,
+  setOrganizationActivities,
 }: {
   index: number;
-  academicActivities: any;
-  setAcademicActivities: any;
+  organizationActivities: any;
+  setOrganizationActivities: any;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const deleteValue = () => {
-    setAcademicActivities(academicActivities.splice(index, 1));
+    setOrganizationActivities(organizationActivities.splice(index, 1));
 
     onOpenChange();
   };
@@ -42,10 +42,10 @@ export default function App({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Hapus Kegiatan Akademik
+                Hapus Kegiatan Organisasi
               </ModalHeader>
               <ModalBody>
-                Hapus Baris {index + 1} dari Kegiatan Akademik?
+                Hapus Baris {index + 1} dari Kegiatan Organisasi?
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>

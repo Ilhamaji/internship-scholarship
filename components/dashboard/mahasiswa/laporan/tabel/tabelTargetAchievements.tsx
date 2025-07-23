@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editTargetAchievements";
-import ModalDelete from "@/components/dashboard/modal/delete";
+import ModalDelete from "@/components/dashboard/mahasiswa/laporan/modal/hapusTargetAchievements";
 
 export default function App({
   targetAchievements,
@@ -40,7 +40,11 @@ export default function App({
                   targetAchievements={targetAchievements}
                   setTargetAchievements={setTargetAchievements}
                 />
-                <ModalDelete />
+                <ModalDelete
+                  index={index}
+                  targetAchievements={targetAchievements}
+                  setTargetAchievements={setTargetAchievements}
+                />
               </div>
             </TableCell>
           </TableRow>

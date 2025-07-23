@@ -64,7 +64,7 @@ export default function App({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Tambah Target IPK dan IPS
+                Tambah Target Kegiatan Akademik
               </ModalHeader>
               <Form
                 onSubmit={(e) => tambahAcademicActivity(e)}

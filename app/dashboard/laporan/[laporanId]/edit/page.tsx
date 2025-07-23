@@ -29,17 +29,15 @@ import { Spinner } from "@heroui/spinner";
 export default function Page() {
   const [loading, setLoading] = useState(true);
   const [academicReports, setAcademicReports] = useState();
+  const [semester, setSemester] = useState();
   const [academicActivities, setAcademicActivities] = useState();
   const [studentsAchievements, setStudentsAchievements] = useState();
   const [organizationActivities, setOrganizationActivities] = useState();
   const [committeeActivities, setCommitteeActivities] = useState();
   const [independentActivities, setIndependentActivities] = useState();
-  const [supportFactors, setSupportFactors] = useState();
-  const [barrierFactors, setBarrierFactors] = useState();
-  const [studentEvaluations, setStudentEvaluations] = useState({
-    supportFactors,
-    barrierFactors,
-  });
+  const [supportFactors, setSupportFactors] = useState("");
+  const [barrierFactors, setBarrierFactors] = useState("");
+  const [studentEvaluations, setStudentEvaluations] = useState();
   const [targetNextSemester, setTargetNextSemester] = useState();
   const [targetAcademicActivities, setTargetAcademicActivities] = useState();
   const [targetAchievements, setTargetAchievements] = useState();
@@ -53,92 +51,173 @@ export default function Page() {
     const getLaporan = async () => {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
       setFullData(res.data.data.detailLaporan);
-      setAcademicReports(res.data.data.detailLaporan.academicReports);
-      setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
+      setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
+      setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester);
+      setSemester(res.data.data.detailLaporan.academicReports[0].semester);
+
       console.log(res.data.data.detailLaporan);
 
-      if (
-        res.data.data.detailLaporan.academicActivities[0]?.activityName !==
-        "Tidak Ada"
-      ) {
-        setAcademicActivities(res.data.data.detailLaporan.academicActivities);
+      if (res.data.data.detailLaporan.academicActivities[0]) {
+        if (
+          res.data.data.detailLaporan.academicActivities[0].activityName !==
+            "" ||
+          res.data.data.detailLaporan.academicActivities[0].activityName !==
+            null
+        ) {
+          setAcademicActivities(res.data.data.detailLaporan.academicActivities);
+        }
+      } else {
+        console.log("Tidak ada data kegiatan akademik");
       }
 
-      if (
-        res.data.data.detailLaporan.studentsAchievements[0].achievementsName !==
-        "Tidak Ada"
-      ) {
-        setStudentsAchievements(
-          res.data.data.detailLaporan.studentsAchievements
-        );
+      if (res.data.data.detailLaporan.studentsAchievements[0]) {
+        if (
+          res.data.data.detailLaporan.studentsAchievements[0]
+            .achievementsName !== "" ||
+          res.data.data.detailLaporan.studentsAchievements[0]
+            .achievementsName !== null
+        ) {
+          setStudentsAchievements(
+            res.data.data.detailLaporan.studentsAchievements
+          );
+        }
+      } else {
+        console.log("Tidak ada data prestasi mahasiswa");
       }
 
-      if (
-        res.data.data.detailLaporan.organizationActivities[0].ukmName !==
-        "Tidak Ada"
-      ) {
-        setOrganizationActivities(
-          res.data.data.detailLaporan.organizationActivities
-        );
+      if (res.data.data.detailLaporan.organizationActivities[0]) {
+        if (
+          res.data.data.detailLaporan.organizationActivities[0].ukmName !==
+            "" ||
+          res.data.data.detailLaporan.organizationActivities[0].ukmName !== null
+        ) {
+          setOrganizationActivities(
+            res.data.data.detailLaporan.organizationActivities
+          );
+        }
+      } else {
+        console.log("Tidak ada data kegiatan organisasi");
       }
 
-      if (
-        res.data.data.detailLaporan.committeeActivities[0].activityName !==
-        "Tidak Ada"
-      ) {
-        setCommitteeActivities(res.data.data.detailLaporan.comitteeActivities);
+      if (res.data.data.detailLaporan.committeeActivities[0]) {
+        if (
+          res.data.data.detailLaporan.committeeActivities[0].activityName !==
+            "" ||
+          res.data.data.detailLaporan.committeeActivities[0].activityName !==
+            null
+        ) {
+          setCommitteeActivities(
+            res.data.data.detailLaporan.committeeActivities
+          );
+        }
+      } else {
+        console.log("Tidak ada data kegiatan kepanitiaan");
       }
 
-      if (
-        res.data.data.detailLaporan.independentActivities[0].activityName !==
-        "Tidak Ada"
-      ) {
-        setIndependentActivities(
-          res.data.data.detailLaporan.independentActivities
-        );
+      if (res.data.data.detailLaporan.independentActivities[0]) {
+        if (
+          res.data.data.detailLaporan.independentActivities[0].activityName !==
+            "" ||
+          res.data.data.detailLaporan.independentActivities[0].activityName !==
+            null
+        ) {
+          setIndependentActivities(
+            res.data.data.detailLaporan.independentActivities
+          );
+        }
+      } else {
+        console.log("Tidak ada data kegiatan mandiri");
       }
 
-      if (
-        res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
-          "Tidak Ada" &&
-        res.data.data.detailLaporan.studentEvaluations[0].barrierFactors !==
-          "Tidak Ada"
-      ) {
-        setIndependentActivities(
-          res.data.data.detailLaporan.studentEvaluations[0]
-        );
+      if (res.data.data.detailLaporan.studentEvaluations[0]) {
+        if (
+          (res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
+            "" &&
+            res.data.data.detailLaporan.studentEvaluations[0].barrierFactors !==
+              "") ||
+          (res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
+            null &&
+            res.data.data.detailLaporan.studentEvaluations[0].barrierFactors !==
+              null)
+        ) {
+          setStudentEvaluations(
+            res.data.data.detailLaporan.studentEvaluations[0]
+          );
+        }
+      } else {
+        console.log("Tidak ada data evaluasi mahasiswa");
       }
 
-      if (
-        res.data.data.detailLaporan.targetAcademicActivities[0].activityName !==
-          "Tidak Ada" &&
-        res.data.data.detailLaporan.targetAcademicActivities[0].strategy !==
-          "Tidak Ada"
-      ) {
-        setTargetAcademicActivities(
-          res.data.data.detailLaporan.targetAcademicActivities
-        );
+      if (res.data.data.detailLaporan.targetAcademicActivities[0]) {
+        if (
+          (res.data.data.detailLaporan.targetAcademicActivities[0]
+            .activityName !== "" &&
+            res.data.data.detailLaporan.targetAcademicActivities[0].strategy !==
+              "") ||
+          (res.data.data.detailLaporan.targetAcademicActivities[0]
+            .activityName !== null &&
+            res.data.data.detailLaporan.targetAcademicActivities[0].strategy !==
+              null)
+        ) {
+          setTargetAcademicActivities(
+            res.data.data.detailLaporan.targetAcademicActivities
+          );
+        }
+      } else {
+        console.log("Tidak ada data target aktivitas akademik");
       }
 
-      if (
-        res.data.data.detailLaporan.targetAchievements[0].achievementsName !==
-          "Tidak Ada" &&
-        res.data.data.detailLaporan.targetAchievements[0].award !==
-          "Tidak Ada" &&
-        res.data.data.detailLaporan.targetAchievements[0].level !== "Tidak Ada"
-      ) {
-        setTargetAchievements(res.data.data.detailLaporan.targetAchievements);
+      if (res.data.data.detailLaporan.targetAchievements[0]) {
+        if (
+          (res.data.data.detailLaporan.targetAchievements[0]
+            .achievementsName !== "" &&
+            res.data.data.detailLaporan.targetAchievements[0].award !== "" &&
+            res.data.data.detailLaporan.targetAchievements[0].level !== "") ||
+          (res.data.data.detailLaporan.targetAchievements[0]
+            .achievementsName !== null &&
+            res.data.data.detailLaporan.targetAchievements[0].award !== null &&
+            res.data.data.detailLaporan.targetAchievements[0].level !== null)
+        ) {
+          setTargetAchievements(res.data.data.detailLaporan.targetAchievements);
+        }
+      } else {
+        console.log("Tidak ada data target pencapaian");
       }
 
-      if (
-        res.data.data.detailLaporan.targetIndependentActivities[0]
-          .activityName !== "Tidak Ada" &&
-        res.data.data.detailLaporan.targetIndependentActivities[0]
-          .participation !== "Tidak Ada"
-      ) {
-        setTargetIndependentActivities(
-          res.data.data.detailLaporan.targetIndependentActivities
-        );
+      if (res.data.data.detailLaporan.targetIndependentActivities[0]) {
+        if (
+          (res.data.data.detailLaporan.targetIndependentActivities[0]
+            .activityName !== "" &&
+            res.data.data.detailLaporan.targetIndependentActivities[0]
+              .participation !== "") ||
+          (res.data.data.detailLaporan.targetIndependentActivities[0]
+            .activityName !== null &&
+            res.data.data.detailLaporan.targetIndependentActivities[0]
+              .participation !== null)
+        ) {
+          setTargetIndependentActivities(
+            res.data.data.detailLaporan.targetIndependentActivities
+          );
+        }
+      } else {
+        console.log("Tidak ada data target aktivitas mandiri");
+      }
+
+      if (res.data.data.detailLaporan.studentEvaluations[0]) {
+        if (
+          (res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
+            "" &&
+            res.data.data.detailLaporan.studentEvaluations[0].barrierFactors !==
+              "") ||
+          (res.data.data.detailLaporan.studentEvaluations[0].barrierFactors !==
+            null &&
+            res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
+              null)
+        ) {
+          setStudentEvaluations(res.data.data.detailLaporan.studentEvaluations);
+        }
+      } else {
+        console.log("Tidak ada data target aktivitas mandiri");
       }
 
       setLoading(false);
@@ -149,64 +228,49 @@ export default function Page() {
 
   const saveData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
 
-    await api.patch(`/monev/draft/${params.laporanId}`, {
-      // academicReports:
-      //   academicReports === undefined
-      //     ? fullData.academicReports
-      //     : academicReports,
-      // academicActivities:
-      //   academicActivities === undefined
-      //     ? fullData.academicActivities
-      //     : academicActivities,
-      // studentsAchievements:
-      //   studentsAchievements === undefined
-      //     ? fullData.studentsAchievements
-      //     : studentsAchievements,
-      // organizationActivities:
-      //   organizationActivities === undefined
-      //     ? fullData.organizationActivities
-      //     : organizationActivities,
-      // committeeActivities:
-      //   committeeActivities === undefined
-      //     ? fullData.committeeActivities
-      //     : committeeActivities,
-      // independentActivities:
-      //   independentActivities === undefined
-      //     ? fullData.independentActivities
-      //     : independentActivities,
-      // targetNextSemester:
-      //   targetNextSemester === undefined
-      //     ? fullData.targetNextSemester
-      //     : targetNextSemester,
-      // targetAcademicActivities:
-      //   targetAcademicActivities === undefined
-      //     ? fullData.targetAcademicActivities
-      //     : targetAcademicActivities,
-      // targetAchievements:
-      //   targetAchievements === undefined
-      //     ? fullData.targetAchievements
-      //     : targetAchievements,
-      // targetIndependentActivities:
-      //   targetIndependentActivities === undefined
-      //     ? fullData.targetIndependentActivities
-      //     : targetIndependentActivities,
-      // studentEvaluations:
-      //   studentEvaluations === undefined
-      //     ? fullData.studentEvaluations
-      //     : studentEvaluations,
-      academicReports: academicReports,
+    const data = {
+      academicReports,
+      academicActivities,
+      studentsAchievements,
+      organizationActivities,
+      committeeActivities,
+      independentActivities,
+      studentEvaluations: {
+        supportFactors,
+        barrierFactors,
+      },
+      targetNextSemester,
+      targetAcademicActivities,
+      targetAchievements,
+      targetIndependentActivities,
+    };
 
-      academicActivities: [
+    const stringData = JSON.stringify(data);
+
+    const formData = new FormData();
+    formData.append("dataMonev", stringData);
+
+    // Jika ada file, tambahkan juga
+    // formData.append("academicReports_bukti", file);
+
+    try {
+      const response = await api.patch(
+        `/monev/draft/${params.laporanId}`,
+        formData,
         {
-          activityName: "Test edit draft 2",
-          startDate: "2025-06-28",
-          endDate: "2025-06-28",
-          place: "Test",
-          buktiUrl: "Test",
-        },
-      ],
-    });
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error adding report:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -305,7 +369,7 @@ export default function Page() {
               isRequired
               size={"lg"}
               placeholder="Jelaskan faktor pendukung anda"
-              onChange={(e) => setSupportFactors}
+              onChange={(e) => setSupportFactors(e.target.value)}
               defaultValue={studentEvaluations?.supportFactors}
             />
           </div>
@@ -315,7 +379,7 @@ export default function Page() {
               isRequired
               size={"lg"}
               placeholder="Jelaskan faktor penghambat anda"
-              onChange={(e) => setBarrierFactors}
+              onChange={(e) => setBarrierFactors(e.target.value)}
               defaultValue={studentEvaluations?.barrierFactors}
             />
           </div>
@@ -327,11 +391,14 @@ export default function Page() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-lg">IPS & IPK</div>
-            <TambahTargetNextSemester
-              semester={academicReports?.semester}
-              targetNextSemester={targetNextSemester}
-              setTargetNextSemester={setTargetNextSemester}
-            />
+            {targetNextSemester.length > 0 ? (
+              <></>
+            ) : (
+              <TambahTargetNextSemester
+                semester={semester}
+                setTargetNextSemester={setTargetNextSemester}
+              />
+            )}
             <TabelTargetNextSemester
               targetNextSemester={targetNextSemester}
               setTargetNextSemester={setTargetNextSemester}

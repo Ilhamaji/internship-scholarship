@@ -37,7 +37,21 @@ export default function App({
   ) => {
     e.preventDefault();
 
-    if (independentActivities === undefined) {
+    if (independentActivities.length > 0) {
+      setIndependentActivities([
+        ...independentActivities,
+        {
+          activityName: activityName,
+          activityType: activityType,
+          startDate: startDate,
+          level: level,
+          endDate: endDate,
+          place: place,
+          buktiUrl: buktiUrl,
+          participation: participation,
+        },
+      ]);
+    } else {
       setIndependentActivities([
         {
           activityName: activityName,
@@ -68,20 +82,6 @@ export default function App({
               : "",
         },
       ]);
-    } else {
-      setIndependentActivities([
-        ...independentActivities,
-        {
-          activityName: activityName,
-          activityType: activityType,
-          startDate: startDate,
-          level: level,
-          endDate: endDate,
-          place: place,
-          buktiUrl: buktiUrl,
-          participation: participation,
-        },
-      ]);
     }
 
     setActivityName("");
@@ -106,7 +106,7 @@ export default function App({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Tambah Kegiatan Akademik
+                Tambah Kegiatan Mandiri
               </ModalHeader>
               <Form
                 onSubmit={(e) => tambahAcademicActivity(e)}

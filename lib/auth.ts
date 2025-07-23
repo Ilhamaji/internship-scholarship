@@ -20,16 +20,16 @@ export const login = async (
     if (accessToken && refreshToken) {
       // Simpan token ke cookies
       Cookies.set("accessToken", accessToken, {
-        expires: 15 / (24 * 60),
+        expires: 1 / 24,
         secure: true,
-      }); // Expire dalam 15 menit
+      }); // Expire dalam 1 jam
 
       // Expire dalam 7 hari
-      Cookies.set("userId", userId, { expires: 30, secure: true });
-      Cookies.set("name", name, { expires: 30, secure: true });
-      Cookies.set("role", role, { expires: 30, secure: true });
-      Cookies.set("avatar", avatar, { expires: 30, secure: true });
-      Cookies.set("refreshToken", refreshToken, { expires: 30, secure: true });
+      Cookies.set("userId", userId, { expires: 7, secure: true });
+      Cookies.set("name", name, { expires: 7, secure: true });
+      Cookies.set("role", role, { expires: 7, secure: true });
+      Cookies.set("avatar", avatar, { expires: 7, secure: true });
+      Cookies.set("refreshToken", refreshToken, { expires: 7, secure: true });
     }
 
     return response.data;

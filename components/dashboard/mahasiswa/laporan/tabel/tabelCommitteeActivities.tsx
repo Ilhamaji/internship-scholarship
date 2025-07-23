@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editCommitteeActivities";
-import ModalDelete from "@/components/dashboard//mahasiswa/laporan/modal/hapusAcademicActivities";
+import ModalDelete from "@/components/dashboard//mahasiswa/laporan/modal/hapusCommitteeActivities";
 
 export default function App({
   committeeActivities,
@@ -52,7 +52,11 @@ export default function App({
                   committeeActivities={committeeActivities}
                   setCommitteeActivities={setCommitteeActivities}
                 />
-                <ModalDelete />
+                <ModalDelete
+                  index={index}
+                  committeeActivities={committeeActivities}
+                  setCommitteeActivities={setCommitteeActivities}
+                />
               </div>
             </TableCell>
           </TableRow>

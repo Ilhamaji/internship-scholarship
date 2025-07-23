@@ -7,9 +7,11 @@ import { Input } from "@heroui/input";
 import EditIcon from "@/components/dashboard/mahasiswa/laporan/icon/iconEdit";
 
 export default function edit({
+  semester,
   targetNextSemester,
   setTargetNextSemester,
 }: {
+  semester: any;
   targetNextSemester: any;
   setTargetNextSemester: any;
 }) {
@@ -19,7 +21,14 @@ export default function edit({
 
   const tambahAcademicReports = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTargetNextSemester({ ...targetNextSemester, ipk: ipk, ips: ips });
+
+    setTargetNextSemester([
+      {
+        semester: semester,
+        ipkTarget: ipk.length > 0 ? ipk : targetNextSemester[0].ipkTarget,
+        ipsTarget: ips.length > 0 ? ips : targetNextSemester[0].ipsTarget,
+      },
+    ]);
 
     onOpenChange();
   };
@@ -48,7 +57,7 @@ export default function edit({
                   placeholder="Masukkan IPK anda"
                   type="ipk"
                   onChange={(e) => setIpk(e.target.value)}
-                  defaultValue={targetNextSemester.ipk}
+                  defaultValue={targetNextSemester[0].ipkTarget}
                   min={0}
                   max={4}
                 />
@@ -61,7 +70,7 @@ export default function edit({
                   placeholder="Masukkan IPS anda"
                   type="ips"
                   onChange={(e) => setIps(e.target.value)}
-                  defaultValue={targetNextSemester.ipk}
+                  defaultValue={targetNextSemester[0].ipsTarget}
                   min={0}
                   max={4}
                 />

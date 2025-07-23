@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editTargetAcademicActivities";
-import ModalDelete from "@/components/dashboard/modal/delete";
+import ModalDelete from "@/components/dashboard/mahasiswa/laporan/modal/hapusTargetAcademicActivities";
 
 export default function App({
   targetAcademicActivities,
@@ -38,7 +38,11 @@ export default function App({
                   targetAcademicActivities={targetAcademicActivities}
                   setTargetAcademicActivities={setTargetAcademicActivities}
                 />
-                <ModalDelete />
+                <ModalDelete
+                  index={index}
+                  targetAcademicActivities={targetAcademicActivities}
+                  setTargetAcademicActivities={setTargetAcademicActivities}
+                />
               </div>
             </TableCell>
           </TableRow>

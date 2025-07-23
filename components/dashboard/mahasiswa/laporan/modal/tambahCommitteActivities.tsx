@@ -88,7 +88,7 @@ export default function App({
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Tambah Kegiatan Akademik
+                Tambah Kepanitiaan & Penugasan
               </ModalHeader>
               <Form
                 onSubmit={(e) => tambahAcademicActivity(e)}

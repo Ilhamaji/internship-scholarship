@@ -54,7 +54,7 @@ api.interceptors.response.use(
 
         // Simpan access token yang baru
         Cookies.set("accessToken", accessToken, {
-          expires: 15 / (24 * 60),
+          expires: 1 / 24,
           secure: true,
         });
 

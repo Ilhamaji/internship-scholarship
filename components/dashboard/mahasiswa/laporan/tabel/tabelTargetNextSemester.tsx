@@ -8,7 +8,6 @@ import {
   TableCell,
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editTargetNextSemester";
-import ModalDelete from "@/components/dashboard/modal/delete";
 
 export default function App({
   targetNextSemester,
@@ -26,25 +25,28 @@ export default function App({
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {targetNextSemester.semester === null &&
-        targetNextSemester.ipsTarget === null &&
-        targetNextSemester.ipkTarget === null ? (
+        {targetNextSemester.length === 0 ||
+        targetNextSemester === undefined ||
+        targetNextSemester === "" ||
+        targetNextSemester === null ? (
           <></>
         ) : (
-          <TableRow key="1">
-            <TableCell>{targetNextSemester.semester}</TableCell>
-            <TableCell>{targetNextSemester.ipsTarget}</TableCell>
-            <TableCell>{targetNextSemester.ipkTarget}</TableCell>
-            <TableCell>
-              <div className="flex flex-row gap-2 justify-end">
-                <ModalEdit
-                  setTargetNextSemester={setTargetNextSemester}
-                  targetNextSemester={targetNextSemester}
-                />
-                <ModalDelete />
-              </div>
-            </TableCell>
-          </TableRow>
+          targetNextSemester.map((item: any, index: any) => (
+            <TableRow key={item.semester}>
+              <TableCell>{item.semester}</TableCell>
+              <TableCell>{item.ipsTarget}</TableCell>
+              <TableCell>{item.ipkTarget}</TableCell>
+              <TableCell>
+                <div className="flex flex-row gap-2 justify-end">
+                  <ModalEdit
+                    semester={item.semester}
+                    setTargetNextSemester={setTargetNextSemester}
+                    targetNextSemester={targetNextSemester}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
         )}
       </TableBody>
     </Table>

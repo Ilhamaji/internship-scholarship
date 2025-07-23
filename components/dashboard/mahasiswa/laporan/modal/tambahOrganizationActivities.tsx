@@ -26,7 +26,9 @@ export default function App({
   const [ukmName, setUkmName] = useState("");
   const [level, setLevel] = useState("");
   const [position, setPosition] = useState("");
-  const [buktiUrl, setBuktiUrl] = useState("");
+  const [activityName, setActivityName] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const tambahAcademicActivity = async (
     e: React.FormEvent<HTMLFormElement>
@@ -37,9 +39,11 @@ export default function App({
       setOrganizationActivities([
         {
           ukmName: ukmName,
+          activityName: activityName,
           level: level,
           position: position,
-          buktiUrl: buktiUrl,
+          startDate: startDate,
+          endDate: endDate,
         },
       ]);
     } else {
@@ -47,9 +51,11 @@ export default function App({
         ...organizationActivities,
         {
           ukmName: ukmName,
+          activityName: activityName,
           level: level,
           position: position,
-          buktiUrl: buktiUrl,
+          startDate: startDate,
+          endDate: endDate,
         },
       ]);
     }
@@ -57,7 +63,9 @@ export default function App({
     setUkmName("");
     setLevel("");
     setPosition("");
-    setBuktiUrl("");
+    setActivityName("");
+    setStartDate("");
+    setEndDate("");
 
     onOpenChange();
   };
@@ -85,6 +93,15 @@ export default function App({
                     label="Nama UKM"
                     labelPlacement="outside"
                     placeholder="Masukkan nama UKM"
+                    type="text"
+                    required
+                  />
+                  <Input
+                    onChange={(e) => setActivityName(e.target.value)}
+                    errorMessage="Masukkan nama kegiatan dengan benar"
+                    label="Nama Kegiatan"
+                    labelPlacement="outside"
+                    placeholder="Masukkan nama kegiatan"
                     type="text"
                     required
                   />
@@ -120,15 +137,24 @@ export default function App({
                     <SelectItem key={"Divisi"}>Divisi</SelectItem>
                     <SelectItem key={"Anggota"}>Anggota</SelectItem>
                   </Select>
-                  <Input
-                    onChange={(e) => setBuktiUrl(e.target.value)}
-                    errorMessage="Masukkan bukti kegiatan dengan benar"
-                    label="Bukti"
-                    labelPlacement="outside"
-                    placeholder="Masukkan bukti kegiatan"
-                    type="file"
-                    required
-                  />
+                  <div className="flex flex-row gap-2">
+                    <Input
+                      onChange={(e) => setStartDate(e.target.value)}
+                      errorMessage="Masukkan tanggal mulai dengan benar"
+                      label="Tanggal Mulai"
+                      labelPlacement="outside"
+                      type="date"
+                      required
+                    />
+                    <Input
+                      onChange={(e) => setEndDate(e.target.value)}
+                      errorMessage="Masukkan tanggal berakhir dengan benar"
+                      label="Tanggal Berakhir"
+                      labelPlacement="outside"
+                      type="date"
+                      required
+                    />
+                  </div>
                 </ModalBody>
                 <ModalFooter className="w-full">
                   <Button color="danger" variant="light" onPress={onClose}>

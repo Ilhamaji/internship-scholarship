@@ -50,7 +50,11 @@ export default function App({
                   academicActivity={academicActivities}
                   setAcademicActivity={setAcademicActivities}
                 />
-                <ModalDelete />
+                <ModalDelete
+                  academicActivities={academicActivities}
+                  setAcademicActivities={setAcademicActivities}
+                  index={index}
+                />
               </div>
             </TableCell>
           </TableRow>

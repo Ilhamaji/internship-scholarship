@@ -26,22 +26,19 @@ export default function App({
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {academicReports.map((item: any, index: any) => (
-          <TableRow key={index}>
-            <TableCell>{item.semester}</TableCell>
-            <TableCell>{item.ips}</TableCell>
-            <TableCell>{item.ipk}</TableCell>
-            <TableCell>
-              <div className="flex flex-row gap-2 justify-end">
-                <ModalEdit
-                  setAcademicReports={setAcademicReports}
-                  academicReports={academicReports}
-                />
-                <ModalDelete idLaporan={item.idLaporan} />
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
+        <TableRow key={academicReports.semester}>
+          <TableCell>{academicReports.semester}</TableCell>
+          <TableCell>{academicReports.ips}</TableCell>
+          <TableCell>{academicReports.ipk}</TableCell>
+          <TableCell>
+            <div className="flex flex-row gap-2 justify-end">
+              <ModalEdit
+                setAcademicReports={setAcademicReports}
+                academicReports={academicReports}
+              />
+            </div>
+          </TableCell>
+        </TableRow>
       </TableBody>
     </Table>
   );

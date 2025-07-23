@@ -23,6 +23,7 @@ export default function page() {
 
       const resMonev = await api.get(`/monev/${Cookies.get("userId")}`);
       setMonevData(resMonev.data.data.laporan);
+      console.log(resMonev.data.data.laporan);
 
       setLoading(false);
     };
