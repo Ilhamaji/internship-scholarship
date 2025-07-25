@@ -27,6 +27,7 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = ["Dashboard", "Laporan Monev", "Riwayat Laporan"];
   const [loading, setLoading] = useState(true);
+  const [latestLaporanId, setLatestLaporanId] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -54,7 +55,7 @@ export default function App() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link color="foreground" href={"/dashboard"}>
               Dashboard
             </Link>
           </NavbarItem>
@@ -82,7 +83,11 @@ export default function App() {
                 </button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
-                <DropdownItem key="new">Profil</DropdownItem>
+                <DropdownItem key="new">
+                  <Link className="w-full h-full" href={"/dashboard/profile"}>
+                    Profil
+                  </Link>
+                </DropdownItem>
                 <DropdownItem
                   onClick={() => {
                     router.push("/logout");
@@ -102,13 +107,20 @@ export default function App() {
           />
         </NavbarContent>
         <NavbarMenu className="z-50">
-          {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link className="w-full" color={"foreground"} href="#" size="lg">
-                {item}
-              </Link>
-            </NavbarMenuItem>
-          ))}
+          {menuItems.map((item, index) => {
+            return (
+              <NavbarMenuItem key={`${item}-${index}`}>
+                <Link
+                  className="w-full"
+                  color={"foreground"}
+                  href="#"
+                  size="lg"
+                >
+                  {item}
+                </Link>
+              </NavbarMenuItem>
+            );
+          })}
         </NavbarMenu>
       </Navbar>
       <div className="sticky w-full h-2 top-16 lg:top-20 sticky-top z-40">

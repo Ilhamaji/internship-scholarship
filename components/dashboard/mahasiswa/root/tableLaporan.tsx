@@ -11,7 +11,15 @@ import {
 import ModalEdit from "@/components/dashboard/mahasiswa/root/edit";
 import ModalDelete from "@/components/dashboard/mahasiswa/root/delete";
 
-export default function App(monevData: any) {
+export default function App({
+  monevData,
+  setSubmitted,
+  submitted,
+}: {
+  monevData: any;
+  setSubmitted: any;
+  submitted: boolean;
+}) {
   return (
     <Table
       aria-label="Example static collection table"
@@ -25,7 +33,7 @@ export default function App(monevData: any) {
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {monevData.monevData.map((item: any) => (
+        {monevData.map((item: any) => (
           <TableRow key={item.id}>
             <TableCell>{item.semesterId}</TableCell>
             <TableCell>{item.semesterDetail.tahunAjar}</TableCell>
@@ -34,7 +42,11 @@ export default function App(monevData: any) {
             <TableCell>
               <div className="flex flex-row gap-2 justify-end">
                 <ModalEdit laporanId={item.laporanId} />
-                <ModalDelete />
+                <ModalDelete
+                  laporanId={item.laporanId}
+                  setSubmitted={setSubmitted}
+                  submitted={submitted}
+                />
               </div>
             </TableCell>
           </TableRow>

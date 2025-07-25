@@ -10,11 +10,14 @@ import { Spinner } from "@heroui/spinner";
 import api from "@/lib/axios";
 import Cookies from "js-cookie";
 import TambahLaporan from "@/components/dashboard/mahasiswa/laporan/modal/tambahLaporan";
+import { useUser } from "@/contexts/userData";
 
 export default function page() {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState();
   const [monevData, setMonevData] = useState();
+  const [submitted, setSubmitted] = useState(false);
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,13 +26,12 @@ export default function page() {
 
       const resMonev = await api.get(`/monev/${Cookies.get("userId")}`);
       setMonevData(resMonev.data.data.laporan);
-      console.log(resMonev.data.data.laporan);
 
       setLoading(false);
     };
 
     fetchData();
-  }, []);
+  }, [submitted]);
 
   if (loading) {
     return (
@@ -42,7 +44,7 @@ export default function page() {
   if (!loading) {
     return (
       <div className="w-full">
-        <TambahLaporan />
+        <TambahLaporan setSubmitted={setSubmitted} submitted={submitted} />
         <div className="px-4 md:px-10 lg:px-36 flex flex-row gap-4">
           <div className="md:flex md:flex-col md:visible hidden invisible border bg-[#fff] px-8 mt-4 w-fit rounded-xl shadow-md">
             <div className="py-6 text-2xl">
@@ -81,7 +83,11 @@ export default function page() {
               <Ukm />
             </div>
             <div className="flex flex-row gap-4 w-full">
-              <TableLaporan monevData={monevData} />
+              <TableLaporan
+                monevData={monevData}
+                setSubmitted={setSubmitted}
+                submitted={submitted}
+              />
             </div>
           </div>
         </div>

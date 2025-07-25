@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Navbar from "@/components/dashboard/navbar";
+import { UserProvider } from "@/contexts/userData";
 
 export const metadata: Metadata = {
   title: "Dashboard | Web Monitoring TSU",
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <div className="min-h-screen bg-neutral-100">
       <Navbar />
-      {children}
+      <UserProvider>{children}</UserProvider>
     </div>
   );
 }

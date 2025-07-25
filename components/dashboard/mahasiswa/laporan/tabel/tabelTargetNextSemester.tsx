@@ -31,22 +31,20 @@ export default function App({
         targetNextSemester === null ? (
           <></>
         ) : (
-          targetNextSemester.map((item: any, index: any) => (
-            <TableRow key={item.semester}>
-              <TableCell>{item.semester}</TableCell>
-              <TableCell>{item.ipsTarget}</TableCell>
-              <TableCell>{item.ipkTarget}</TableCell>
-              <TableCell>
-                <div className="flex flex-row gap-2 justify-end">
-                  <ModalEdit
-                    semester={item.semester}
-                    setTargetNextSemester={setTargetNextSemester}
-                    targetNextSemester={targetNextSemester}
-                  />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))
+          <TableRow key={targetNextSemester.semester}>
+            <TableCell>{targetNextSemester.semester}</TableCell>
+            <TableCell>{targetNextSemester.ipsTarget}</TableCell>
+            <TableCell>{targetNextSemester.ipkTarget}</TableCell>
+            <TableCell>
+              <div className="flex flex-row gap-2 justify-end">
+                <ModalEdit
+                  semester={targetNextSemester.semester}
+                  setTargetNextSemester={setTargetNextSemester}
+                  targetNextSemester={targetNextSemester}
+                />
+              </div>
+            </TableCell>
+          </TableRow>
         )}
       </TableBody>
     </Table>

@@ -9,9 +9,25 @@ import {
 } from "@heroui/modal";
 import { DeleteIcon } from "./edit";
 import { Tooltip } from "@heroui/tooltip";
+import api from "@/lib/axios";
 
-export default function App() {
+export default function App({
+  laporanId,
+  setSubmitted,
+  submitted,
+}: {
+  laporanId: string;
+  setSubmitted: any;
+  submitted: boolean;
+}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+  const deleteHandler = async () => {
+    await api.delete(`/monev/laporan/${laporanId}`);
+
+    setSubmitted(!submitted);
+    onOpenChange();
+  };
 
   return (
     <>
@@ -28,14 +44,14 @@ export default function App() {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                Hapus Laporan
               </ModalHeader>
-              <ModalBody>Hapus baris 1 ?</ModalBody>
+              <ModalBody className="flex">Hapus id {laporanId} ?</ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button color="primary" onPress={deleteHandler}>
                   Action
                 </Button>
               </ModalFooter>

@@ -18,9 +18,11 @@ import { Select, SelectItem } from "@heroui/select";
 
 export default function App({
   semester,
+  targetNextSemester,
   setTargetNextSemester,
 }: {
   semester: any;
+  targetNextSemester: any;
   setTargetNextSemester: any;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -33,13 +35,11 @@ export default function App({
   ) => {
     e.preventDefault();
 
-    setTargetNextSemester([
-      {
-        semester: nextSemester,
-        ipkTarget: ipkTarget,
-        ipsTarget: ipsTarget,
-      },
-    ]);
+    setTargetNextSemester({
+      semester: nextSemester,
+      ipkTarget: ipkTarget,
+      ipsTarget: ipsTarget,
+    });
 
     setIpsTarget("");
     setIpkTarget("");

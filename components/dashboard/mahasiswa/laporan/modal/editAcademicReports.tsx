@@ -19,8 +19,15 @@ export default function edit({
 
   const tambahAcademicReports = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setAcademicReports({ ...academicReports, ipk: ipk, ips: ips });
 
+    setAcademicReports({
+      ...academicReports,
+      ipk: ipk.length > 0 ? ipk : academicReports.ipk,
+      ips: ips.length > 0 ? ips : academicReports.ips,
+    });
+
+    setIpk("");
+    setIps("");
     onOpenChange();
   };
 
@@ -41,6 +48,19 @@ export default function edit({
               <Form onSubmit={tambahAcademicReports} className="p-10">
                 <Input
                   isRequired
+                  errorMessage="Maksukkan IPS dengan benar"
+                  label="IPS"
+                  labelPlacement="outside"
+                  name="ips"
+                  placeholder="Masukkan IPS anda"
+                  type="ips"
+                  onChange={(e) => setIps(e.target.value)}
+                  defaultValue={academicReports.ips}
+                  min={0}
+                  max={4}
+                />
+                <Input
+                  isRequired
                   errorMessage="Maksukkan IPK dengan benar"
                   label="IPK"
                   labelPlacement="outside"
@@ -52,19 +72,7 @@ export default function edit({
                   min={0}
                   max={4}
                 />
-                <Input
-                  isRequired
-                  errorMessage="Maksukkan IPS dengan benar"
-                  label="IPS"
-                  labelPlacement="outside"
-                  name="ips"
-                  placeholder="Masukkan IPS anda"
-                  type="ips"
-                  onChange={(e) => setIps(e.target.value)}
-                  defaultValue={academicReports.ipk}
-                  min={0}
-                  max={4}
-                />
+
                 <Button type="submit">Submit</Button>
               </Form>
             </>

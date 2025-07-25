@@ -15,7 +15,13 @@ import { useState } from "react";
 import { Spinner } from "@heroui/spinner";
 import api from "@/lib/axios";
 
-export default function App() {
+export default function App({
+  setSubmitted,
+  submitted,
+}: {
+  setSubmitted: any;
+  submitted: any;
+}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [semester, setSemester] = useState("");
   const [ipk, setIpk] = useState("");
@@ -45,8 +51,6 @@ export default function App() {
     const formData = new FormData();
     formData.append("dataMonev", stringDataMonev);
 
-    console.log(formData);
-
     // Jika ingin kirim file bukti:
     // formData.append("academicReports_bukti", file);
 
@@ -54,10 +58,12 @@ export default function App() {
       const response = await api.post("/monev/draft", formData);
       console.log(response.data);
 
+      setSubmitted(!submitted);
       setLoading(false);
       onOpenChange(); // Tutup modal jika berhasil
     } catch (error) {
       console.error("Error adding report:", error);
+      setSubmitted(!submitted);
       setLoading(false);
     }
   };

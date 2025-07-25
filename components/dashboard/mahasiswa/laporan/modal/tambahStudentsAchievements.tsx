@@ -50,7 +50,7 @@ export default function App({
           startDate: startDate,
           endDate: endDate,
           place: place,
-          buktiUrl: buktiUrl,
+          // buktiUrl: buktiUrl,
         },
       ]);
     } else {
@@ -65,7 +65,7 @@ export default function App({
           startDate: startDate,
           endDate: endDate,
           place: place,
-          buktiUrl: buktiUrl,
+          // buktiUrl: buktiUrl,
         },
       ]);
     }
@@ -202,7 +202,6 @@ export default function App({
                     labelPlacement="outside"
                     placeholder="Masukkan bukti kegiatan"
                     type="file"
-                    required
                   />
                 </ModalBody>
                 <ModalFooter className="w-full">

@@ -24,6 +24,8 @@ import { Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import api from "@/lib/axiosInstance";
 import { useParams } from "next/navigation";
+import { Alert } from "@heroui/alert";
+import TabelSkeleton from "@/components/dashboard/mahasiswa/laporan/skeleton/tabelSkeleton";
 import { Spinner } from "@heroui/spinner";
 
 export default function Page() {
@@ -31,7 +33,7 @@ export default function Page() {
   const [academicReports, setAcademicReports] = useState();
   const [semester, setSemester] = useState();
   const [academicActivities, setAcademicActivities] = useState();
-  const [studentsAchievements, setStudentsAchievements] = useState();
+  const [studentAchievements, setStudentAchievements] = useState();
   const [organizationActivities, setOrganizationActivities] = useState();
   const [committeeActivities, setCommitteeActivities] = useState();
   const [independentActivities, setIndependentActivities] = useState();
@@ -44,6 +46,8 @@ export default function Page() {
   const [targetIndependentActivities, setTargetIndependentActivities] =
     useState();
   const [fullData, setFullData] = useState();
+  const [refreshData, setRefreshData] = useState(false);
+  const [message, setMessage] = useState("");
 
   const params = useParams<{ laporanId: string }>();
 
@@ -52,10 +56,8 @@ export default function Page() {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
       setFullData(res.data.data.detailLaporan);
       setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
-      setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester);
+      setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
       setSemester(res.data.data.detailLaporan.academicReports[0].semester);
-
-      console.log(res.data.data.detailLaporan);
 
       if (res.data.data.detailLaporan.academicActivities[0]) {
         if (
@@ -70,15 +72,15 @@ export default function Page() {
         console.log("Tidak ada data kegiatan akademik");
       }
 
-      if (res.data.data.detailLaporan.studentsAchievements[0]) {
+      if (res.data.data.detailLaporan.studentAchievements[0]) {
         if (
           res.data.data.detailLaporan.studentsAchievements[0]
             .achievementsName !== "" ||
           res.data.data.detailLaporan.studentsAchievements[0]
             .achievementsName !== null
         ) {
-          setStudentsAchievements(
-            res.data.data.detailLaporan.studentsAchievements
+          setStudentAchievements(
+            res.data.data.detailLaporan.studentAchievements
           );
         }
       } else {
@@ -224,16 +226,15 @@ export default function Page() {
     };
 
     getLaporan();
-  }, []);
+  }, [refreshData]);
 
-  const saveData = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const saveData = async () => {
     setLoading(true);
 
     const data = {
       academicReports,
       academicActivities,
-      studentsAchievements,
+      studentAchievements,
       organizationActivities,
       committeeActivities,
       independentActivities,
@@ -250,7 +251,7 @@ export default function Page() {
     const stringData = JSON.stringify(data);
 
     const formData = new FormData();
-    formData.append("dataMonev", stringData);
+    formData.append("dataBaru", stringData);
 
     // Jika ada file, tambahkan juga
     // formData.append("academicReports_bukti", file);
@@ -265,25 +266,48 @@ export default function Page() {
           },
         }
       );
-      console.log(response.data);
+
+      setRefreshData(!refreshData);
+      setMessage("success");
     } catch (error) {
       console.error("Error adding report:", error);
+      setMessage("Error: " + error);
     } finally {
+      window.scrollTo(0, 0);
       setLoading(false);
     }
   };
 
   if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <Spinner />
-      </div>
-    );
+    return <TabelSkeleton />;
   }
 
   if (!loading) {
     return (
       <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 lg:px-36">
+        {message === "success" ? (
+          <div className="flex flex-col gap-4">
+            <Alert
+              color="success"
+              description="Berhasil memperbarui laporan"
+              title="Berhasil"
+              variant="faded"
+              isClosable={true}
+            />
+          </div>
+        ) : message === "" ? (
+          <></>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <Alert
+              color="danger"
+              description={`Gagal memperbarui laporan, Error ${message}`}
+              title="Gagal"
+              variant="faded"
+              isClosable={true}
+            />
+          </div>
+        )}
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
           <div className="text-xl md:text-2xl font-bold">
             A. LAPORAN KEGIATAN AKADEMIK
@@ -316,12 +340,12 @@ export default function Page() {
               Prestasi yang diraih selama semester ini
             </div>
             <TambahStudentsAchievements
-              setStudentsAchievements={setStudentsAchievements}
-              studentsAchievements={studentsAchievements}
+              setStudentsAchievements={setStudentAchievements}
+              studentsAchievements={studentAchievements}
             />
             <TabelStudentsAchievements
-              setStudentsAchievements={setStudentsAchievements}
-              studentsAchievements={studentsAchievements}
+              setStudentsAchievements={setStudentAchievements}
+              studentsAchievements={studentAchievements}
             />
           </div>
           <div className="flex flex-col gap-2">
@@ -363,26 +387,49 @@ export default function Page() {
 
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
           <div className="text-xl md:text-2xl font-bold">C. EVALUASI</div>
-          <div className="flex flex-col gap-2">
-            <div className="text-lg">Faktor Pendukung</div>
-            <Textarea
-              isRequired
-              size={"lg"}
-              placeholder="Jelaskan faktor pendukung anda"
-              onChange={(e) => setSupportFactors(e.target.value)}
-              defaultValue={studentEvaluations?.supportFactors}
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="text-lg">Faktor Penghambat</div>
-            <Textarea
-              isRequired
-              size={"lg"}
-              placeholder="Jelaskan faktor penghambat anda"
-              onChange={(e) => setBarrierFactors(e.target.value)}
-              defaultValue={studentEvaluations?.barrierFactors}
-            />
-          </div>
+          {studentEvaluations === undefined ||
+          studentEvaluations === null ||
+          studentEvaluations.length === 0 ? (
+            <>
+              <div className="flex flex-col gap-2">
+                <div className="text-lg">Faktor Pendukung</div>
+                <Textarea
+                  size={"lg"}
+                  placeholder="Jelaskan faktor pendukung anda"
+                  onChange={(e) => setSupportFactors(e.target.value)}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="text-lg">Faktor Penghambat</div>
+                <Textarea
+                  size={"lg"}
+                  placeholder="Jelaskan faktor penghambat anda"
+                  onChange={(e) => setBarrierFactors(e.target.value)}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="flex flex-col gap-2">
+                <div className="text-lg">Faktor Pendukung</div>
+                <Textarea
+                  size={"lg"}
+                  placeholder="Jelaskan faktor pendukung anda"
+                  onChange={(e) => setSupportFactors(e.target.value)}
+                  defaultValue={studentEvaluations.supportFactors}
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="text-lg">Faktor Penghambat</div>
+                <Textarea
+                  size={"lg"}
+                  placeholder="Jelaskan faktor penghambat anda"
+                  onChange={(e) => setBarrierFactors(e.target.value)}
+                  defaultValue={studentEvaluations.barrierFactors}
+                />
+              </div>
+            </>
+          )}
         </div>
 
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
@@ -391,13 +438,16 @@ export default function Page() {
           </div>
           <div className="flex flex-col gap-2">
             <div className="text-lg">IPS & IPK</div>
-            {targetNextSemester.length > 0 ? (
-              <></>
-            ) : (
+            {targetNextSemester === undefined ||
+            targetNextSemester === null ||
+            targetNextSemester.length === 0 ? (
               <TambahTargetNextSemester
                 semester={semester}
+                targetNextSemester={targetNextSemester}
                 setTargetNextSemester={setTargetNextSemester}
               />
+            ) : (
+              <></>
             )}
             <TabelTargetNextSemester
               targetNextSemester={targetNextSemester}
@@ -441,40 +491,9 @@ export default function Page() {
           </div>
         </div>
 
-        {loading ? (
-          <Button
-            isLoading
-            color="primary"
-            spinner={
-              <svg
-                className="animate-spin h-5 w-5 text-current"
-                fill="none"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  fill="currentColor"
-                />
-              </svg>
-            }
-          >
-            Loading
-          </Button>
-        ) : (
-          <Button color="primary" onClick={(e: any) => saveData(e)}>
-            Simpan
-          </Button>
-        )}
+        <Button color="primary" onPress={() => saveData()}>
+          Simpan
+        </Button>
       </div>
     );
   }
