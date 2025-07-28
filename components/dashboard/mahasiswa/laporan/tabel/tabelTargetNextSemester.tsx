@@ -25,8 +25,7 @@ export default function App({
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {targetNextSemester.length === 0 ||
-        targetNextSemester === undefined ||
+        {targetNextSemester === undefined ||
         targetNextSemester === "" ||
         targetNextSemester === null ? (
           <></>

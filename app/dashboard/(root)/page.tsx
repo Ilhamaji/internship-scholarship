@@ -3,7 +3,7 @@
 import React, { use, useEffect, useState } from "react";
 import { Card, CardHeader, CardBody } from "@heroui/card";
 import { Image } from "@heroui/image";
-import TableLaporan from "@/components/dashboard/mahasiswa/root/tableLaporan";
+import TabelLaporan from "@/components/dashboard/mahasiswa/root/tabelLaporan";
 import Ukm from "@/components/dashboard/ukm";
 import getUserData from "@/lib/action/getUserData";
 import { Spinner } from "@heroui/spinner";
@@ -83,7 +83,7 @@ export default function page() {
               <Ukm />
             </div>
             <div className="flex flex-row gap-4 w-full">
-              <TableLaporan
+              <TabelLaporan
                 monevData={monevData}
                 setSubmitted={setSubmitted}
                 submitted={submitted}

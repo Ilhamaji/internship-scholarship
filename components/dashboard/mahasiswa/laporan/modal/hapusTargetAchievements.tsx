@@ -7,7 +7,7 @@ import {
   ModalFooter,
   useDisclosure,
 } from "@heroui/modal";
-import DeleteIcon from "@/components/dashboard/mahasiswa/laporan/icon/iconDelete";
+import DeleteIcon from "@/components/icon/iconDelete";
 import { Tooltip } from "@heroui/tooltip";
 
 export default function App({

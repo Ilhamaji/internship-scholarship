@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@/contexts/userData";
 import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";

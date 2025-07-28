@@ -4,7 +4,7 @@ import { Tooltip } from "@heroui/tooltip";
 import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
-import EditIcon from "@/components/dashboard/mahasiswa/laporan/icon/iconEdit";
+import EditIcon from "@/components/icon/iconEdit";
 
 export default function edit({
   semester,

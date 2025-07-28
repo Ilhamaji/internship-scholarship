@@ -31,7 +31,8 @@ export default function App({
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {independentActivities.length === 0 ? (
+        {independentActivities === undefined ||
+        independentActivities === null ? (
           <></>
         ) : (
           independentActivities.map((item: any, index: any) => (

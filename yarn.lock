@@ -519,19 +519,19 @@
     "@react-stately/toggle" "3.8.5"
     "@react-stately/utils" "3.10.7"
 
-"@heroui/pagination@^2.2.19":
-  version "2.2.19"
-  resolved "https://registry.npmjs.org/@heroui/pagination/-/pagination-2.2.19.tgz"
-  integrity sha512-FJO/BbDW8AiCELyQoULTMchH5QFLBoaGybHhXpDwbRAX+1KMj7b1MvM5dgQQAUg7F2ixqo1fRR6i07tCieUFLg==
+"@heroui/pagination@^2.2.21":
+  version "2.2.21"
+  resolved "https://registry.yarnpkg.com/@heroui/pagination/-/pagination-2.2.21.tgz#ac1c350ea36084076105f3cd03e6fa4ff98d7d26"
+  integrity sha512-zhxIUkyR0AY2mMlHnJphQ68NfvDT19XeHihTxW1Fxpp5MKcz9rOdk85v2batnXWqXah+s5h+O03n11IyZJbVBw==
   dependencies:
-    "@heroui/react-utils" "2.1.11"
-    "@heroui/shared-icons" "2.1.9"
-    "@heroui/shared-utils" "2.1.9"
-    "@heroui/use-intersection-observer" "2.2.13"
-    "@heroui/use-pagination" "2.2.14"
-    "@react-aria/focus" "3.20.4"
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/shared-icons" "2.1.10"
+    "@heroui/shared-utils" "2.1.10"
+    "@heroui/use-intersection-observer" "2.2.14"
+    "@heroui/use-pagination" "2.2.15"
+    "@react-aria/focus" "3.20.5"
     "@react-aria/i18n" "3.12.10"
-    "@react-aria/interactions" "3.25.2"
+    "@react-aria/interactions" "3.25.3"
     "@react-aria/utils" "3.29.1"
     scroll-into-view-if-needed "3.0.10"
 
@@ -929,10 +929,10 @@
     "@heroui/react-utils" "2.1.11"
     "@heroui/use-safe-layout-effect" "2.1.7"
 
-"@heroui/use-intersection-observer@2.2.13":
-  version "2.2.13"
-  resolved "https://registry.npmjs.org/@heroui/use-intersection-observer/-/use-intersection-observer-2.2.13.tgz"
-  integrity sha512-s7ZaIujBHDUZsGaYJt4Ce56kCjQHctophPuvpcKrM2itysKjwfdlLuIKm3YGyATCC4jUtN+qDxB3nS4A+81g7Q==
+"@heroui/use-intersection-observer@2.2.14":
+  version "2.2.14"
+  resolved "https://registry.yarnpkg.com/@heroui/use-intersection-observer/-/use-intersection-observer-2.2.14.tgz#ec025cc6408f8fdce5819c1b73e69d5a300046f1"
+  integrity sha512-qYJeMk4cTsF+xIckRctazCgWQ4BVOpJu+bhhkB1NrN+MItx19Lcb7ksOqMdN5AiSf85HzDcAEPIQ9w9RBlt5sg==
 
 "@heroui/use-is-mobile@2.2.10":
   version "2.2.10"
@@ -946,12 +946,12 @@
   resolved "https://registry.npmjs.org/@heroui/use-measure/-/use-measure-2.1.7.tgz"
   integrity sha512-H586tr/bOH08MAufeiT35E1QmF8SPQy5Ghmat1Bb+vh/6KZ5S0K0o95BE2to7sXE9UCJWa7nDFuizXAGbveSiA==
 
-"@heroui/use-pagination@2.2.14":
-  version "2.2.14"
-  resolved "https://registry.npmjs.org/@heroui/use-pagination/-/use-pagination-2.2.14.tgz"
-  integrity sha512-+N4+B8Xo4ZuBzvrCQ4zTsD0eX6l884J3Eazk9wbHsbkWvTzb1THe0bf94ajz7MNMp82BRzHZikHHFVb/aWOlFw==
+"@heroui/use-pagination@2.2.15":
+  version "2.2.15"
+  resolved "https://registry.yarnpkg.com/@heroui/use-pagination/-/use-pagination-2.2.15.tgz#f9b476e880b6b21df6c2219d612b9178c41191d4"
+  integrity sha512-hTu0gY5BSGch+JW8SDpSG8zI8grYt+EYVS2bn7nrI8vUZQOseNXOmKpiFeshuQP9X129ACZjmEkH7/LMbs4E7Q==
   dependencies:
-    "@heroui/shared-utils" "2.1.9"
+    "@heroui/shared-utils" "2.1.10"
     "@react-aria/i18n" "3.12.10"
 
 "@heroui/use-safe-layout-effect@2.1.7":
@@ -2899,6 +2899,11 @@ delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/delayed-stream/-/delayed-stream-1.0.0.tgz"
   integrity sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==
+
+dequal@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.3.tgz#2644214f1997d39ed0ee0ece72335490a7ac67be"
+  integrity sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==
 
 detect-libc@^2.0.4:
   version "2.0.4"
@@ -4939,6 +4944,14 @@ supports-preserve-symlinks-flag@^1.0.0:
   resolved "https://registry.npmjs.org/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
 
+swr@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-2.3.4.tgz#60bcb5b97cae157a6ef69eff0ed2beb9010eba69"
+  integrity sha512-bYd2lrhc+VarcpkgWclcUi92wYCpOgMws9Sd1hG1ntAu0NEy+14CbotuFjshBU2kt9rYj9TSmDcybpxpeTU1fg==
+  dependencies:
+    dequal "^2.0.3"
+    use-sync-external-store "^1.4.0"
+
 synckit@^0.11.0:
   version "0.11.8"
   resolved "https://registry.npmjs.org/synckit/-/synckit-0.11.8.tgz"
@@ -5175,6 +5188,11 @@ use-latest@^1.2.1:
   integrity sha512-mhg3xdm9NaM8q+gLT8KryJPnRFOz1/5XPBhmDEVZK1webPzDjrPk7f/mbpeLqTgB9msytYWANxgALOCJKnLvcQ==
   dependencies:
     use-isomorphic-layout-effect "^1.1.1"
+
+use-sync-external-store@^1.4.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.5.0.tgz#55122e2a3edd2a6c106174c27485e0fd59bcfca0"
+  integrity sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==
 
 util-deprecate@^1.0.2:
   version "1.0.2"

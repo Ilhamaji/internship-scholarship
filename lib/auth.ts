@@ -38,6 +38,25 @@ export const login = async (
   }
 };
 
+export const registerAdmin = async (
+  setError: any,
+  name: string,
+  email: string,
+  password: string
+) => {
+  try {
+    const response = await axios.post(`${API_URL}/auth/register/admin`, {
+      name,
+      email,
+      password,
+    });
+
+    return response.data;
+  } catch (error: any) {
+    return setError(error.response?.data?.message);
+  }
+};
+
 export const logout = () => {
   Cookies.remove("accessToken");
   Cookies.remove("refreshToken");

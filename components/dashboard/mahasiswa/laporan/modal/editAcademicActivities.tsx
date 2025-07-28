@@ -12,7 +12,7 @@ import { Button } from "@heroui/button";
 import { Form } from "@heroui/form";
 import { Input } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/select";
-import EditIcon from "@/components/dashboard/mahasiswa/laporan/icon/iconEdit";
+import EditIcon from "@/components/icon/iconEdit";
 
 export default function edit({
   index,

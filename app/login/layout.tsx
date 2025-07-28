@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Web Monitoring TSU",
+  title: "Login | Web Monitoring TSU",
   description:
     "Website ini adalah website monitoring untuk mahasiswa yang menerima beasiswa di Tiga Serangkai University.",
   icons: {
