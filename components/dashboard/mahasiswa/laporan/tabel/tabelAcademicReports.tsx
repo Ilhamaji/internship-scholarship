@@ -8,7 +8,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/laporan/modal/editAcademicReports";
-import ModalDelete from "@/components/dashboard/modal/delete";
+import ModalDelete from "@/components/dashboard/root/modal/delete";
 
 export default function App({
   academicReports,

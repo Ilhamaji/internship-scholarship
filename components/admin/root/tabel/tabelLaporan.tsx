@@ -13,8 +13,8 @@ import {
 import { Spinner } from "@heroui/spinner";
 import { Pagination } from "@heroui/pagination";
 import api from "@/lib/axios";
-import ModalEditLaporan from "@/components/admin/modal/modalEditLaporan";
-import ModalDeleteLaporan from "@/components/admin/modal/modalDeleteLaporan";
+import ModalEditLaporan from "@/components/admin/root/modal/modalEditLaporan";
+import ModalDeleteLaporan from "@/components/admin/root/modal/modalDeleteLaporan";
 import { Chip } from "@heroui/chip";
 
 export default function App() {
@@ -55,6 +55,9 @@ export default function App() {
 
   return (
     <Table
+      width={"100%"}
+      selectionMode="single"
+      isStriped
       aria-label="Example table with client async pagination"
       bottomContent={
         pages > 0 ? (
@@ -85,40 +88,42 @@ export default function App() {
         loadingState={loadingState}
       >
         {data?.result.map((item: any, index: any) => {
-          if (item.status !== "Draft") {
-            return (
-              <TableRow key={index}>
-                <TableCell>{startIndex + index + 1}</TableCell>
-                <TableCell>{item.semesterId}</TableCell>
-                <TableCell>{item.user.name}</TableCell>
-                <TableCell>
-                  {item.status === "Lolos" ||
-                  item.status === "Lolos Dengan Penugasan" ? (
-                    <Chip color="success" className="text-white">
-                      {item.status}
-                    </Chip>
-                  ) : item.status === "Ditolak SP-1" ||
-                    item.status === "Ditolak SP-2" ||
-                    item.status === "Ditolak SP-3" ? (
-                    <Chip color="danger">{item.status}</Chip>
-                  ) : item.status === "Draft" ? (
-                    <Chip color="warning">{item.status}</Chip>
-                  ) : (
-                    <Chip color="default">{item.status}</Chip>
-                  )}
-                </TableCell>
+          return (
+            <TableRow key={index}>
+              <TableCell>{startIndex + index + 1}</TableCell>
+              <TableCell>{item.semesterId}</TableCell>
+              <TableCell>{item.user.name}</TableCell>
+              <TableCell>
+                {item.status === "Lolos" ||
+                item.status === "Lolos dengan penugasan" ? (
+                  <Chip color="success" className="text-white">
+                    {item.status}
+                  </Chip>
+                ) : item.status === "Ditolak SP-1" ||
+                  item.status === "Ditolak SP-2" ||
+                  item.status === "Ditolak SP-3" ? (
+                  <Chip color="danger">{item.status}</Chip>
+                ) : item.status === "Draft" ? (
+                  <Chip className="text-white" color="warning">
+                    {item.status}
+                  </Chip>
+                ) : (
+                  <Chip color="default">{item.status}</Chip>
+                )}
+              </TableCell>
 
-                <TableCell className="flex flex-row gap-2 justify-end">
+              <TableCell className="flex justify-end">
+                <div className="flex flex-row gap-2 py-6">
                   <ModalEditLaporan laporanId={item.laporanId} />
                   <ModalDeleteLaporan
                     laporanId={item.laporanId}
                     refresh={refresh}
                     setRefresh={setRefresh} // trigger refresh
                   />
-                </TableCell>
-              </TableRow>
-            );
-          }
+                </div>
+              </TableCell>
+            </TableRow>
+          );
         })}
       </TableBody>
     </Table>

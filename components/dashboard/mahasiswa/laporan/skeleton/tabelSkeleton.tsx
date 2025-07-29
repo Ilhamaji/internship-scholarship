@@ -273,7 +273,7 @@ export default function App() {
           </TableBody>
         </Table>
       </div>
-      <Button className="w-full" isLoading color="primary">
+      <Button className="w-full" size="lg" isLoading color="primary">
         Loading
       </Button>
     </div>

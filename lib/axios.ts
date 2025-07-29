@@ -12,7 +12,7 @@ const api = axios.create({
   },
 });
 
-// Request Interceptor: Menambahkan accessToken ke setiap request
+// Request Interceptor: Tambahkan Authorization header jika token tersedia
 api.interceptors.request.use(
   (config) => {
     const accessToken = Cookies.get("accessToken");
@@ -21,56 +21,56 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
-// Response Interceptor: Menangani token kedaluwarsa (401 Unauthorized)
+// Response Interceptor: Tangani error 401 dan refresh token
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
-    // Jika error adalah 401 dan ini bukan request untuk refresh token itu sendiri
     if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // Tandai sebagai sudah di-retry untuk menghindari loop tak terbatas
+      originalRequest._retry = true;
 
       try {
         const refreshToken = Cookies.get("refreshToken");
-        if (!refreshToken) {
-          // Jika tidak ada refresh token, langsung logout
+        const userId = Cookies.get("userId");
+
+        if (!refreshToken || !userId) {
           logout();
           return Promise.reject(error);
         }
 
-        const response = await axios.post(`${API_URL}/auth/refresh-token`, {
-          refreshToken,
+        // Panggil endpoint baru untuk refresh token
+        const response = await axios.get(`${API_URL}/refresh-token/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+          withCredentials: true,
         });
 
-        const { accessToken } = response.data;
+        const { accessToken: newAccessToken } = response.data;
 
-        // Simpan access token yang baru
-        Cookies.set("accessToken", accessToken, {
-          expires: 1 / 24,
+        // Simpan token baru ke cookie
+        Cookies.set("accessToken", newAccessToken, {
+          expires: 1 / 24, // 1 jam
           secure: true,
         });
 
-        // Update header Authorization di request asli dengan token baru
-        api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        // Update Authorization header dan ulangi request awal
+        api.defaults.headers.common["Authorization"] =
+          `Bearer ${newAccessToken}`;
+        originalRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
 
-        // Ulangi request yang gagal tadi dengan token baru
         return api(originalRequest);
       } catch (refreshError) {
-        // Jika refresh token juga gagal/kedaluwarsa, logout user
         console.error("Refresh token failed:", refreshError);
-        logout(); // Hapus cookie dan redirect ke login
+        logout();
         return Promise.reject(refreshError);
       }
     }
+
     return Promise.reject(error);
   }
 );

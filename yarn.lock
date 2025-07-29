@@ -375,6 +375,18 @@
     "@react-types/form" "3.7.13"
     "@react-types/shared" "3.30.0"
 
+"@heroui/form@2.1.23":
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/@heroui/form/-/form-2.1.23.tgz#768380e263eeaae80dad380a799712cb731474ac"
+  integrity sha512-g4yrAdSVkyFZkWyR/mo7bCeV54Z9h19w0afsPv8NSQitLJuPP/ybkUMPYpNjwwr6qeab1WDtkhfDlURNb3z+pw==
+  dependencies:
+    "@heroui/shared-utils" "2.1.10"
+    "@heroui/system" "2.4.19"
+    "@heroui/theme" "2.4.19"
+    "@react-stately/form" "3.1.5"
+    "@react-types/form" "3.7.13"
+    "@react-types/shared" "3.30.0"
+
 "@heroui/form@^2.1.21":
   version "2.1.21"
   resolved "https://registry.npmjs.org/@heroui/form/-/form-2.1.21.tgz"
@@ -554,6 +566,22 @@
     "@react-aria/utils" "3.29.1"
     "@react-stately/overlays" "3.6.17"
     "@react-types/overlays" "3.8.16"
+
+"@heroui/radio@^2.3.23":
+  version "2.3.23"
+  resolved "https://registry.yarnpkg.com/@heroui/radio/-/radio-2.3.23.tgz#00a10bc524760d21db7924a1bc989a95244042c6"
+  integrity sha512-e6jkwkhnvGIVqztkrUp3FTmXV2KVDt3xfi3yHd2cwFfGkWVRqxaU+/v4Ui2mlNvYecXF68E+YmE+RQ7Wxq2UqQ==
+  dependencies:
+    "@heroui/form" "2.1.23"
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/shared-utils" "2.1.10"
+    "@react-aria/focus" "3.20.5"
+    "@react-aria/interactions" "3.25.3"
+    "@react-aria/radio" "3.11.5"
+    "@react-aria/visually-hidden" "3.8.25"
+    "@react-stately/radio" "3.10.14"
+    "@react-types/radio" "3.8.10"
+    "@react-types/shared" "3.30.0"
 
 "@heroui/react-rsc-utils@2.1.8":
   version "2.1.8"
@@ -806,6 +834,20 @@
     flat "^5.0.2"
     tailwind-merge "2.5.4"
     tailwind-variants "0.3.0"
+
+"@heroui/theme@2.4.19":
+  version "2.4.19"
+  resolved "https://registry.yarnpkg.com/@heroui/theme/-/theme-2.4.19.tgz#4ca077f24e605dc878290091fe9991afd8a60d0f"
+  integrity sha512-MksRtU/ux5d9Ogv8duIkBcddrY1W6YuhP9fgaucsvgEDKE9JiSLsb4owI63x1uC0GYQ0+4DIH164E2Lm6KOejQ==
+  dependencies:
+    "@heroui/shared-utils" "2.1.10"
+    clsx "^1.2.1"
+    color "^4.2.3"
+    color2k "^2.0.3"
+    deepmerge "4.3.1"
+    flat "^5.0.2"
+    tailwind-merge "3.0.2"
+    tailwind-variants "1.0.0"
 
 "@heroui/tooltip@2.2.18":
   version "2.2.18"
@@ -1422,6 +1464,17 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/form@^3.0.18":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/form/-/form-3.1.0.tgz#78961c7884e561f1a389cd10d94a069fc4455e83"
+  integrity sha512-aDAOZafrn0V8e09mDAtCvc+JnpnkFM9X8cbI5+fdXsXAA+JxO+3uRRfnJHBlIL0iLc4C4OVWxBxWToV95pg1KA==
+  dependencies:
+    "@react-aria/interactions" "^3.25.4"
+    "@react-aria/utils" "^3.30.0"
+    "@react-stately/form" "^3.2.0"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/grid@^3.14.1":
   version "3.14.2"
   resolved "https://registry.npmjs.org/@react-aria/grid/-/grid-3.14.2.tgz"
@@ -1475,6 +1528,17 @@
     "@react-aria/utils" "^3.29.1"
     "@react-stately/flags" "^3.1.2"
     "@react-types/shared" "^3.30.0"
+    "@swc/helpers" "^0.5.0"
+
+"@react-aria/interactions@^3.25.4":
+  version "3.25.4"
+  resolved "https://registry.yarnpkg.com/@react-aria/interactions/-/interactions-3.25.4.tgz#2f0e21e8187b7f0944b323f55696cae9accb39e0"
+  integrity sha512-HBQMxgUPHrW8V63u9uGgBymkMfj6vdWbB0GgUJY49K9mBKMsypcHeWkWM6+bF7kxRO728/IK8bWDV6whDbqjHg==
+  dependencies:
+    "@react-aria/ssr" "^3.9.10"
+    "@react-aria/utils" "^3.30.0"
+    "@react-stately/flags" "^3.1.2"
+    "@react-types/shared" "^3.31.0"
     "@swc/helpers" "^0.5.0"
 
 "@react-aria/label@3.7.19", "@react-aria/label@^3.7.19":
@@ -1562,6 +1626,22 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/radio@3.11.5":
+  version "3.11.5"
+  resolved "https://registry.yarnpkg.com/@react-aria/radio/-/radio-3.11.5.tgz#45a02e93c703ee4eaa30ea5939189db370ea6de0"
+  integrity sha512-6BjpeTupQnxetfvC2bqIxWUt6USMqNZoKOoOO7mUL7ESF6/Gp8ocutvQn0VnTxU+7OhdrZX5AACPg/qIQYumVw==
+  dependencies:
+    "@react-aria/focus" "^3.20.5"
+    "@react-aria/form" "^3.0.18"
+    "@react-aria/i18n" "^3.12.10"
+    "@react-aria/interactions" "^3.25.3"
+    "@react-aria/label" "^3.7.19"
+    "@react-aria/utils" "^3.29.1"
+    "@react-stately/radio" "^3.10.14"
+    "@react-types/radio" "^3.8.10"
+    "@react-types/shared" "^3.30.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/selection@3.24.2":
   version "3.24.2"
   resolved "https://registry.npmjs.org/@react-aria/selection/-/selection-3.24.2.tgz"
@@ -1604,6 +1684,13 @@
   version "3.9.9"
   resolved "https://registry.npmjs.org/@react-aria/ssr/-/ssr-3.9.9.tgz"
   integrity sha512-2P5thfjfPy/np18e5wD4WPt8ydNXhij1jwA8oehxZTFqlgVMGXzcWKxTb4RtJrLFsqPO7RUQTiY8QJk0M4Vy2g==
+  dependencies:
+    "@swc/helpers" "^0.5.0"
+
+"@react-aria/ssr@^3.9.10":
+  version "3.9.10"
+  resolved "https://registry.yarnpkg.com/@react-aria/ssr/-/ssr-3.9.10.tgz#7fdc09e811944ce0df1d7e713de1449abd7435e6"
+  integrity sha512-hvTm77Pf+pMBhuBm760Li0BVIO38jv1IBws1xFm1NoL26PU+fe+FMW5+VZWyANR6nYL65joaJKZqOdTQMkO9IQ==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
@@ -1701,6 +1788,18 @@
     "@swc/helpers" "^0.5.0"
     clsx "^2.0.0"
 
+"@react-aria/utils@^3.30.0":
+  version "3.30.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/utils/-/utils-3.30.0.tgz#68aa1d703c9e0468350bd1e3b583d99e9e69795a"
+  integrity sha512-ydA6y5G1+gbem3Va2nczj/0G0W7/jUVo/cbN10WA5IizzWIwMP5qhFr7macgbKfHMkZ+YZC3oXnt2NNre5odKw==
+  dependencies:
+    "@react-aria/ssr" "^3.9.10"
+    "@react-stately/flags" "^3.1.2"
+    "@react-stately/utils" "^3.10.8"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+    clsx "^2.0.0"
+
 "@react-aria/visually-hidden@3.8.24":
   version "3.8.24"
   resolved "https://registry.npmjs.org/@react-aria/visually-hidden/-/visually-hidden-3.8.24.tgz"
@@ -1711,7 +1810,7 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
-"@react-aria/visually-hidden@^3.8.24", "@react-aria/visually-hidden@^3.8.25":
+"@react-aria/visually-hidden@3.8.25", "@react-aria/visually-hidden@^3.8.24", "@react-aria/visually-hidden@^3.8.25":
   version "3.8.25"
   resolved "https://registry.npmjs.org/@react-aria/visually-hidden/-/visually-hidden-3.8.25.tgz"
   integrity sha512-9tRRFV1YMLuDId9E8PeUf0xy0KmQBoP8y/bm0PKWzXOqLOVmp/+kop9rwsjC7J6ppbBnlak7XCXTc7GoSFOCRA==
@@ -1788,6 +1887,14 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-stately/form@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@react-stately/form/-/form-3.2.0.tgz#77b4030a9100a50f3e322c277783a4c0740948f1"
+  integrity sha512-PfefxvT7/BIhAGpD4oQpdcxnL8cfN0ZTQxQq+Wmb9z3YzK1oM8GFxb8eGdDRG71JeF8WUNMAQVZFhgl00Z/YKg==
+  dependencies:
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-stately/grid@^3.11.3":
   version "3.11.3"
   resolved "https://registry.npmjs.org/@react-stately/grid/-/grid-3.11.3.tgz"
@@ -1827,6 +1934,28 @@
   dependencies:
     "@react-stately/utils" "^3.10.7"
     "@react-types/overlays" "^3.8.16"
+    "@swc/helpers" "^0.5.0"
+
+"@react-stately/radio@3.10.14":
+  version "3.10.14"
+  resolved "https://registry.yarnpkg.com/@react-stately/radio/-/radio-3.10.14.tgz#939abddb938fa57dda606888eb1d1cc803c9a008"
+  integrity sha512-Y7xizUWJ0YJ8pEtqMeKOibX21B5dk56fHgMHXYLeUEm43y5muWQft2YvP0/n4mlkP2Isbk96kPbv7/ez3Gi+lA==
+  dependencies:
+    "@react-stately/form" "^3.1.5"
+    "@react-stately/utils" "^3.10.7"
+    "@react-types/radio" "^3.8.10"
+    "@react-types/shared" "^3.30.0"
+    "@swc/helpers" "^0.5.0"
+
+"@react-stately/radio@^3.10.14":
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/@react-stately/radio/-/radio-3.11.0.tgz#42130406a5d27ca021ddb95ff12e3530315718fe"
+  integrity sha512-hsCmKb9e/ygmzBADFYIGpEQ43LrxjWnlKESgxphvlv0Klla4d6XLAYSFOTX1kcjSztpvVWrdl4cIfmKVF1pz2g==
+  dependencies:
+    "@react-stately/form" "^3.2.0"
+    "@react-stately/utils" "^3.10.8"
+    "@react-types/radio" "^3.9.0"
+    "@react-types/shared" "^3.31.0"
     "@swc/helpers" "^0.5.0"
 
 "@react-stately/selection@^3.20.3":
@@ -1888,6 +2017,13 @@
   version "3.10.7"
   resolved "https://registry.npmjs.org/@react-stately/utils/-/utils-3.10.7.tgz"
   integrity sha512-cWvjGAocvy4abO9zbr6PW6taHgF24Mwy/LbQ4TC4Aq3tKdKDntxyD+sh7AkSRfJRT2ccMVaHVv2+FfHThd3PKQ==
+  dependencies:
+    "@swc/helpers" "^0.5.0"
+
+"@react-stately/utils@^3.10.8":
+  version "3.10.8"
+  resolved "https://registry.yarnpkg.com/@react-stately/utils/-/utils-3.10.8.tgz#fdb9d172f7bbc2d083e69190f5ef0edfa4b4392f"
+  integrity sha512-SN3/h7SzRsusVQjQ4v10LaVsDc81jyyR0DD5HnsQitm/I5WDpaSr2nRHtyloPFU48jlql1XX/S04T2DLQM7Y3g==
   dependencies:
     "@swc/helpers" "^0.5.0"
 
@@ -1983,10 +2119,29 @@
   dependencies:
     "@react-types/shared" "^3.30.0"
 
+"@react-types/radio@3.8.10":
+  version "3.8.10"
+  resolved "https://registry.yarnpkg.com/@react-types/radio/-/radio-3.8.10.tgz#f506ac42b84001ce35d29bf166b83a765a0abf3e"
+  integrity sha512-hLOu2CXxzxQqkEkXSM71jEJMnU5HvSzwQ+DbJISDjgfgAKvZZHMQX94Fht2Vj+402OdI77esl3pJ1tlSLyV5VQ==
+  dependencies:
+    "@react-types/shared" "^3.30.0"
+
+"@react-types/radio@^3.8.10", "@react-types/radio@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@react-types/radio/-/radio-3.9.0.tgz#72e0b455e361407b2323932081da9dd692e1c1f1"
+  integrity sha512-phndlgqMF6/9bOOhO3le00eozNfDU1E7OHWV2cWWhGSMRFuRdf7/d+NjVtavCX75+GJ50MxvXk+KB0fjTuvKyg==
+  dependencies:
+    "@react-types/shared" "^3.31.0"
+
 "@react-types/shared@3.30.0", "@react-types/shared@^3.30.0":
   version "3.30.0"
   resolved "https://registry.npmjs.org/@react-types/shared/-/shared-3.30.0.tgz"
   integrity sha512-COIazDAx1ncDg046cTJ8SFYsX8aS3lB/08LDnbkH/SkdYrFPWDlXMrO/sUam8j1WWM+PJ+4d1mj7tODIKNiFog==
+
+"@react-types/shared@^3.31.0":
+  version "3.31.0"
+  resolved "https://registry.yarnpkg.com/@react-types/shared/-/shared-3.31.0.tgz#014be53096c3728f0684550430807e9962365c15"
+  integrity sha512-ua5U6V66gDcbLZe4P2QeyNgPp4YWD1ymGA6j3n+s8CGExtrCPe64v+g4mvpT8Bnb985R96e4zFT61+m0YCwqMg==
 
 "@react-types/switch@^3.5.12":
   version "3.5.12"
@@ -4964,6 +5119,11 @@ tailwind-merge@2.5.4:
   resolved "https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-2.5.4.tgz"
   integrity sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==
 
+tailwind-merge@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/tailwind-merge/-/tailwind-merge-3.0.2.tgz#567eff76de12211e24dd909da0f5ed6f4f422b0c"
+  integrity sha512-l7z+OYZ7mu3DTqrL88RiKrKIqO3NcpEO8V/Od04bNpvk0kiIFndGEoqfuzvj4yuhRkHKjRkII2z+KS2HfPcSxw==
+
 tailwind-merge@^2.5.4:
   version "2.6.0"
   resolved "https://registry.npmjs.org/tailwind-merge/-/tailwind-merge-2.6.0.tgz"
@@ -4975,6 +5135,13 @@ tailwind-variants@0.3.0:
   integrity sha512-ho2k5kn+LB1fT5XdNS3Clb96zieWxbStE9wNLK7D0AV64kdZMaYzAKo0fWl6fXLPY99ffF9oBJnIj5escEl/8A==
   dependencies:
     tailwind-merge "^2.5.4"
+
+tailwind-variants@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tailwind-variants/-/tailwind-variants-1.0.0.tgz#dde2cc2a8689910ca1cdc95ba82c63cf9094bd51"
+  integrity sha512-2WSbv4ulEEyuBKomOunut65D8UZwxrHoRfYnxGcQNnHqlSCp2+B7Yz2W+yrNDrxRodOXtGD/1oCcKGNBnUqMqA==
+  dependencies:
+    tailwind-merge "3.0.2"
 
 tailwindcss@3.4.16:
   version "3.4.16"

@@ -78,7 +78,7 @@ export default function App({
 
   return (
     <>
-      <Button onPress={onOpen}>Open Modal</Button>
+      <Button onPress={onOpen}>Tambah Laporan</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (

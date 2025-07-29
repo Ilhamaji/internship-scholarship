@@ -10,6 +10,7 @@ import {
 } from "@heroui/table";
 import ModalEdit from "@/components/dashboard/mahasiswa/root/edit";
 import ModalDelete from "@/components/dashboard/mahasiswa/root/delete";
+import { Chip } from "@heroui/chip";
 
 export default function App({
   monevData,
@@ -38,7 +39,24 @@ export default function App({
             <TableCell>{item.semesterId}</TableCell>
             <TableCell>{item.semesterDetail.tahunAjar}</TableCell>
             <TableCell>{item.semesterDetail.semester}</TableCell>
-            <TableCell>{item.status}</TableCell>
+            <TableCell>
+              {item.status === "Lolos" ||
+              item.status === "Lolos dengan penugasan" ? (
+                <Chip color="success" className="text-white">
+                  {item.status}
+                </Chip>
+              ) : item.status === "Ditolak SP-1" ||
+                item.status === "Ditolak SP-2" ||
+                item.status === "Ditolak SP-3" ? (
+                <Chip color="danger">{item.status}</Chip>
+              ) : item.status === "Draft" ? (
+                <Chip className="text-white" color="warning">
+                  {item.status}
+                </Chip>
+              ) : (
+                <Chip color="default">{item.status}</Chip>
+              )}
+            </TableCell>
             <TableCell>
               <div className="flex flex-row gap-2 justify-end">
                 <ModalEdit laporanId={item.laporanId} />

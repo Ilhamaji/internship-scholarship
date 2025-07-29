@@ -1,6 +1,6 @@
 import { Metadata } from "next";
-import Navbar from "@/components/dashboard/navbar";
-import { UserProvider } from "@/contexts/userData";
+import Navbar from "@/components/dashboard/root/navbar";
+import ClientProvider from "@/components/dashboard/root/clientProvider";
 
 export const metadata: Metadata = {
   title: "Dashboard | Web Monitoring TSU",
@@ -18,8 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <div className="min-h-screen bg-neutral-100">
-      <Navbar />
-      <UserProvider>{children}</UserProvider>
+      <ClientProvider>
+        <Navbar />
+        {children}
+      </ClientProvider>
     </div>
   );
 }

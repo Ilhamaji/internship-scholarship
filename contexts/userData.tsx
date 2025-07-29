@@ -1,7 +1,9 @@
+"use client";
+
 // src/context/UserContext.tsx
 import React, { createContext, useState, useContext, useEffect } from "react";
 import Cookies from "js-cookie";
-import axios from "axios";
+import api from "@/lib/axios";
 
 // Define the type for the user data
 interface User {
@@ -21,23 +23,32 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`/api/users/${Cookies.get("userId")}`);
-        setUserData(res.data.data);
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const role = Cookies.get("role");
+    const userId = Cookies.get("userId");
 
-    fetchData();
+    if (role === "student" && userId) {
+      const fetchData = async () => {
+        try {
+          const res = await api.get(`/users/${userId}`);
+          setUserData(res.data.data);
+        } catch (error) {
+          console.error("Failed to fetch user data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchData();
+    } else {
+      setLoading(false); // Jangan lupa untuk mengubah loading ke false jika bukan student
+    }
   }, []);
 
   return (

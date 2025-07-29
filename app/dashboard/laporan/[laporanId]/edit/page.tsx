@@ -20,7 +20,9 @@ import TambahTargetAchievements from "@/components/dashboard/mahasiswa/laporan/m
 import TabelTargetAchievements from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetAchievements";
 import TambahTargetIndependentActivities from "@/components/dashboard/mahasiswa/laporan/modal/tambahTargetIndependentActivities";
 import TabelTargetIndependentActivities from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetIndependentActivities";
-import { Textarea } from "@heroui/input";
+import SupportFactorsTextArea from "@/components/dashboard/mahasiswa/laporan/textAreaSupportFactors";
+import BarrierFactorsTextArea from "@/components/dashboard/mahasiswa/laporan/textAreaBarrierFactors";
+import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import api from "@/lib/axiosInstance";
 import { useParams } from "next/navigation";
@@ -55,6 +57,7 @@ export default function Page() {
     const getLaporan = async () => {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
       setFullData(res.data.data.detailLaporan);
+
       setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
       setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
       setSemester(res.data.data.detailLaporan.academicReports[0].semester);
@@ -68,8 +71,6 @@ export default function Page() {
         ) {
           setAcademicActivities(res.data.data.detailLaporan.academicActivities);
         }
-      } else {
-        console.log("Tidak ada data kegiatan akademik");
       }
 
       if (res.data.data.detailLaporan.studentAchievements[0]) {
@@ -83,8 +84,6 @@ export default function Page() {
             res.data.data.detailLaporan.studentAchievements
           );
         }
-      } else {
-        console.log("Tidak ada data prestasi mahasiswa");
       }
 
       if (res.data.data.detailLaporan.organizationActivities[0]) {
@@ -97,8 +96,6 @@ export default function Page() {
             res.data.data.detailLaporan.organizationActivities
           );
         }
-      } else {
-        console.log("Tidak ada data kegiatan organisasi");
       }
 
       if (res.data.data.detailLaporan.committeeActivities[0]) {
@@ -112,8 +109,6 @@ export default function Page() {
             res.data.data.detailLaporan.committeeActivities
           );
         }
-      } else {
-        console.log("Tidak ada data kegiatan kepanitiaan");
       }
 
       if (res.data.data.detailLaporan.independentActivities[0]) {
@@ -127,8 +122,6 @@ export default function Page() {
             res.data.data.detailLaporan.independentActivities
           );
         }
-      } else {
-        console.log("Tidak ada data kegiatan mandiri");
       }
 
       if (res.data.data.detailLaporan.studentEvaluations[0]) {
@@ -146,8 +139,6 @@ export default function Page() {
             res.data.data.detailLaporan.studentEvaluations[0]
           );
         }
-      } else {
-        console.log("Tidak ada data evaluasi mahasiswa");
       }
 
       if (res.data.data.detailLaporan.targetAcademicActivities[0]) {
@@ -165,8 +156,6 @@ export default function Page() {
             res.data.data.detailLaporan.targetAcademicActivities
           );
         }
-      } else {
-        console.log("Tidak ada data target aktivitas akademik");
       }
 
       if (res.data.data.detailLaporan.targetAchievements[0]) {
@@ -182,8 +171,6 @@ export default function Page() {
         ) {
           setTargetAchievements(res.data.data.detailLaporan.targetAchievements);
         }
-      } else {
-        console.log("Tidak ada data target pencapaian");
       }
 
       if (res.data.data.detailLaporan.targetIndependentActivities[0]) {
@@ -201,8 +188,6 @@ export default function Page() {
             res.data.data.detailLaporan.targetIndependentActivities
           );
         }
-      } else {
-        console.log("Tidak ada data target aktivitas mandiri");
       }
 
       if (res.data.data.detailLaporan.studentEvaluations[0]) {
@@ -216,10 +201,10 @@ export default function Page() {
             res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
               null)
         ) {
-          setStudentEvaluations(res.data.data.detailLaporan.studentEvaluations);
+          setStudentEvaluations(
+            res.data.data.detailLaporan.studentEvaluations[0]
+          );
         }
-      } else {
-        console.log("Tidak ada data target aktivitas mandiri");
       }
 
       setLoading(false);
@@ -239,8 +224,14 @@ export default function Page() {
       committeeActivities,
       independentActivities,
       studentEvaluations: {
-        supportFactors,
-        barrierFactors,
+        supportFactors:
+          supportFactors === "" || supportFactors.length === 0
+            ? studentEvaluations.supportFactors
+            : supportFactors,
+        barrierFactors:
+          barrierFactors === "" || barrierFactors.length === 0
+            ? studentEvaluations.barrierFactors
+            : barrierFactors,
       },
       targetNextSemester,
       targetAcademicActivities,
@@ -252,9 +243,6 @@ export default function Page() {
 
     const formData = new FormData();
     formData.append("dataBaru", stringData);
-
-    // Jika ada file, tambahkan juga
-    // formData.append("academicReports_bukti", file);
 
     try {
       const response = await api.patch(
@@ -284,7 +272,7 @@ export default function Page() {
 
   if (!loading) {
     return (
-      <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 lg:px-36">
+      <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 xl:px-36">
         {message === "success" ? (
           <div className="flex flex-col gap-4">
             <Alert
@@ -387,49 +375,22 @@ export default function Page() {
 
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
           <div className="text-xl md:text-2xl font-bold">C. EVALUASI</div>
-          {studentEvaluations === undefined ||
-          studentEvaluations === null ||
-          studentEvaluations.length === 0 ? (
-            <>
-              <div className="flex flex-col gap-2">
-                <div className="text-lg">Faktor Pendukung</div>
-                <Textarea
-                  size={"lg"}
-                  placeholder="Jelaskan faktor pendukung anda"
-                  onChange={(e) => setSupportFactors(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="text-lg">Faktor Penghambat</div>
-                <Textarea
-                  size={"lg"}
-                  placeholder="Jelaskan faktor penghambat anda"
-                  onChange={(e) => setBarrierFactors(e.target.value)}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex flex-col gap-2">
-                <div className="text-lg">Faktor Pendukung</div>
-                <Textarea
-                  size={"lg"}
-                  placeholder="Jelaskan faktor pendukung anda"
-                  onChange={(e) => setSupportFactors(e.target.value)}
-                  defaultValue={studentEvaluations.supportFactors}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="text-lg">Faktor Penghambat</div>
-                <Textarea
-                  size={"lg"}
-                  placeholder="Jelaskan faktor penghambat anda"
-                  onChange={(e) => setBarrierFactors(e.target.value)}
-                  defaultValue={studentEvaluations.barrierFactors}
-                />
-              </div>
-            </>
-          )}
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Faktor Pendukung</div>
+            <SupportFactorsTextArea
+              studentEvaluations={studentEvaluations}
+              supportFactors={supportFactors}
+              setSupportFactors={setSupportFactors}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Faktor Penghambat</div>
+            <BarrierFactorsTextArea
+              studentEvaluations={studentEvaluations}
+              setBarrierFactors={setBarrierFactors}
+              barrierFactors={barrierFactors}
+            />
+          </div>
         </div>
 
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
@@ -491,7 +452,7 @@ export default function Page() {
           </div>
         </div>
 
-        <Button color="primary" onPress={() => saveData()}>
+        <Button size="lg" color="primary" onPress={() => saveData()}>
           Simpan
         </Button>
       </div>

@@ -22,19 +22,15 @@ import {
 import Cookies from "js-cookie";
 import { Skeleton } from "@heroui/skeleton";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/contexts/userData";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const menuItems = ["Dashboard", "Laporan Monev", "Riwayat Laporan"];
-  const [loading, setLoading] = useState(true);
   const [latestLaporanId, setLatestLaporanId] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    if (Cookies.get("avatar")) {
-      setLoading(false);
-    }
-  }, []);
+  const { userData, loading: loadingUser } = useUser();
 
   return (
     <>
@@ -75,10 +71,10 @@ export default function App() {
             <Dropdown>
               <DropdownTrigger>
                 <button className="flex my-auto bg-transparent w-fit">
-                  {loading ? (
+                  {loadingUser ? (
                     <Skeleton className="flex rounded-full w-10 h-10" />
                   ) : (
-                    <Avatar src={Cookies.get("avatar")} />
+                    <Avatar src={userData?.avatar} />
                   )}
                 </button>
               </DropdownTrigger>

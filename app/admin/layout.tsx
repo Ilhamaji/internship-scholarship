@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Navbar from "@/components/dashboard/navbar";
+import Navbar from "@/components/admin/root/navbar";
 import { UserProvider } from "@/contexts/userData";
 
 export const metadata: Metadata = {
@@ -18,8 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <div className="min-h-screen bg-neutral-100">
-      <Navbar />
-      <UserProvider>{children}</UserProvider>
+      <UserProvider>
+        <Navbar />
+        {children}
+      </UserProvider>
     </div>
   );
 }

@@ -14,8 +14,8 @@ import {
 import { Spinner } from "@heroui/spinner";
 import { Pagination } from "@heroui/pagination";
 import api from "@/lib/axios";
-import ModalEditMahasiswa from "@/components/admin/modal/modalEditMahasiswa";
-import ModalDeleteMahasiswa from "@/components/admin/modal/modalDeleteMahasiswa";
+import ModalEditMahasiswa from "@/components/admin/root/modal/modalEditMahasiswa";
+import ModalDeleteMahasiswa from "@/components/admin/root/modal/modalDeleteMahasiswa";
 
 const fetcher = async (url: any) => {
   const { data } = await api.get(url);
@@ -52,8 +52,13 @@ export default function App() {
 
   const startIndex = (page - 1) * 10;
 
+  console.log(data);
+
   return (
     <Table
+      width={"100%"}
+      selectionMode="single"
+      isStriped
       aria-label="Example table with client async pagination"
       bottomContent={
         pages > 0 ? (
@@ -86,15 +91,17 @@ export default function App() {
         {data?.result.map((item: any, index: any) => (
           <TableRow key={index}>
             <TableCell>{startIndex + index + 1}</TableCell>
-            <TableCell>{item.user.userId}</TableCell>
-            <TableCell>{item.user.name}</TableCell>
-            <TableCell className="flex flex-row gap-2 justify-end">
-              <ModalEditMahasiswa userId={item.user.userId} />
-              <ModalDeleteMahasiswa
-                userId={item.user.userId}
-                refresh={refresh}
-                setRefresh={setRefresh}
-              />
+            <TableCell>{item.userId}</TableCell>
+            <TableCell>{item.name}</TableCell>
+            <TableCell className="flex flex-row gap-2 py-5 justify-end">
+              <div className="flex flex-row gap-2 py-3">
+                <ModalEditMahasiswa userId={item.userId} />
+                <ModalDeleteMahasiswa
+                  userId={item.userId}
+                  refresh={refresh}
+                  setRefresh={setRefresh}
+                />
+              </div>
             </TableCell>
           </TableRow>
         ))}

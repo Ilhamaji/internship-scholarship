@@ -60,9 +60,8 @@ export default function Page() {
   useEffect(() => {
     const getLaporan = async () => {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
-      console.log(res);
 
-      setFullData(res.data.data.detailLaporan);
+      setFullData(res.data.data);
       setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
       setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
       setSemester(res.data.data.detailLaporan.academicReports[0].semester);
@@ -76,8 +75,6 @@ export default function Page() {
         ) {
           setAcademicActivities(res.data.data.detailLaporan.academicActivities);
         }
-      } else {
-        console.log("Tidak ada data kegiatan akademik");
       }
 
       if (res.data.data.detailLaporan.studentAchievements[0]) {
@@ -91,8 +88,6 @@ export default function Page() {
             res.data.data.detailLaporan.studentAchievements
           );
         }
-      } else {
-        console.log("Tidak ada data prestasi mahasiswa");
       }
 
       if (res.data.data.detailLaporan.organizationActivities[0]) {
@@ -105,8 +100,6 @@ export default function Page() {
             res.data.data.detailLaporan.organizationActivities
           );
         }
-      } else {
-        console.log("Tidak ada data kegiatan organisasi");
       }
 
       if (res.data.data.detailLaporan.committeeActivities[0]) {
@@ -120,8 +113,6 @@ export default function Page() {
             res.data.data.detailLaporan.committeeActivities
           );
         }
-      } else {
-        console.log("Tidak ada data kegiatan kepanitiaan");
       }
 
       if (res.data.data.detailLaporan.independentActivities[0]) {
@@ -135,8 +126,6 @@ export default function Page() {
             res.data.data.detailLaporan.independentActivities
           );
         }
-      } else {
-        console.log("Tidak ada data kegiatan mandiri");
       }
 
       if (res.data.data.detailLaporan.studentEvaluations[0]) {
@@ -154,8 +143,6 @@ export default function Page() {
             res.data.data.detailLaporan.studentEvaluations[0]
           );
         }
-      } else {
-        console.log("Tidak ada data evaluasi mahasiswa");
       }
 
       if (res.data.data.detailLaporan.targetAcademicActivities[0]) {
@@ -173,8 +160,6 @@ export default function Page() {
             res.data.data.detailLaporan.targetAcademicActivities
           );
         }
-      } else {
-        console.log("Tidak ada data target aktivitas akademik");
       }
 
       if (res.data.data.detailLaporan.targetAchievements[0]) {
@@ -190,8 +175,6 @@ export default function Page() {
         ) {
           setTargetAchievements(res.data.data.detailLaporan.targetAchievements);
         }
-      } else {
-        console.log("Tidak ada data target pencapaian");
       }
 
       if (res.data.data.detailLaporan.targetIndependentActivities[0]) {
@@ -209,8 +192,6 @@ export default function Page() {
             res.data.data.detailLaporan.targetIndependentActivities
           );
         }
-      } else {
-        console.log("Tidak ada data target aktivitas mandiri");
       }
 
       if (res.data.data.detailLaporan.studentEvaluations[0]) {
@@ -224,10 +205,10 @@ export default function Page() {
             res.data.data.detailLaporan.studentEvaluations[0].supportFactors !==
               null)
         ) {
-          setStudentEvaluations(res.data.data.detailLaporan.studentEvaluations);
+          setStudentEvaluations(
+            res.data.data.detailLaporan.studentEvaluations[0]
+          );
         }
-      } else {
-        console.log("Tidak ada data target aktivitas mandiri");
       }
 
       setLoading(false);
@@ -244,7 +225,12 @@ export default function Page() {
         {
           status: status,
           comments: {
-            academicReports: komentarAcademicReports,
+            academicReports:
+              komentarAcademicReports === undefined ||
+              komentarAcademicReports === null ||
+              komentarAcademicReports.length === 0
+                ? ""
+                : komentarAcademicReports,
             academicActivities: [...komentarAcademicActivities],
             studentAchievements: [...komentarStudentsAchievements],
             organizationActivities: [...komentarOrganizationActivities],
@@ -367,7 +353,6 @@ export default function Page() {
             />
           </div>
         </div>
-
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
           <div className="text-xl md:text-2xl font-bold">C. EVALUASI</div>
           {studentEvaluations === undefined ||
@@ -377,6 +362,7 @@ export default function Page() {
               <div className="flex flex-col gap-2">
                 <div className="text-lg">Faktor Pendukung</div>
                 <Textarea
+                  disabled
                   size={"lg"}
                   placeholder="Jelaskan faktor pendukung anda"
                   onChange={(e) => setSupportFactors(e.target.value)}
@@ -385,6 +371,7 @@ export default function Page() {
               <div className="flex flex-col gap-2">
                 <div className="text-lg">Faktor Penghambat</div>
                 <Textarea
+                  disabled
                   size={"lg"}
                   placeholder="Jelaskan faktor penghambat anda"
                   onChange={(e) => setBarrierFactors(e.target.value)}
@@ -396,6 +383,7 @@ export default function Page() {
               <div className="flex flex-col gap-2">
                 <div className="text-lg">Faktor Pendukung</div>
                 <Textarea
+                  disabled
                   size={"lg"}
                   placeholder="Jelaskan faktor pendukung anda"
                   onChange={(e) => setSupportFactors(e.target.value)}
@@ -405,6 +393,7 @@ export default function Page() {
               <div className="flex flex-col gap-2">
                 <div className="text-lg">Faktor Penghambat</div>
                 <Textarea
+                  disabled
                   size={"lg"}
                   placeholder="Jelaskan faktor penghambat anda"
                   onChange={(e) => setBarrierFactors(e.target.value)}
@@ -450,25 +439,34 @@ export default function Page() {
           </div>
         </div>
 
-        <Select
-          className="w-full"
-          label="Status"
-          placeholder="Pilih Status Laporan"
-          onChange={(e) => setStatus(e.target.value)}
-        >
-          <SelectItem key="Lolos">Lolos</SelectItem>
-          <SelectItem key="Lolos Dengan Penugasan">
-            Lolos Dengan Penugasan
-          </SelectItem>
-          <SelectItem key="Ditolak SP-1">Ditolak SP-1</SelectItem>
-          <SelectItem key="Ditolak SP-2">Ditolak SP-2</SelectItem>
-          <SelectItem key="Ditolak SP-3">Ditolak SP-3</SelectItem>
-          <SelectItem key="Pending">Pending</SelectItem>
-          <SelectItem key="Draft">Draft</SelectItem>
-        </Select>
-        <Button color="primary" onPress={() => saveData()}>
-          Simpan
-        </Button>
+        <div className="w-full flex flex-row gap-2">
+          <Select
+            color="primary"
+            label="Status"
+            size="sm"
+            placeholder="Pilih Status Laporan"
+            onChange={(e) => setStatus(e.target.value)}
+          >
+            <SelectItem key="Lolos">Lolos</SelectItem>
+            <SelectItem key="Lolos dengan penugasan">
+              Lolos Dengan Penugasan
+            </SelectItem>
+            <SelectItem key="Ditolak SP-1">Ditolak SP-1</SelectItem>
+            <SelectItem key="Ditolak SP-2">Ditolak SP-2</SelectItem>
+            <SelectItem key="Ditolak SP-3">Ditolak SP-3</SelectItem>
+            <SelectItem key="Pending">Pending</SelectItem>
+            <SelectItem key="Draft">Draft</SelectItem>
+          </Select>
+          <Button
+            className="w-full my-auto"
+            radius="sm"
+            size="lg"
+            color="primary"
+            onPress={() => saveData()}
+          >
+            Simpan
+          </Button>
+        </div>
       </div>
     );
   }
