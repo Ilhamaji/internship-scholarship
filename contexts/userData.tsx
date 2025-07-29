@@ -1,7 +1,12 @@
 "use client";
 
-// src/context/UserContext.tsx
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import Cookies from "js-cookie";
 import api from "@/lib/axios";
 
@@ -19,6 +24,7 @@ interface UserContextType {
   setUserData: React.Dispatch<React.SetStateAction<User | null>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  refreshUserData: () => Promise<void>; // Added this
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -29,38 +35,39 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  useEffect(() => {
+  const refreshUserData = useCallback(async () => {
     const role = Cookies.get("role");
     const userId = Cookies.get("userId");
 
     if (role === "student" && userId) {
-      const fetchData = async () => {
-        try {
-          const res = await api.get(`/users/${userId}`);
-          setUserData(res.data.data);
-        } catch (error) {
-          console.error("Failed to fetch user data:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchData();
+      setLoading(true);
+      try {
+        const res = await api.get(`/users/${userId}`);
+        setUserData(res.data.data);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      } finally {
+        setLoading(false);
+      }
     } else {
-      setLoading(false); // Jangan lupa untuk mengubah loading ke false jika bukan student
+      setUserData(null);
+      setLoading(false);
     }
   }, []);
 
+  useEffect(() => {
+    refreshUserData(); // Initial fetch on mount
+  }, [refreshUserData]);
+
   return (
     <UserContext.Provider
-      value={{ userData, setUserData, loading, setLoading }}
+      value={{ userData, setUserData, loading, setLoading, refreshUserData }}
     >
       {children}
     </UserContext.Provider>
   );
 };
 
-// Custom hook to use the user context
 export const useUser = (): UserContextType => {
   const context = useContext(UserContext);
   if (!context) {

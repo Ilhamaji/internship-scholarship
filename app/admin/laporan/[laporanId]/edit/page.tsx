@@ -62,6 +62,7 @@ export default function Page() {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
 
       setFullData(res.data.data);
+
       setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
       setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
       setSemester(res.data.data.detailLaporan.academicReports[0].semester);
@@ -256,8 +257,30 @@ export default function Page() {
   }
 
   if (!loading) {
+    const created = new Date(fullData.createdAt);
+    const updated = new Date(fullData.updatedAt);
+
+    const chh = String(created.getUTCHours()).padStart(2, "0");
+    const cmm = String(created.getUTCMinutes()).padStart(2, "0");
+    const css = String(created.getUTCSeconds()).padStart(2, "0");
+    const cdd = String(created.getUTCDate()).padStart(2, "0");
+    const cMM = String(created.getUTCMonth() + 1).padStart(2, "0");
+    const cyy = String(created.getUTCFullYear()).slice(2);
+
+    const uhh = String(updated.getUTCHours()).padStart(2, "0");
+    const umm = String(updated.getUTCMinutes()).padStart(2, "0");
+    const uss = String(updated.getUTCSeconds()).padStart(2, "0");
+    const udd = String(updated.getUTCDate()).padStart(2, "0");
+    const uMM = String(updated.getUTCMonth() + 1).padStart(2, "0");
+    const uyy = String(updated.getUTCFullYear()).slice(2);
+
+    const formattedCreated = `${chh}:${cmm}:${css} ${cdd}/${cMM}/${cyy}`;
+    const formattedUpdated = `${uhh}:${umm}:${uss} ${udd}/${uMM}/${uyy}`;
+
+    console.log(fullData);
+
     return (
-      <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 lg:px-36">
+      <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 xl:px-36">
         {message === "success" ? (
           <div className="flex flex-col gap-4">
             <Alert
@@ -281,6 +304,19 @@ export default function Page() {
             />
           </div>
         )}
+        <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
+          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 justify-between">
+            <div className="">
+              <b>NIM</b> : {fullData.userId}
+            </div>
+            <div className="">
+              {fullData.semesterDetail.tahunAjar} -{" "}
+              {fullData.semesterDetail.semester}
+            </div>
+            <div className="">Dibuat : {formattedCreated}</div>
+            <div className="">Update : {formattedUpdated}</div>
+          </div>
+        </div>
         <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
           <div className="text-xl md:text-2xl font-bold">
             A. LAPORAN KEGIATAN AKADEMIK

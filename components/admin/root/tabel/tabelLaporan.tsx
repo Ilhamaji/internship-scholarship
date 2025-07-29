@@ -92,7 +92,11 @@ export default function App() {
             <TableRow key={index}>
               <TableCell>{startIndex + index + 1}</TableCell>
               <TableCell>{item.semesterId}</TableCell>
-              <TableCell>{item.user.name}</TableCell>
+              <TableCell>
+                <div className="line-clamp-2 overflow-hidden">
+                  {item.user.name}
+                </div>
+              </TableCell>
               <TableCell>
                 {item.status === "Lolos" ||
                 item.status === "Lolos dengan penugasan" ? (

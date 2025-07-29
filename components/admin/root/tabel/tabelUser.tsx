@@ -52,8 +52,6 @@ export default function App() {
 
   const startIndex = (page - 1) * 10;
 
-  console.log(data);
-
   return (
     <Table
       width={"100%"}
@@ -92,7 +90,9 @@ export default function App() {
           <TableRow key={index}>
             <TableCell>{startIndex + index + 1}</TableCell>
             <TableCell>{item.userId}</TableCell>
-            <TableCell>{item.name}</TableCell>
+            <TableCell>
+              <div className="line-clamp-2 overflow-hidden">{item.name}</div>
+            </TableCell>
             <TableCell className="flex flex-row gap-2 py-5 justify-end">
               <div className="flex flex-row gap-2 py-3">
                 <ModalEditMahasiswa userId={item.userId} />
