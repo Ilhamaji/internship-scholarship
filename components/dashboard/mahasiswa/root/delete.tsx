@@ -31,7 +31,7 @@ export default function App({
 
   return (
     <>
-      <Tooltip content="delete">
+      <Tooltip content="Hapus">
         <span
           onClick={onOpen}
           className="my-auto text-lg text-default-400 cursor-pointer hover:text-red-500 active:opacity-50"

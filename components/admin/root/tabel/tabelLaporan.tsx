@@ -26,7 +26,7 @@ export default function App() {
     return data.data;
   };
 
-  const endpoint = `/admin/monev/laporan?page=${page}`;
+  const endpoint = `/admin/monev/laporan?status=Pending&?page=${page}`;
 
   const { data, isLoading } = useSWR(endpoint, fetcher, {
     keepPreviousData: true,
@@ -88,7 +88,8 @@ export default function App() {
         loadingState={loadingState}
       >
         {data?.result.map((item: any, index: any) => {
-          return (
+          if (item.status!=="Draft") {
+            return (
             <TableRow key={index}>
               <TableCell>{startIndex + index + 1}</TableCell>
               <TableCell>{item.semesterId}</TableCell>
@@ -128,6 +129,7 @@ export default function App() {
               </TableCell>
             </TableRow>
           );
+          }
         })}
       </TableBody>
     </Table>

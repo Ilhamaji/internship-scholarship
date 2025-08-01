@@ -18,7 +18,7 @@ export default function textArea({
         labelPlacement="inside"
         onChange={(e) => setSupportFactors(e.target.value)}
         defaultValue={
-          supportFactors === undefined
+          supportFactors === undefined 
             ? studentEvaluations.supportFactors
             : supportFactors
         }

@@ -12,7 +12,7 @@ import {
 
 export default function App() {
   return (
-    <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 lg:px-36">
+    <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 xl:px-36">
       <div className="w-full flex flex-col bg-white lg:p-12 items-center gap-6">
         <div className="w-full flex flex-col gap-2">
           <Skeleton className="h-3 w-3/5 rounded-lg" />

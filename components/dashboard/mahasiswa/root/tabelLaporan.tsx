@@ -58,14 +58,19 @@ export default function App({
               )}
             </TableCell>
             <TableCell>
-              <div className="flex flex-row gap-2 justify-end">
-                <ModalEdit laporanId={item.laporanId} />
-                <ModalDelete
-                  laporanId={item.laporanId}
-                  setSubmitted={setSubmitted}
-                  submitted={submitted}
-                />
-              </div>
+              
+                {item.status === "Draft" ?
+                  <div className="flex flex-row gap-2 justify-end">
+                    <ModalEdit laporanId={item.laporanId} />
+                    <ModalDelete
+                      laporanId={item.laporanId}
+                      setSubmitted={setSubmitted}
+                      submitted={submitted}
+                    />
+                  </div>
+                  : ""
+                }
+                
             </TableCell>
           </TableRow>
         ))}

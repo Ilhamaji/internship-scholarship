@@ -22,6 +22,7 @@ import TambahTargetIndependentActivities from "@/components/dashboard/mahasiswa/
 import TabelTargetIndependentActivities from "@/components/dashboard/mahasiswa/laporan/tabel/tabelTargetIndependentActivities";
 import SupportFactorsTextArea from "@/components/dashboard/mahasiswa/laporan/textAreaSupportFactors";
 import BarrierFactorsTextArea from "@/components/dashboard/mahasiswa/laporan/textAreaBarrierFactors";
+import Pengajuan from "@/components/dashboard/mahasiswa/laporan/modal/pengajuan";
 import { Input, Textarea } from "@heroui/input";
 import { Button } from "@heroui/button";
 import api from "@/lib/axiosInstance";
@@ -56,8 +57,8 @@ export default function Page() {
   useEffect(() => {
     const getLaporan = async () => {
       const res = await api.get(`/monev/detail/${params.laporanId}`);
-      setFullData(res.data.data.detailLaporan);
-
+      setFullData(res.data.data);
+      
       setAcademicReports(res.data.data.detailLaporan.academicReports[0]);
       setTargetNextSemester(res.data.data.detailLaporan.targetNextSemester[0]);
       setSemester(res.data.data.detailLaporan.academicReports[0].semester);
@@ -225,11 +226,11 @@ export default function Page() {
       independentActivities,
       studentEvaluations: {
         supportFactors:
-          supportFactors === "" || supportFactors.length === 0
+          supportFactors === undefined || supportFactors === "" || supportFactors.length === 0
             ? studentEvaluations.supportFactors
             : supportFactors,
         barrierFactors:
-          barrierFactors === "" || barrierFactors.length === 0
+          barrierFactors === undefined || barrierFactors === "" || barrierFactors.length === 0
             ? studentEvaluations.barrierFactors
             : barrierFactors,
       },
@@ -452,9 +453,12 @@ export default function Page() {
           </div>
         </div>
 
-        <Button size="lg" color="primary" onPress={() => saveData()}>
-          Simpan
-        </Button>
+        <div className="flex flex-row gap-4 w-full">
+          <Pengajuan laporanId={fullData.laporanId} setMessage={setMessage} />
+          <Button size="lg" className="w-full" color="primary" onPress={() => saveData()}>
+            Simpan
+          </Button>
+        </div>
       </div>
     );
   }

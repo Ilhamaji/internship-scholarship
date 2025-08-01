@@ -26,6 +26,7 @@ export default function page() {
   const [refresh, setRefresh] = useState(true);
   const [message, setMessage] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const { userData, loading: userLoading, refreshUserData } = useUser();
 
@@ -36,10 +37,13 @@ export default function page() {
       alamat: alamat.length !== 0 ? alamat : userData?.studentDetails.alamat,
     });
 
+
+    setIsEdit(!isEdit);
     setMessage("success");
     setIsVisible(true);
     setRefresh(!refresh);
     refreshUserData();
+     window.scrollTo(0, 0);
   };
 
   if (userLoading) {
@@ -82,6 +86,7 @@ export default function page() {
                 defaultValue={userData?.name}
                 onChange={(e) => setName(e.target.value)}
                 required
+                disabled
               />
               <Input
                 errorMessage="Masukkan email dengan benar"
@@ -92,6 +97,7 @@ export default function page() {
                 size="lg"
                 onChange={(e) => setEmail(e.target.value)}
                 defaultValue={userData?.email}
+                disabled={!isEdit}
               />
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -116,6 +122,7 @@ export default function page() {
                 required
                 defaultValue={userData?.role}
                 size="lg"
+                disabled
               />
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -129,6 +136,7 @@ export default function page() {
                 onChange={(e) => setProdi(e.target.value)}
                 defaultValue={userData?.studentDetails.prodi}
                 required
+                disabled
               />
               <Input
                 errorMessage="Masukkan jenis beasiswa dengan benar"
@@ -139,6 +147,7 @@ export default function page() {
                 onChange={(e) => setJenisBeasiswa(e.target.value)}
                 defaultValue={userData?.studentDetails.jenisBeasiswa}
                 size="lg"
+                disabled
               />
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -152,6 +161,7 @@ export default function page() {
                 onChange={(e) => setAngkatan(e.target.value)}
                 defaultValue={userData?.studentDetails.angkatan}
                 required
+                disabled
               />
               <Input
                 errorMessage="Masukkan kelas dengan benar"
@@ -162,6 +172,7 @@ export default function page() {
                 onChange={(e) => setKelas(e.target.value)}
                 defaultValue={userData?.studentDetails.kelas}
                 size="lg"
+                disabled
               />
             </div>
             <div className="w-full pt-2">
@@ -173,6 +184,7 @@ export default function page() {
                 orientation="horizontal"
                 onChange={(e) => setJenisKelamin(e.target.value)}
                 defaultValue={userData?.studentDetails.jenisKelamin}
+                isDisabled
               >
                 <Radio value="Laki-laki">Laki-laki</Radio>
                 <Radio value="Perempuan">Perempuan</Radio>
@@ -188,6 +200,7 @@ export default function page() {
                 onChange={(e) => setNoHp(e.target.value)}
                 defaultValue={userData?.studentDetails.noHp}
                 size="lg"
+                disabled={!isEdit}
               />
             </div>
             <div className="w-full">
@@ -200,16 +213,26 @@ export default function page() {
                 onChange={(e) => setAlamat(e.target.value)}
                 defaultValue={userData?.studentDetails.alamat}
                 size="lg"
+                disabled={!isEdit}
               />
             </div>
-            <Button
+            {isEdit === false ? (<Button
+              color="warning"
+              radius="sm"
+              size="lg"
+              className="text-white"
+              onPress={() => setIsEdit(!isEdit)}
+            >
+              Edit
+            </Button>):(<Button
               color="primary"
               onPress={() => handleEditMahasiswa()}
               radius="sm"
               size="lg"
             >
               Simpan
-            </Button>
+            </Button>) }
+            
           </div>
         </div>
       </div>

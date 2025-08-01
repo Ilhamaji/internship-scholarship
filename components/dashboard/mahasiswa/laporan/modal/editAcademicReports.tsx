@@ -53,7 +53,7 @@ export default function edit({
                   labelPlacement="outside"
                   name="ips"
                   placeholder="Masukkan IPS anda"
-                  type="ips"
+                  type="number"
                   onChange={(e) => setIps(e.target.value)}
                   defaultValue={academicReports.ips}
                   min={0}
@@ -66,7 +66,7 @@ export default function edit({
                   labelPlacement="outside"
                   name="ipk"
                   placeholder="Masukkan IPK anda"
-                  type="ipk"
+                  type="number"
                   onChange={(e) => setIpk(e.target.value)}
                   defaultValue={academicReports.ipk}
                   min={0}

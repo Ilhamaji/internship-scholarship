@@ -110,8 +110,8 @@ export default function App({
                   name="ipk"
                   placeholder="Enter your IPK"
                   type="number"
-                  min={0.0}
-                  max={4.0}
+                  min={0}
+                  max={4}
                   step={0.01}
                   value={ipk}
                   onChange={(e) => setIpk(e.target.value)}
@@ -125,8 +125,8 @@ export default function App({
                   name="ips"
                   placeholder="Enter your IPS"
                   type="number"
-                  min={0.0}
-                  max={4.0}
+                  min={0}
+                  max={4}
                   step={0.01}
                   value={ips}
                   onChange={(e) => setIps(e.target.value)}

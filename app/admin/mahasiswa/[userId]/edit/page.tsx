@@ -35,9 +35,11 @@ export default function page() {
         const res = await api.get(`/users/${params.userId}`);
         setUserData(res.data.data);
 
+         window.scrollTo(0, 0);
         setLoading(false);
       } catch (error) {
         setLoading(false);
+        window.scrollTo(0, 0);
         console.log(error);
       }
     };

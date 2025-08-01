@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Navbar from "@/components/root/navbar";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Web Monitoring TSU",

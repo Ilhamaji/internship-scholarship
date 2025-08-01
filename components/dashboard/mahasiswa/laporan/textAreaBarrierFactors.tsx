@@ -18,7 +18,7 @@ export default function textArea({
         labelPlacement="inside"
         onChange={(e) => setBarrierFactors(e.target.value)}
         defaultValue={
-          barrierFactors === undefined
+          barrierFactors === undefined 
             ? studentEvaluations.barrierFactors
             : barrierFactors
         }
