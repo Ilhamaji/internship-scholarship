@@ -14,24 +14,34 @@ import {
 import { Form } from "@heroui/form";
 import api from "@/lib/axios";
 
-export default function App({laporanId, setMessage}:{laporanId:any, setMessage:any}) {
-    const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    
-    const pengajuanHandler = async (e) => {
-        e.preventDefault();
-        console.log(laporanId);
-        
+export default function App({
+  laporanId,
+  setMessage,
+}: {
+  laporanId: any;
+  setMessage: any;
+}) {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-        await api.patch(`/monev/draft/${laporanId}/submit`);
+  const pengajuanHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(laporanId);
 
-        setMessage("success");
-        onOpenChange();
-    }
+    await api.patch(`/monev/draft/${laporanId}/submit`);
+
+    setMessage("success");
+    onOpenChange();
+  };
 
   return (
     <>
-      <Button onPress={onOpen} size="lg" className="w-full text-white" color="success">
-         Tambah Data
+      <Button
+        onPress={onOpen}
+        size="lg"
+        className="w-full text-white"
+        color="success"
+      >
+        Tambah Data
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>

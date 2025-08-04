@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR, { mutate } from "swr";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState, ChangeEvent } from "react";
 import {
   Table,
   TableHeader,
@@ -9,7 +9,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
 } from "@heroui/table";
 import { Spinner } from "@heroui/spinner";
 import { Pagination } from "@heroui/pagination";
@@ -17,71 +16,93 @@ import api from "@/lib/axios";
 import ModalEditMahasiswa from "@/components/admin/root/modal/modalEditMahasiswa";
 import ModalDeleteMahasiswa from "@/components/admin/root/modal/modalDeleteMahasiswa";
 
-const fetcher = async (url: any) => {
+interface StudentDetails {
+  angkatan?: string | null;
+  // ... tambahkan jika ada field lain diperlukan
+}
+
+interface MahasiswaItem {
+  userId: string;
+  name?: string;
+  studentDetails?: StudentDetails;
+  // ... lainnya sesuai response
+}
+
+interface SWRResponse {
+  result?: MahasiswaItem[];
+  pagination?: {
+    total?: number;
+    // bisa ditambah page, per_page, dsb jika ada
+  };
+}
+
+const ROWS_PER_PAGE = 10;
+
+const fetcher = async (url: string): Promise<SWRResponse> => {
   const { data } = await api.get(url);
   return data.data;
 };
 
-export default function App() {
-  const [page, setPage] = React.useState(1);
-  const [refresh, setRefresh] = React.useState(false);
-  const [angkatan, setAngkatan] = React.useState([]);
+const App: React.FC = () => {
+  const [page, setPage] = useState<number>(1);
+  const [refresh, setRefresh] = useState<boolean>(false);
 
-  // SWR hook for fetching data
-  const { data, isLoading } = useSWR(`/admin/mahasiswa?page=${page}`, fetcher, {
-    keepPreviousData: true,
-  });
+  const { data, isLoading } = useSWR<SWRResponse>(
+    `/admin/mahasiswa?page=${page}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+    }
+  );
 
-  // Handle data refresh when refresh changes
+  // refresh trigger
   useEffect(() => {
     if (refresh) {
-      mutate(`/admin/mahasiswa?page=${page}`); // Re-fetch data
-      setRefresh(false); // Reset refresh trigger
+      void mutate(`/admin/mahasiswa?page=${page}`);
+      setRefresh(false);
     }
-  }, [refresh, page]); // Refresh when refresh or page changes
+  }, [refresh, page]);
 
-  const rowsPerPage = 10;
+  // derive pagination
+  const totalPages = useMemo(() => {
+    if (!data?.pagination?.total) return 0;
+    return Math.ceil(data.pagination.total / ROWS_PER_PAGE);
+  }, [data?.pagination?.total]);
 
-  const pages = React.useMemo(() => {
-    return data?.pagination.total
-      ? Math.ceil(data?.pagination.total / rowsPerPage)
-      : 0;
-  }, [data?.pagination.total, rowsPerPage]);
-
-  const loadingState =
-    isLoading || data?.result.length === 0 ? "loading" : "idle";
-
-  const startIndex = (page - 1) * 10;
-
-  if (!isLoading) {
-    data?.result.map((item: any, index: any) => {
-      if (angkatan.length === 0) {
-        setAngkatan([item.studentDetails.angkatan]);
-      } else {
-        if (!angkatan.includes(item.studentDetails.angkatan)) {
-          setAngkatan([...angkatan, item.studentDetails.angkatan]);
-        }
-      }
+  // unique angkatan list (didapat dari data, no state mutation during render)
+  const angkatanOptions = useMemo<string[]>(() => {
+    if (!data?.result) return [];
+    const set = new Set<string>();
+    data.result.forEach((item) => {
+      const angkatan = item.studentDetails?.angkatan;
+      if (angkatan) set.add(angkatan);
     });
+    return Array.from(set).sort();
+  }, [data?.result]);
 
-    return (
+  const startIndex = (page - 1) * ROWS_PER_PAGE;
+
+  const loadingState = isLoading || !data?.result ? "loading" : "idle";
+  const list = data?.result ?? [];
+
+  return (
+    <div className="px-2 md:px-6 xl:px-36">
       <Table
-        width={"100%"}
+        width="100%"
         selectionMode="single"
         isStriped
-        aria-label="Example table with client async pagination"
+        aria-label="Tabel mahasiswa"
         bottomContent={
-          pages > 0 ? (
+          totalPages > 0 ? (
             <div className="flex w-full justify-center">
               <Pagination
-                initialPage={1}
                 isCompact
                 showControls
                 showShadow
                 color="primary"
                 page={page}
-                total={pages}
-                onChange={(page) => setPage(page)}
+                total={totalPages}
+                onChange={(p) => setPage(p)}
               />
             </div>
           ) : null
@@ -94,35 +115,31 @@ export default function App() {
           <TableColumn className="text-end">AKSI</TableColumn>
         </TableHeader>
         <TableBody
-          items={data?.result ?? []}
+          items={list}
           loadingContent={<Spinner />}
           loadingState={loadingState}
         >
-          {data?.result.map((item: any, index: any) => {
-            for (let i = 0; i < angkatan.length; i++) {
-              if (item.studentDetails.angkatan === angkatan[i]) {
-                return (
-                  <TableRow key={index}>
-                    <TableCell>{startIndex + index + 1}</TableCell>
-                    <TableCell>{item.userId}</TableCell>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell className="flex flex-row gap-2 py-5 justify-end">
-                      <div className="flex flex-row gap-2 py-3">
-                        <ModalEditMahasiswa userId={item.userId} />
-                        <ModalDeleteMahasiswa
-                          userId={item.userId}
-                          refresh={refresh}
-                          setRefresh={setRefresh}
-                        />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              }
-            }
-          })}
+          {list.map((item, index) => (
+            <TableRow key={item.userId || index}>
+              <TableCell>{startIndex + index + 1}</TableCell>
+              <TableCell>{item.userId}</TableCell>
+              <TableCell>{item.name || "-"}</TableCell>
+              <TableCell className="flex flex-row gap-2 py-5 justify-end">
+                <div className="flex flex-row gap-2 py-3">
+                  <ModalEditMahasiswa userId={item.userId} />
+                  <ModalDeleteMahasiswa
+                    userId={item.userId}
+                    refresh={refresh}
+                    setRefresh={setRefresh}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default App;

@@ -32,7 +32,7 @@ export default function App({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [place, setPlace] = useState("");
-  const [bukti, setBukti] = useState(null);
+  const [bukti, setBukti] = useState<File | null>(null);
   const [participation, setParticipation] = useState("");
 
   const tambahAcademicActivity = async (
@@ -177,7 +177,9 @@ export default function App({
                     <SelectItem key={"Anggota"}>Anggota</SelectItem>
                   </Select>
                   <Input
-                    onChange={(e) => setBukti(e.target.files[0])}
+                    onChange={(e) =>
+                      setBukti(e.target.files ? e.target.files[0] : null)
+                    }
                     errorMessage="Masukkan bukti kegiatan dengan benar"
                     label="Bukti"
                     labelPlacement="outside"

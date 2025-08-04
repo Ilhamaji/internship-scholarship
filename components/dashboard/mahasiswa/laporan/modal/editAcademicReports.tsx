@@ -21,7 +21,7 @@ export default function edit({
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [ipk, setIpk] = useState("");
   const [ips, setIps] = useState("");
-  const [bukti, setBukti] = useState(null);
+  const [bukti, setBukti] = useState<File | null>(null);
 
   const tambahAcademicReports = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,7 +97,9 @@ export default function edit({
                   name="bukti"
                   placeholder="Masukkan bukti anda"
                   type="file"
-                  onChange={(e) => setBukti(e.target.files[0])}
+                  onChange={(e) =>
+                    setBukti(e.target.files ? e.target.files[0] : null)
+                  }
                 />
                 <Button type="submit">Submit</Button>
               </Form>

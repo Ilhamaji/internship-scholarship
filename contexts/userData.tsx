@@ -11,12 +11,24 @@ import Cookies from "js-cookie";
 import api from "@/lib/axios";
 
 // Define the type for the user data
+interface studentDetails {
+  prodi: string;
+  jenisBeasiswa: string;
+  angkatan: string;
+  kelas: string;
+  jenisKelamin: string;
+  noHp: string;
+  alamat: string;
+  // Add other fields as necessary
+}
+
 interface User {
   userId: string;
   name: string;
   email: string;
   avatar: string;
   role: string;
+  studentDetails: studentDetails;
   // Add other fields as necessary
 }
 

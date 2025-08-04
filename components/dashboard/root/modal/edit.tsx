@@ -140,7 +140,7 @@ export const EditIcon = (props: IconSvgProps) => {
 
 export default function edit() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [submitted, setSubmitted] = React.useState(null);
+  const [submitted, setSubmitted] = React.useState<any | null>(null);
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     // Prevent default browser page refresh.

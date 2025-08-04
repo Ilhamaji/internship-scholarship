@@ -53,13 +53,13 @@ export default function App() {
 
   const tableData = React.useMemo(() => {
     if (!data?.result) return [];
-    return data.result.filter((item) => item.status !== "Draft");
+    return data.result.filter((item: any) => item.status !== "Draft");
   }, [data?.result]);
 
   const filteredData = React.useMemo(() => {
     if (!tableData) return [];
     const search = searchTerm.toLowerCase();
-    return tableData.filter((item) => {
+    return tableData.filter((item: any) => {
       const name = item.user?.name?.toLowerCase() || "";
       const nim = item.userId?.toString() || "";
       const semesterId = item.semesterId || "";
