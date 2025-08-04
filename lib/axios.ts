@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { logout } from "@/lib/auth"; // Import fungsi logout
 
-const API_URL = process.env.API_URL;
+const API_URL = "https://tsu-kip-api-production.up.railway.app/";
 
 // Axios instance utama
 const api = axios.create({

@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { logout } from "./auth"; // Import fungsi logout
 
-const API_URL = process.env.API_URL;
+const API_URL = "https://tsu-kip-api-production.up.railway.app/";
 
 const api = axios.create({
   baseURL: API_URL,
