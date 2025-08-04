@@ -24,7 +24,8 @@ export default function App() {
   const [angkatan, setAngkatan] = React.useState("");
   const [semester, setSemester] = React.useState("");
 
-  const isSearching = searchTerm.trim() !== "" || angkatan !== "" || semester !== "";
+  const isSearching =
+    searchTerm.trim() !== "" || angkatan !== "" || semester !== "";
 
   const endpoint = `/admin/monev/laporan?status=Pending&status=Lolos&limit=1000`;
 
@@ -62,8 +63,7 @@ export default function App() {
       const name = item.user?.name?.toLowerCase() || "";
       const nim = item.userId?.toString() || "";
       const semesterId = item.semesterId || "";
-      const matchesSearch =
-        name.includes(search) || nim.includes(search);
+      const matchesSearch = name.includes(search) || nim.includes(search);
 
       const nimAngkatan = nim.substring(0, 2); // 2 digit awal dari userId
       const matchesAngkatan = !angkatan || nimAngkatan === angkatan;
@@ -111,53 +111,53 @@ export default function App() {
   return (
     <>
       {/* Search & Filter */}
-      <div className="mt-4 mb-4 flex flex-col md:flex-row justify-between items-center gap-4">
-  {/* Search (kiri) */}
-  <div className="w-full md:w-1/5">
-    <input
-      type="text"
-      placeholder="Cari berdasarkan NIM atau Nama"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="border border-gray-300 px-4 py-2 rounded-full focus:outline-none w-full"
-    />
-  </div>
+      <div className="mt-4 mb-4 flex flex-col md:flex-row justify-between items-center gap-4 px-2 md:px-6 xl:px-36">
+        {/* Search (kiri) */}
+        <div className="w-full md:w-1/5">
+          <input
+            type="text"
+            placeholder="Cari berdasarkan NIM atau Nama"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border border-gray-300 px-4 py-2 rounded-full focus:outline-none w-full"
+          />
+        </div>
 
-  {/* Filter (kanan) */}
-  <div className="flex gap-2 w-full md:w-auto">
-    <select
-      value={angkatan}
-      onChange={(e) => setAngkatan(e.target.value)}
-      className="border border-gray-300 px-4 py-2 rounded-md"
-    >
-      <option value="">Angkatan</option>
-      {[...Array(9)].map((_, i) => {
-        const year = 22 + i;
-        return (
-          <option key={year} value={String(year)}>
-            Angkatan {year}
-          </option>
-        );
-      })}
-    </select>
+        {/* Filter (kanan) */}
+        <div className="flex gap-2 w-full md:w-auto">
+          <select
+            value={angkatan}
+            onChange={(e) => setAngkatan(e.target.value)}
+            className="border border-gray-300 px-4 py-2 rounded-md"
+          >
+            <option value="">Angkatan</option>
+            {[...Array(9)].map((_, i) => {
+              const year = 22 + i;
+              return (
+                <option key={year} value={String(year)}>
+                  Angkatan {year}
+                </option>
+              );
+            })}
+          </select>
 
-    <select
-      value={semester}
-      onChange={(e) => setSemester(e.target.value)}
-      className="border border-gray-300 px-4 py-2 rounded-md"
-    >
-      <option value="">Semester</option>
-      {semesterOptions.map((s) => (
-        <option key={s.value} value={s.value}>
-          Semester {s.label}
-        </option>
-      ))}
-    </select>
-  </div>
-</div>
-
+          <select
+            value={semester}
+            onChange={(e) => setSemester(e.target.value)}
+            className="border border-gray-300 px-4 py-2 rounded-md"
+          >
+            <option value="">Semester</option>
+            {semesterOptions.map((s) => (
+              <option key={s.value} value={s.value}>
+                Semester {s.label}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
 
       <Table
+        className="px-2 md:px-6 xl:px-36"
         width={"100%"}
         selectionMode="single"
         isStriped
