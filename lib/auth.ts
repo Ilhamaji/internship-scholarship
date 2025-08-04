@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const API_URL = "http://localhost:5000";
+const API_URL = process.env.API_URL || "http://localhost:5000";
 
 export const login = async (
   setError: any,
