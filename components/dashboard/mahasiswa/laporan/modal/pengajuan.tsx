@@ -41,7 +41,7 @@ export default function App({
         className="w-full text-white"
         color="success"
       >
-        Tambah Data
+        Ajukan
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
