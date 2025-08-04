@@ -37,7 +37,7 @@ export default function page() {
     return (
       <div className="w-full">
         <div className="px-4 md:px-6 xl:px-36 flex flex-col md:flex-row gap-4 py-4">
-          <div className="flex flex-col border bg-[#fff] px-8 w-full md:w-fit rounded-xl shadow-md">
+          <div className="flex flex-col border bg-[#fff] px-8 w-full md:w-fit h-fit rounded-xl shadow-md">
             <div className="py-6 text-lg sm:text-xl">
               Selamat datang <div className="font-bold">{userData?.name}</div>
             </div>
