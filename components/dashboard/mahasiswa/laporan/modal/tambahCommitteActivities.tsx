@@ -86,6 +86,7 @@ export default function App({
       <Modal
         placement="top"
         scrollBehavior="inside"
+        className="h-full"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
@@ -119,20 +120,20 @@ export default function App({
                       Panitia Dalam Kegiatan Perguruan Tinggi
                     </SelectItem>
                   </Select>
+                  <Input
+                    autoFocus
+                    onChange={(e) => setActivityName(e.target.value)}
+                    errorMessage="Masukkan nama kegiatan dengan benar"
+                    label="Nama kegiatan"
+                    labelPlacement="outside"
+                    placeholder="Masukkan nama kegiatan"
+                    type="text"
+                    required
+                  />
                   {activityType === "" || activityType === undefined ? (
                     <></>
                   ) : activityType === "Pelatihan Kepemimpinan" ? (
                     <>
-                      <Input
-                        autoFocus
-                        onChange={(e) => setActivityName(e.target.value)}
-                        errorMessage="Masukkan nama kegiatan dengan benar"
-                        label="Nama kegiatan"
-                        labelPlacement="outside"
-                        placeholder="Masukkan nama kegiatan"
-                        type="text"
-                        required
-                      />
                       <Select
                         className="w-full"
                         errorMessage="Pilih tingkatan dengan benar"
@@ -163,55 +164,9 @@ export default function App({
                         <SelectItem key={"Divisi"}>Divisi</SelectItem>
                         <SelectItem key={"Anggota"}>Anggota</SelectItem>
                       </Select>
-                      <Input
-                        onChange={(e) => setPlace(e.target.value)}
-                        errorMessage="Masukkan tempat kegiatan dengan benar"
-                        label="Tempat"
-                        labelPlacement="outside"
-                        placeholder="Masukkan tempat kegiatan"
-                        type="text"
-                        required
-                      />
-                      <div className="flex flex-row gap-2">
-                        <Input
-                          onChange={(e) => setStartDate(e.target.value)}
-                          errorMessage="Masukkan tanggal mulai dengan benar"
-                          label="Tanggal Mulai"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                        <Input
-                          onChange={(e) => setEndDate(e.target.value)}
-                          errorMessage="Masukkan tanggal berakhir dengan benar"
-                          label="Tanggal Berakhir"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                      </div>
-                      <Input
-                        onChange={(e) => setBuktiUrl(e.target.value)}
-                        errorMessage="Masukkan bukti kegiatan dengan benar"
-                        label="Bukti"
-                        labelPlacement="outside"
-                        placeholder="Masukkan bukti kegiatan"
-                        type="file"
-                        required
-                      />
                     </>
                   ) : (
                     <>
-                      <Input
-                        autoFocus
-                        onChange={(e) => setActivityName(e.target.value)}
-                        errorMessage="Masukkan nama kegiatan dengan benar"
-                        label="Nama kegiatan"
-                        labelPlacement="outside"
-                        placeholder="Masukkan nama kegiatan"
-                        type="text"
-                        required
-                      />
                       <Select
                         className="w-full"
                         errorMessage="Pilih tingkatan dengan benar"
@@ -246,44 +201,44 @@ export default function App({
                         <SelectItem key={"Divisi"}>Divisi</SelectItem>
                         <SelectItem key={"Anggota"}>Anggota</SelectItem>
                       </Select>
-                      <Input
-                        onChange={(e) => setPlace(e.target.value)}
-                        errorMessage="Masukkan tempat kegiatan dengan benar"
-                        label="Tempat"
-                        labelPlacement="outside"
-                        placeholder="Masukkan tempat kegiatan"
-                        type="text"
-                        required
-                      />
-                      <div className="flex flex-row gap-2">
-                        <Input
-                          onChange={(e) => setStartDate(e.target.value)}
-                          errorMessage="Masukkan tanggal mulai dengan benar"
-                          label="Tanggal Mulai"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                        <Input
-                          onChange={(e) => setEndDate(e.target.value)}
-                          errorMessage="Masukkan tanggal berakhir dengan benar"
-                          label="Tanggal Berakhir"
-                          labelPlacement="outside"
-                          type="date"
-                          required
-                        />
-                      </div>
-                      <Input
-                        onChange={(e) => setBuktiUrl(e.target.value)}
-                        errorMessage="Masukkan bukti kegiatan dengan benar"
-                        label="Bukti"
-                        labelPlacement="outside"
-                        placeholder="Masukkan bukti kegiatan"
-                        type="file"
-                        required
-                      />
                     </>
                   )}
+                  <Input
+                    onChange={(e) => setPlace(e.target.value)}
+                    errorMessage="Masukkan tempat kegiatan dengan benar"
+                    label="Tempat"
+                    labelPlacement="outside"
+                    placeholder="Masukkan tempat kegiatan"
+                    type="text"
+                    required
+                  />
+                  <div className="flex flex-row gap-2">
+                    <Input
+                      onChange={(e) => setStartDate(e.target.value)}
+                      errorMessage="Masukkan tanggal mulai dengan benar"
+                      label="Tanggal Mulai"
+                      labelPlacement="outside"
+                      type="date"
+                      required
+                    />
+                    <Input
+                      onChange={(e) => setEndDate(e.target.value)}
+                      errorMessage="Masukkan tanggal berakhir dengan benar"
+                      label="Tanggal Berakhir"
+                      labelPlacement="outside"
+                      type="date"
+                      required
+                    />
+                  </div>
+                  <Input
+                    onChange={(e) => setBuktiUrl(e.target.value)}
+                    errorMessage="Masukkan bukti kegiatan dengan benar"
+                    label="Bukti"
+                    labelPlacement="outside"
+                    placeholder="Masukkan bukti kegiatan"
+                    type="file"
+                    required
+                  />
                 </ModalBody>
                 <ModalFooter className="w-full">
                   <Button color="danger" variant="light" onPress={onClose}>
