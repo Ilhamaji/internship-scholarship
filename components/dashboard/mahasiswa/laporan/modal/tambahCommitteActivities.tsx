@@ -85,7 +85,7 @@ export default function App({
       </Button>
       <Modal
         placement="top"
-        className="h-full"
+        className="h-fit"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
       >
