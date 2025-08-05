@@ -78,7 +78,7 @@ export default function App({
   return (
     <>
       <Button onPress={onOpen}>Tambah Laporan</Button>
-      <Modal placement="center" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <Form onSubmit={tambahLaporanHandler}>
@@ -87,6 +87,7 @@ export default function App({
               </ModalHeader>
               <ModalBody className="w-full space-y-4">
                 <Input
+                  autoFocus
                   className="w-full"
                   isRequired
                   errorMessage="Please enter a valid Semester"

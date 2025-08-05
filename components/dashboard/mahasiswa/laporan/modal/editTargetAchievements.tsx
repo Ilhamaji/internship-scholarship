@@ -63,7 +63,7 @@ export default function edit({
           <EditIcon />
         </span>
       </Tooltip>
-      <Modal placement="bottom" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -76,6 +76,7 @@ export default function edit({
               >
                 <ModalBody className="w-full">
                   <Input
+                    autoFocus
                     onChange={(e) => setAchievementsName(e.target.value)}
                     errorMessage="Masukkan nama prestasi dengan benar"
                     label="Nama Prestasi"

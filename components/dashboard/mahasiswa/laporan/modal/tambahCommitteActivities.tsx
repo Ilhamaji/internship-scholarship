@@ -84,7 +84,7 @@ export default function App({
         <LinkIcon /> Tambah Data
       </Button>
       <Modal
-        placement="auto"
+        placement="top"
         scrollBehavior="inside"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -101,6 +101,7 @@ export default function App({
               >
                 <ModalBody className="w-full">
                   <Select
+                    autoFocus
                     className="w-full"
                     errorMessage="Pilih jenis kegiatan dengan benar"
                     label="Jenis Kegiatan"

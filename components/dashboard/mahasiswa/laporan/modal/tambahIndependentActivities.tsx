@@ -101,7 +101,7 @@ export default function App({
       <Button onPress={onOpen} className="flex max-w-40">
         <LinkIcon /> Tambah Data
       </Button>
-      <Modal placement="bottom" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -114,6 +114,7 @@ export default function App({
               >
                 <ModalBody className="w-full">
                   <Select
+                    autoFocus
                     className="w-full"
                     errorMessage="Pilih jenis kegiatan dengan benar"
                     label="Jenis Kegiatan"

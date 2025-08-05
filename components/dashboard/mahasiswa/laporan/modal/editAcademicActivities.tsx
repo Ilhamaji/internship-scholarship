@@ -96,7 +96,7 @@ export default function edit({
           <EditIcon />
         </span>
       </Tooltip>
-      <Modal placement="bottom" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -109,6 +109,7 @@ export default function edit({
               >
                 <ModalBody className="w-full">
                   <Input
+                    autoFocus
                     onChange={(e) => setActivityName(e.target.value)}
                     errorMessage="Masukkan nama kegiatan dengan benar"
                     label="Nama Kegiatan"

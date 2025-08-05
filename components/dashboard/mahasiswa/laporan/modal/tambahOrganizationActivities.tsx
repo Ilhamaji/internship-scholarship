@@ -75,7 +75,7 @@ export default function App({
       <Button onPress={onOpen} className="flex max-w-40">
         <LinkIcon /> Tambah Data
       </Button>
-      <Modal placement="bottom" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -88,6 +88,7 @@ export default function App({
               >
                 <ModalBody className="w-full">
                   <Input
+                    autoFocus
                     onChange={(e) => setUkmName(e.target.value)}
                     errorMessage="Masukkan nama UKM dengan benar"
                     label="Nama UKM"

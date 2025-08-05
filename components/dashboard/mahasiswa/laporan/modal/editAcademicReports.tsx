@@ -57,12 +57,13 @@ export default function edit({
           <EditIcon />
         </span>
       </Tooltip>
-      <Modal placement="bottom" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <Form onSubmit={tambahAcademicReports} className="p-10">
                 <Input
+                  autoFocus
                   isRequired
                   errorMessage="Maksukkan IPS dengan benar"
                   label="IPS"

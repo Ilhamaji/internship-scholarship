@@ -102,6 +102,7 @@ export default function App({
               >
                 <ModalBody className="w-full">
                   <Input
+                    autoFocus
                     onChange={(e) => setActivityName(e.target.value)}
                     errorMessage="Masukkan nama kegiatan dengan benar"
                     label="Nama Kegiatan"

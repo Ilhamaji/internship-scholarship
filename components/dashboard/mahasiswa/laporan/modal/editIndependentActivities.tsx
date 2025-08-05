@@ -129,7 +129,7 @@ export default function edit({
           <EditIcon />
         </span>
       </Tooltip>
-      <Modal placement="bottom" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="top" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
@@ -142,6 +142,7 @@ export default function edit({
               >
                 <ModalBody className="w-full">
                   <Select
+                    autoFocus
                     className="w-full"
                     errorMessage="Pilih jenis kegiatan dengan benar"
                     label="Jenis Kegiatan"
