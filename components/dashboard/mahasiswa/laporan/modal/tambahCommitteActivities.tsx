@@ -120,7 +120,7 @@ export default function App({
                     </SelectItem>
                   </Select>
                   {activityType === "Pelatihan Kepemimpinan" ? (
-                    <>
+                    <div>
                       <Input
                         autoFocus
                         onChange={(e) => setActivityName(e.target.value)}
@@ -197,10 +197,11 @@ export default function App({
                         type="file"
                         required
                       />
-                    </>
+                    </div>
                   ) : (
-                    <>
+                    <div>
                       <Input
+                        autoFocus
                         onChange={(e) => setActivityName(e.target.value)}
                         errorMessage="Masukkan nama kegiatan dengan benar"
                         label="Nama kegiatan"
@@ -279,7 +280,7 @@ export default function App({
                         type="file"
                         required
                       />
-                    </>
+                    </div>
                   )}
                 </ModalBody>
                 <ModalFooter className="w-full">
