@@ -56,7 +56,6 @@ export default function App({
 
     try {
       const response = await api.post("/monev/draft", formData);
-      console.log(response.data);
 
       setSubmitted(!submitted);
       setLoading(false);
@@ -79,7 +78,7 @@ export default function App({
   return (
     <>
       <Button onPress={onOpen}>Tambah Laporan</Button>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="auto" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <Form onSubmit={tambahLaporanHandler}>

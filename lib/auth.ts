@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const API_URL = "https://tsu-kip-api-production.up.railway.app";
+const API_URL = process.env.NEXT_PUBLIC_EXTERNAL_API_URL;
 
 export const login = async (
   setError: any,

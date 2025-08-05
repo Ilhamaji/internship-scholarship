@@ -90,7 +90,7 @@ export default function edit({
           <EditIcon />
         </span>
       </Tooltip>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="auto" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
