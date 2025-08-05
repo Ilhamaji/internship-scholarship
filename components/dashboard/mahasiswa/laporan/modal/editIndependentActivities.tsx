@@ -142,7 +142,6 @@ export default function edit({
               >
                 <ModalBody className="w-full">
                   <Select
-                    autoFocus
                     className="w-full"
                     errorMessage="Pilih jenis kegiatan dengan benar"
                     label="Jenis Kegiatan"
@@ -269,6 +268,7 @@ export default function edit({
                     ""
                   )}
                   <Input
+                    autoFocus
                     onChange={(e) => setActivityName(e.target.value)}
                     errorMessage="Masukkan nama kegiatan dengan benar"
                     label="Nama Kegiatan"

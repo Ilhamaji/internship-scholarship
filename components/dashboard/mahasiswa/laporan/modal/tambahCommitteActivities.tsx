@@ -101,7 +101,6 @@ export default function App({
               >
                 <ModalBody className="w-full">
                   <Select
-                    autoFocus
                     className="w-full"
                     errorMessage="Pilih jenis kegiatan dengan benar"
                     label="Jenis Kegiatan"
@@ -123,6 +122,7 @@ export default function App({
                   {activityType === "Pelatihan Kepemimpinan" ? (
                     <>
                       <Input
+                        autoFocus
                         onChange={(e) => setActivityName(e.target.value)}
                         errorMessage="Masukkan nama kegiatan dengan benar"
                         label="Nama kegiatan"
