@@ -201,7 +201,7 @@ export default function App({
                       />
                     </>
                   ) : (
-                    <div>
+                    <>
                       <Input
                         autoFocus
                         onChange={(e) => setActivityName(e.target.value)}
@@ -282,7 +282,7 @@ export default function App({
                         type="file"
                         required
                       />
-                    </div>
+                    </>
                   )}
                 </ModalBody>
                 <ModalFooter className="w-full">
