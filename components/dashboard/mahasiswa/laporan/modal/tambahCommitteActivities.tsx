@@ -85,7 +85,6 @@ export default function App({
       </Button>
       <Modal
         placement="top"
-        scrollBehavior="inside"
         className="h-full"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
