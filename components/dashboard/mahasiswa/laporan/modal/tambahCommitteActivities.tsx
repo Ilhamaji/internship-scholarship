@@ -119,8 +119,10 @@ export default function App({
                       Panitia Dalam Kegiatan Perguruan Tinggi
                     </SelectItem>
                   </Select>
-                  {activityType === "Pelatihan Kepemimpinan" ? (
-                    <div>
+                  {activityType === "" || activityType === undefined ? (
+                    <></>
+                  ) : activityType === "Pelatihan Kepemimpinan" ? (
+                    <>
                       <Input
                         autoFocus
                         onChange={(e) => setActivityName(e.target.value)}
@@ -197,7 +199,7 @@ export default function App({
                         type="file"
                         required
                       />
-                    </div>
+                    </>
                   ) : (
                     <div>
                       <Input
