@@ -78,7 +78,7 @@ export default function App({
   return (
     <>
       <Button onPress={onOpen}>Tambah Laporan</Button>
-      <Modal placement="auto" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="center" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <Form onSubmit={tambahLaporanHandler}>

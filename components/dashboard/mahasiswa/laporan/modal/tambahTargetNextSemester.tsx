@@ -51,7 +51,7 @@ export default function App({
       <Button onPress={onOpen} className="flex max-w-40">
         <LinkIcon /> Tambah Data
       </Button>
-      <Modal placement="auto" isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal placement="center" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
