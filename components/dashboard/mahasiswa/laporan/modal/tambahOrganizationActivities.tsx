@@ -156,6 +156,13 @@ export default function App({
                       required
                     />
                   </div>
+                  <Input
+                    errorMessage="Masukkan bukti organisasi dengan benar"
+                    label="Bukti"
+                    labelPlacement="outside"
+                    placeholder="Masukkan bukti kegiatan"
+                    type="file"
+                  />
                 </ModalBody>
                 <ModalFooter className="w-full">
                   <Button color="danger" variant="light" onPress={onClose}>

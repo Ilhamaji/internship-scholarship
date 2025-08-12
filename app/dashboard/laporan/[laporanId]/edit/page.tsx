@@ -341,7 +341,7 @@ const Page: React.FC = () => {
       const formData = new FormData();
       formData.append("dataBaru", JSON.stringify(payload));
 
-      if (academicReportsBukti) {
+      if (academicReportsBukti !== null && academicReportsBukti !== undefined) {
         formData.append("academicReports_bukti", academicReportsBukti);
       }
 
@@ -432,6 +432,7 @@ const Page: React.FC = () => {
     return <TabelSkeleton />;
   }
 
+  console.log(fullData);
   return (
     <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 xl:px-36">
       {message === "success" ? (
@@ -494,10 +495,14 @@ const Page: React.FC = () => {
             Prestasi yang diraih selama semester ini
           </div>
           <TambahStudentsAchievements
+            studentAchievementsBukti={studentAchievementsBukti}
+            setStudentAchievementsBukti={setStudentAchievementsBukti}
             setStudentsAchievements={setStudentAchievements}
             studentsAchievements={studentAchievements}
           />
           <TabelStudentsAchievements
+            studentAchievementsBukti={studentAchievementsBukti}
+            setStudentAchievementsBukti={setStudentAchievementsBukti}
             idStudentAchievements={idStudentAchievements}
             setIdStudentAchievements={setIdStudentAchievements}
             setStudentsAchievements={setStudentAchievements}

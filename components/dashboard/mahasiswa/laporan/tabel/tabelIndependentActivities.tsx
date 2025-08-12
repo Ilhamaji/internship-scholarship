@@ -22,7 +22,7 @@ export default function App({
   setIndependentActivities: any;
 }) {
   return (
-    <Table aria-label="Example static collection table">
+    <Table aria-label="Example static collection table" isStriped>
       <TableHeader>
         <TableColumn>NO</TableColumn>
         <TableColumn>NAMA KEGIATAN</TableColumn>

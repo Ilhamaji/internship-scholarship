@@ -14,8 +14,6 @@ export default function textArea({
     <>
       <Textarea
         size="lg"
-        label="Faktor Penghambat"
-        labelPlacement="inside"
         onChange={(e) => setBarrierFactors(e.target.value)}
         defaultValue={
           barrierFactors === undefined ||

@@ -17,9 +17,13 @@ import { useState } from "react";
 import { Select, SelectItem } from "@heroui/select";
 
 export default function App({
+  studentAchievementsBukti,
+  setStudentAchievementsBukti,
   studentsAchievements,
   setStudentsAchievements,
 }: {
+  studentAchievementsBukti: any;
+  setStudentAchievementsBukti: any;
   studentsAchievements: any;
   setStudentsAchievements: any;
 }) {
@@ -32,7 +36,8 @@ export default function App({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [place, setPlace] = useState("");
-  const [buktiUrl, setBuktiUrl] = useState("");
+  const [bukti, setBukti] = useState<File | null>(null);
+  const [buktiError, setBuktiError] = useState<String | null>(null);
 
   const tambahAcademicActivity = async (
     e: React.FormEvent<HTMLFormElement>
@@ -50,7 +55,6 @@ export default function App({
           startDate: startDate,
           endDate: endDate,
           place: place,
-          // buktiUrl: buktiUrl,
         },
       ]);
     } else {
@@ -65,9 +69,16 @@ export default function App({
           startDate: startDate,
           endDate: endDate,
           place: place,
-          // buktiUrl: buktiUrl,
         },
       ]);
+    }
+
+    if (bukti !== null) {
+      if (studentAchievementsBukti !== null) {
+        setStudentAchievementsBukti(bukti);
+      } else {
+        setStudentAchievementsBukti([bukti]);
+      }
     }
 
     setAchievementsName("");
@@ -78,7 +89,7 @@ export default function App({
     setStartDate("");
     setEndDate("");
     setPlace("");
-    setBuktiUrl("");
+    setBukti(null);
 
     onOpenChange();
   };
@@ -197,8 +208,23 @@ export default function App({
                     required
                   />
                   <Input
-                    onChange={(e) => setBuktiUrl(e.target.value)}
-                    errorMessage="Masukkan bukti kegiatan dengan benar"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        const file = e.target.files[0];
+                        if (file.size > 4 * 1024 * 1024) {
+                          // 4 MB
+                          setBuktiError("Ukuran file maksimal 4 MB");
+                          setBukti(null);
+                        } else {
+                          setBuktiError(null);
+                          setBukti(file);
+                        }
+                      }
+                    }}
+                    errorMessage={
+                      buktiError || "Masukkan bukti kegiatan dengan benar"
+                    }
+                    isInvalid={!!buktiError}
                     label="Bukti"
                     labelPlacement="outside"
                     placeholder="Masukkan bukti kegiatan"

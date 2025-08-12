@@ -53,25 +53,28 @@ const Page: React.FC = () => {
   const handleEditMahasiswa = async () => {
     if (!userData?.userId) return;
     setSaving(true);
-    try {
-      await api.patch(`/users/edit/${userData.userId}`, {
-        email: email || userData.email,
-        noHp: noHp || userData.studentDetails?.noHp,
-        alamat: alamat || userData.studentDetails?.alamat,
-      });
 
-      setMessage("success");
-      setIsVisible(true);
-      setIsEdit(false);
-      await refreshUserData();
-      window.scrollTo(0, 0);
-    } catch (err) {
-      console.error("Update failed:", err);
-      setMessage("error");
-      setIsVisible(true);
-      window.scrollTo(0, 0);
-    } finally {
-      setSaving(false);
+    if (email === "" || noHp === "" || alamat === "") {
+      try {
+        await api.patch(`/users/edit/${userData.userId}`, {
+          email: email || userData.email,
+          noHp: noHp || userData.studentDetails?.noHp,
+          alamat: alamat || userData.studentDetails?.alamat,
+        });
+
+        setMessage("success");
+        setIsVisible(true);
+        setIsEdit(false);
+        await refreshUserData();
+        window.scrollTo(0, 0);
+      } catch (err) {
+        console.error("Update failed:", err);
+        setMessage("error");
+        setIsVisible(true);
+        window.scrollTo(0, 0);
+      } finally {
+        setSaving(false);
+      }
     }
   };
 

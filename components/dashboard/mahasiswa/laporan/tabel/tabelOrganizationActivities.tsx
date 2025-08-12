@@ -22,45 +22,59 @@ export default function App({
   setOrganizationActivities: any;
 }) {
   return (
-    <Table aria-label="Example static collection table">
+    <Table aria-label="Example static collection table" isStriped>
       <TableHeader>
         <TableColumn>NO</TableColumn>
         <TableColumn>NAMA ORGANISASI</TableColumn>
         <TableColumn>NAMA KEGIATAN</TableColumn>
         <TableColumn>KEIKUTSERTAAN</TableColumn>
         <TableColumn>TINGKAT</TableColumn>
-        <TableColumn>TANGGAL</TableColumn>
+        <TableColumn>TANGGAL MULAI</TableColumn>
+        <TableColumn>TANGGAL BERAKHIR</TableColumn>
         <TableColumn className="text-end">AKSI</TableColumn>
       </TableHeader>
       <TableBody>
-        {organizationActivities?.map((item: any, index: any) => (
-          <TableRow key={index}>
-            <TableCell>{index + 1}</TableCell>
-            <TableCell className="truncate">{item.ukmName}</TableCell>
-            <TableCell className="truncate">{item.activityName}</TableCell>
-            <TableCell>{item.position}</TableCell>
-            <TableCell>{item.level}</TableCell>
-            <TableCell>
-              {item.startDate} - {item.endDate}
-            </TableCell>
-            <TableCell>
-              <div className="flex flex-row gap-2 justify-end">
-                <ModalEdit
-                  index={index}
-                  organizationActivities={organizationActivities}
-                  setOrganizationActivities={setOrganizationActivities}
-                />
-                <ModalDelete
-                  index={index}
-                  idOrganizationActivities={idOrganizationActivities}
-                  setIdOrganizationActivities={setIdOrganizationActivities}
-                  organizationActivities={organizationActivities}
-                  setOrganizationActivities={setOrganizationActivities}
-                />
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
+        {organizationActivities?.map((item: any, index: any) => {
+          const startParts = item.startDate.split("-");
+          const endParts = item.endDate.split("-");
+          const startDay = startParts[2];
+          const startMonth = startParts[1];
+          const startYear = startParts[0];
+          const endDay = endParts[2];
+          const endMonth = endParts[1];
+          const endYear = endParts[0];
+
+          const startDate = `${startDay}-${startMonth}-${startYear}`;
+          const endDate = `${endDay}-${endMonth}-${endYear}`;
+
+          return (
+            <TableRow key={index}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell className="truncate">{item.ukmName}</TableCell>
+              <TableCell className="truncate">{item.activityName}</TableCell>
+              <TableCell>{item.position}</TableCell>
+              <TableCell>{item.level}</TableCell>
+              <TableCell>{startDate}</TableCell>
+              <TableCell>{endDate}</TableCell>
+              <TableCell>
+                <div className="flex flex-row gap-2 justify-end">
+                  <ModalEdit
+                    index={index}
+                    organizationActivities={organizationActivities}
+                    setOrganizationActivities={setOrganizationActivities}
+                  />
+                  <ModalDelete
+                    index={index}
+                    idOrganizationActivities={idOrganizationActivities}
+                    setIdOrganizationActivities={setIdOrganizationActivities}
+                    organizationActivities={organizationActivities}
+                    setOrganizationActivities={setOrganizationActivities}
+                  />
+                </div>
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

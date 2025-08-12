@@ -14,8 +14,6 @@ export default function textArea({
     <>
       <Textarea
         size="lg"
-        label="Faktor Pendukung"
-        labelPlacement="inside"
         onChange={(e) => setSupportFactors(e.target.value)}
         defaultValue={
           supportFactors === undefined ||

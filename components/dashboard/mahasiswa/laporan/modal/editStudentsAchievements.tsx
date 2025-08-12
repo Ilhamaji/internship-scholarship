@@ -15,10 +15,14 @@ import { Select, SelectItem } from "@heroui/select";
 import EditIcon from "@/components/icon/iconEdit";
 
 export default function edit({
+  studentAchievementsBukti,
+  setStudentAchievementsBukti,
   studentsAchievements,
   setStudentsAchievements,
   index,
 }: {
+  studentAchievementsBukti: any;
+  setStudentAchievementsBukti: any;
   studentsAchievements: any;
   setStudentsAchievements: any;
   index: number;
@@ -32,7 +36,7 @@ export default function edit({
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [place, setPlace] = useState("");
-  const [buktiUrl, setBuktiUrl] = useState("");
+  const [bukti, setBukti] = useState<File | null>(null);
 
   const tambahAcademicActivity = async (
     e: React.FormEvent<HTMLFormElement>
@@ -64,10 +68,6 @@ export default function edit({
               ? studentsAchievements[index].endDate
               : endDate,
           place: place.length === 0 ? studentsAchievements[index].place : place,
-          buktiUrl:
-            buktiUrl.length === 0
-              ? studentsAchievements[index].buktiUrl
-              : buktiUrl,
         };
 
         return data;
@@ -76,6 +76,14 @@ export default function edit({
       return v;
     });
     setStudentsAchievements(newArray);
+
+    if (bukti && studentAchievementsBukti !== null) {
+      setStudentAchievementsBukti((prev: any) => [...prev, bukti]);
+    }
+
+    if (bukti && studentAchievementsBukti === null) {
+      setStudentAchievementsBukti([bukti]);
+    }
 
     onOpenChange();
   };
@@ -215,16 +223,14 @@ export default function edit({
                     required
                   />
                   <Input
-                    onChange={(e) => setBuktiUrl(e.target.value)}
+                    onChange={(e) =>
+                      e.target.files ? setBukti(e.target.files[0]) : null
+                    }
                     errorMessage="Masukkan bukti kegiatan dengan benar"
                     label="Bukti"
                     labelPlacement="outside"
                     placeholder="Masukkan bukti kegiatan"
                     type="file"
-                    defaultValue={studentsAchievements[index].buktiUrl}
-                    required={
-                      studentsAchievements[index].buktiUrl ? false : true
-                    }
                   />
                 </ModalBody>
                 <ModalFooter className="w-full">

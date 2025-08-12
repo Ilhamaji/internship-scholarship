@@ -236,7 +236,6 @@ export default function App({
                     labelPlacement="outside"
                     placeholder="Masukkan bukti kegiatan"
                     type="file"
-                    required
                   />
                 </ModalBody>
                 <ModalFooter className="w-full">
