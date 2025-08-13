@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import Navbar from "@/components/dashboard/root/navbar";
-import ClientProvider from "@/components/dashboard/root/provider/clientProvider";
 import MonevProvider from "@/components/dashboard/mahasiswa/root/provider/monevProvider";
 
 export const metadata: Metadata = {
@@ -19,12 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <div className="min-h-screen bg-neutral-100">
-      <ClientProvider>
-        <MonevProvider>
-          <Navbar />
-          {children}
-        </MonevProvider>
-      </ClientProvider>
+      <MonevProvider>{children}</MonevProvider>
     </div>
   );
 }

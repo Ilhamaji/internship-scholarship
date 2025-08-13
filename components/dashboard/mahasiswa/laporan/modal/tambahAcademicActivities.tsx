@@ -53,20 +53,12 @@ export default function App({
       },
     ]);
 
-    // 2️⃣ Tambah bukti di index yang sesuai
-    if (bukti) {
-      setAcademicActivitiesBukti((prev: File[] | null) => {
-        const newArray = prev ? [...prev] : [];
-        newArray.push(bukti); // tambahkan di akhir, index sesuai dengan academicActivities terakhir
-        return newArray;
-      });
-    } else {
-      // Kalau tidak ada bukti, tetap tambahkan null agar index tetap sejajar
-      setAcademicActivitiesBukti((prev: (File | null)[] | null) => {
-        const newArray = prev ? [...prev] : [];
-        newArray.push(null);
-        return newArray;
-      });
+    if (bukti !== null) {
+      if (academicActivitiesBukti && Array.isArray(academicActivitiesBukti)) {
+        setAcademicActivitiesBukti([...academicActivitiesBukti, bukti]);
+      } else {
+        setAcademicActivitiesBukti([bukti]);
+      }
     }
 
     // 3️⃣ Reset form

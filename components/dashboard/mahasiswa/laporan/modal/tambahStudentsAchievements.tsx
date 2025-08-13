@@ -74,8 +74,8 @@ export default function App({
     }
 
     if (bukti !== null) {
-      if (studentAchievementsBukti !== null) {
-        setStudentAchievementsBukti(bukti);
+      if (studentAchievementsBukti && Array.isArray(studentAchievementsBukti)) {
+        setStudentAchievementsBukti([...studentAchievementsBukti, bukti]);
       } else {
         setStudentAchievementsBukti([bukti]);
       }

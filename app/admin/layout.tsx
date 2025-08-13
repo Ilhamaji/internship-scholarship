@@ -1,27 +1,18 @@
-import { Metadata } from "next";
-import Navbar from "@/components/admin/root/navbar";
-import { UserProvider } from "@/contexts/userData";
+import React from "react";
+import SidebarAdmin from "@/components/admin/root/navbar";
 
-export const metadata: Metadata = {
-  title: "Admin | Web Monitoring TSU",
-  description:
-    "Website ini adalah website monitoring untuk mahasiswa yang menerima beasiswa di Tiga Serangkai University.",
-  icons: {
-    icon: "/icon/logo.svg",
-  },
-};
-
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-neutral-100">
-      <UserProvider>
-        <Navbar />
-        {children}
-      </UserProvider>
+    <div className="flex min-h-screen">
+      {/* Sidebar di kiri */}
+      <SidebarAdmin />
+
+      {/* Konten utama di kanan */}
+      <main className="flex-1 p-4 bg-gray-50 overflow-y-auto">{children}</main>
     </div>
   );
 }

@@ -11,102 +11,107 @@ import {
   TableCell,
 } from "@heroui/table";
 import { Spinner } from "@heroui/spinner";
-import { Pagination } from "@heroui/pagination";
 import api from "@/lib/axios";
 import ModalEditLaporan from "@/components/admin/root/modal/modalEditLaporan";
 import ModalDeleteLaporan from "@/components/admin/root/modal/modalDeleteLaporan";
 import { Chip } from "@heroui/chip";
+import { Button } from "@heroui/button";
+
+// Format tanggal
+const formatTanggal = (dateString: string) => {
+  if (!dateString) return "";
+  if (typeof window === "undefined") return "";
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+  return `${year}-${month}-${day}`;
+};
 
 export default function App() {
-  const [page, setPage] = React.useState(1);
   const [refresh, setRefresh] = React.useState(false);
 
   const fetcher = async (url: any) => {
     const { data } = await api.get(url);
+    console.log(data.data);
     return data.data;
   };
 
-  const endpoint = `/admin/monev/laporan?status=Pending&?page=${page}`;
+  const endpoint = `/admin/monev/laporan?status=Pending`;
 
   const { data, isLoading } = useSWR(endpoint, fetcher, {
     keepPreviousData: true,
   });
 
-  // Use useEffect to refresh SWR data when shouldRefresh is triggered
   useEffect(() => {
     if (refresh) {
-      mutate(endpoint); // re-fetch data
-      setRefresh(false); // reset trigger
+      mutate(endpoint);
+      setRefresh(false);
     }
   }, [refresh, endpoint]);
 
-  const rowsPerPage = 10;
-
-  const pages = React.useMemo(() => {
-    return data?.pagination.total
-      ? Math.ceil(data?.pagination.total / rowsPerPage)
-      : 0;
-  }, [data?.pagination.total, rowsPerPage]);
-
   const loadingState =
-    isLoading || data?.result.length === 0 ? "loading" : "idle";
+    isLoading || data?.result?.length === 0 ? "loading" : "idle";
 
-  const startIndex = (page - 1) * 10;
+  const latestFive = React.useMemo(() => {
+    if (!data?.result) return [];
+    return [...data.result]
+      .sort(
+        (a, b) =>
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      )
+      .slice(0, 5);
+  }, [data?.result]);
 
   return (
     <Table
-      width={"100%"}
-      selectionMode="single"
       isStriped
-      aria-label="Example table with client async pagination"
-      bottomContent={
-        pages > 0 ? (
-          <div className="flex w-full justify-center">
-            <Pagination
-              isCompact
-              showControls
-              showShadow
-              color="primary"
-              page={page}
-              total={pages}
-              onChange={(page) => setPage(page)}
-            />
-          </div>
-        ) : null
-      }
+      width="100%"
+      aria-label="Tabel Laporan Terbaru"
+      classNames={{
+        wrapper: "rounded-none shadow-none",
+        table: "min-w-full border-collapse",
+        th: "bg-[#0097A7] text-white font-semibold px-4 py-2 text-left",
+        td: "px-4 py-2 text-left",
+        tr: "hover:bg-gray-50",
+      }}
     >
       <TableHeader>
-        <TableColumn>NO</TableColumn>
-        <TableColumn>SEMESTER</TableColumn>
-        <TableColumn>NAMA</TableColumn>
-        <TableColumn>STATUS</TableColumn>
-        <TableColumn className="text-end">AKSI</TableColumn>
+        <TableColumn>No</TableColumn>
+        <TableColumn className="text-center">Semester</TableColumn>
+        <TableColumn>Tahun Ajaran</TableColumn>
+        <TableColumn>NIM</TableColumn>
+        <TableColumn>Nama Mahasiswa</TableColumn>
+        <TableColumn>Tanggal Dikirim</TableColumn>
+        <TableColumn>Status</TableColumn>
+        <TableColumn className="text-right">Aksi</TableColumn>
       </TableHeader>
       <TableBody
-        items={data?.result ?? []}
+        items={latestFive}
         loadingContent={<Spinner />}
         loadingState={loadingState}
       >
-        {data?.result.map((item: any, index: any) => {
-          if (item.status!=="Draft") {
-            return (
+        {latestFive.map((item: any, index: any) => {
+          const semesterValue = item.academicReports?.semester || "-";
+          const tahunAjaranValue = item.semester
+            ? `${item.semester.tahunAjaran} ${item.semester.semester}`
+            : "-";
+
+          return (
             <TableRow key={index}>
-              <TableCell>{startIndex + index + 1}</TableCell>
-              <TableCell>{item.semesterId}</TableCell>
-              <TableCell>
-                <div className="line-clamp-2 overflow-hidden">
-                  {item.user.name}
-                </div>
-              </TableCell>
+              <TableCell>{index + 1}.</TableCell>
+              <TableCell className="text-center">{semesterValue}</TableCell>
+              <TableCell>{tahunAjaranValue}</TableCell>
+              <TableCell>{item.user?.userId || "-"}</TableCell>
+              <TableCell>{item.user?.name}</TableCell>
+              <TableCell>{formatTanggal(item.updatedAt)}</TableCell>
               <TableCell>
                 {item.status === "Lolos" ||
                 item.status === "Lolos dengan penugasan" ? (
                   <Chip color="success" className="text-white">
                     {item.status}
                   </Chip>
-                ) : item.status === "Ditolak SP-1" ||
-                  item.status === "Ditolak SP-2" ||
-                  item.status === "Ditolak SP-3" ? (
+                ) : item.status.startsWith("Ditolak") ? (
                   <Chip color="danger">{item.status}</Chip>
                 ) : item.status === "Draft" ? (
                   <Chip className="text-white" color="warning">
@@ -116,21 +121,29 @@ export default function App() {
                   <Chip color="default">{item.status}</Chip>
                 )}
               </TableCell>
-
-              <TableCell className="flex justify-end">
-                <div className="flex flex-row gap-2 py-6">
+              <TableCell className="text-right py-6">
+                <div className="flex flex-row gap-2">
                   <ModalEditLaporan laporanId={item.laporanId} />
                   <ModalDeleteLaporan
                     laporanId={item.laporanId}
                     refresh={refresh}
-                    setRefresh={setRefresh} // trigger refresh
+                    setRefresh={setRefresh}
                   />
                 </div>
               </TableCell>
             </TableRow>
           );
-          }
         })}
+
+        <TableRow>
+          <TableCell colSpan={8} className="text-right">
+            <a href="/admin/laporan_monev">
+              <Button style={{ backgroundColor: "#0097A7", color: "#FFFFFF" }}>
+                Lihat Selengkapnya
+              </Button>
+            </a>
+          </TableCell>
+        </TableRow>
       </TableBody>
     </Table>
   );

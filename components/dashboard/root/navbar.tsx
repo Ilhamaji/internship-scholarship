@@ -21,14 +21,15 @@ import {
 } from "@heroui/dropdown";
 import Cookies from "js-cookie";
 import { Skeleton } from "@heroui/skeleton";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/contexts/userData";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const menuItems = ["Dashboard", "Laporan Monev", "Riwayat Laporan"];
+  const menuItems = ["Dashboard", "Riwayat Laporan"];
   const [latestLaporanId, setLatestLaporanId] = useState("");
   const router = useRouter();
+  const pathname = usePathname();
 
   const { userData, loading: loadingUser } = useUser();
 
@@ -51,17 +52,26 @@ export default function App() {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem>
-            <Link color="foreground" href={"/dashboard"}>
+            <Link
+              className={
+                pathname === "/dashboard"
+                  ? "text-green-900"
+                  : "text-black hover:text-green-600"
+              }
+              href={"/dashboard"}
+            >
               Dashboard
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Laporan Monev
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link color="foreground" href="#">
+            <Link
+              className={
+                pathname === "/riwayat-laporan"
+                  ? "text-green-900"
+                  : "text-black hover:text-green-600"
+              }
+              href="/riwayat-laporan"
+            >
               Riwayat Laporan
             </Link>
           </NavbarItem>

@@ -8,6 +8,9 @@ import { Alert } from "@heroui/alert";
 import { Button } from "@heroui/button";
 import { Input, Textarea } from "@heroui/input";
 import { RadioGroup, Radio } from "@heroui/radio";
+import { Progress } from "@heroui/progress";
+import { Image } from "@heroui/image";
+import { useMonev } from "@/contexts/monevData";
 
 interface StudentDetails {
   prodi?: string | null;
@@ -41,6 +44,7 @@ const Page: React.FC = () => {
   const [message, setMessage] = useState<"success" | "error" | "">("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [saving, setSaving] = useState<boolean>(false);
+  const { monevData, datas, refreshMonev, loading } = useMonev();
 
   // initialize form from context userData
   useEffect(() => {
@@ -78,6 +82,22 @@ const Page: React.FC = () => {
     }
   };
 
+  function toTitleCase(str: string) {
+    // Handle empty or non-string input
+    if (!str || typeof str !== "string") {
+      return "";
+    }
+
+    return str
+      .toLowerCase() // Convert the entire string to lowercase
+      .split(" ") // Split the string into an array of words
+      .map((word) => {
+        // Capitalize the first letter of each word
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      })
+      .join(" "); // Join the words back into a single string
+  }
+
   // derived for readability
   const user = userData as UserData | null;
 
@@ -86,7 +106,7 @@ const Page: React.FC = () => {
   }
 
   return (
-    <div className="px-4 md:px-6 xl:px-36 py-4">
+    <div className="mx-4 md:px-6 xl:px-36 py-4">
       {isVisible && message === "success" && (
         <Alert
           color="success"
@@ -108,8 +128,63 @@ const Page: React.FC = () => {
         />
       )}
 
-      <div className="flex flex-col md:flex-row gap-4 mt-4">
+      <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        <div className="flex flex-col border bg-[#fff] px-8 w-full sm:w-80 lg:w-96 h-fit rounded-xl shadow-md">
+          <div className="flex mx-auto pt-6">
+            <Image
+              src={userData?.avatar}
+              width={100}
+              height={100}
+              className="mx-auto rounded-full"
+            />
+          </div>
+          <div className="py-6 text-lg text-center">
+            {toTitleCase(userData?.name ?? "")}
+          </div>
+          <hr />
+          <div className="flex flex-col gap-1 py-6">
+            <div className="text-base sm:text-md font-bold">
+              {userData?.userId}
+            </div>
+            <div className="text-base sm:text-md font-base">
+              {datas?.user.prodi}
+            </div>
+            <div className="text-base sm:text-md">
+              Angkatan {userData?.studentDetails.angkatan}
+            </div>
+          </div>
+          <hr />
+          <div className="flex flex-col gap-2 py-6 text-base sm:text-md">
+            <div className="">
+              Beasiswa : {userData?.studentDetails.jenisBeasiswa}
+            </div>
+            <div className="">Kelas : {userData?.studentDetails.kelas}</div>
+            <div className="">
+              Jenis Kelamin : {userData?.studentDetails.jenisKelamin}
+            </div>
+            <div className="">Alamat : {userData?.studentDetails.alamat}</div>
+            <div className="">No HP : {userData?.studentDetails.noHp}</div>
+          </div>
+          <hr />
+          <div className="flex flex-col gap-2 py-6 text-base sm:text-md">
+            <Progress
+              label="Laporan terajukan"
+              showValueLabel={true}
+              valueLabel={`${datas?.user.submittedCount ?? "0"}/8`}
+              aria-label="Progress..."
+              size="lg"
+              value={
+                datas?.user.submittedCount
+                  ? (datas?.user.submittedCount / 8) * 100
+                  : 0
+              }
+            />
+          </div>
+        </div>
         <div className="flex flex-col gap-4 p-10 w-full bg-white shadow-md rounded-lg">
+          <div className="text-lg mb-4 sm:text-xl md:text-2xl font-bold">
+            Data Mahasiswa
+          </div>
           <div className="flex flex-col sm:flex-row gap-4">
             <Input
               errorMessage="Masukkan nama lengkap dengan benar"

@@ -32,7 +32,7 @@ export default function App() {
   });
 
   // Handle data refresh when refresh changes
-  useEffect(() => {
+  useEffect(() => { 
     if (refresh) {
       mutate(`/admin/mahasiswa?page=${page}`); // Re-fetch data
       setRefresh(false); // Reset refresh trigger

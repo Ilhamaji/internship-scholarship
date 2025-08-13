@@ -1,10 +1,8 @@
 "use client";
 
 import React, { use, useEffect, useState } from "react";
-import TabelLaporan from "@/components/dashboard/mahasiswa/root/tabelLaporan";
-import TabelLaporanPending from "@/components/dashboard/mahasiswa/root/tabelLaporanPending";
+import TabelLaporanAcc from "@/components/riwayat-laporan/tabelLaporanAcc";
 import { Spinner } from "@heroui/spinner";
-import TambahLaporan from "@/components/dashboard/mahasiswa/laporan/modal/tambahLaporan";
 import { useUser } from "@/contexts/userData";
 import { Image } from "@heroui/image";
 import { Progress } from "@heroui/progress";
@@ -13,9 +11,9 @@ import { useMonev } from "@/contexts/monevData";
 export default function page() {
   const [submitted, setSubmitted] = useState(false);
   const { userData, setUserData } = useUser();
-  const { monevData, datas, refreshMonev, loadingMonev } = useMonev();
+  const { monevData, datas, refreshMonev, loading } = useMonev();
 
-  if (loadingMonev) {
+  if (loading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
         <Spinner />
@@ -39,7 +37,7 @@ export default function page() {
       .join(" "); // Join the words back into a single string
   }
 
-  if (!loadingMonev) {
+  if (!loading) {
     return (
       <div className="w-full">
         <div className="px-4 md:px-6 xl:px-36 flex flex-col md:flex-row gap-4 py-4">
@@ -98,30 +96,13 @@ export default function page() {
 
           <div className="flex flex-col gap-2 w-full">
             <div className="text-lg sm:text-xl md:text-2xl font-bold">
-              Laporan Beasiswa
+              Riwayat Laporan
             </div>
-            <div className="text-sm sm:text-base md:text-lg">
-              Selamat datang, mahasiswa {toTitleCase(userData?.name ?? "")}
-            </div>
-            <TambahLaporan setSubmitted={setSubmitted} submitted={submitted} />
-            <div className="bg-white rounded-lg p-2 mt-2">
-              <div className="text-xl mb-2">Laporan monev yang tersimpan</div>
-              <TabelLaporan
-                monevData={monevData}
-                setSubmitted={setSubmitted}
-                submitted={submitted}
-              />
-            </div>
-            <div className="bg-white rounded-lg p-2">
-              <div className="text-xl mb-2">
-                Laporan monev yang telah diajukan
-              </div>
-              <TabelLaporanPending
-                monevData={monevData}
-                setSubmitted={setSubmitted}
-                submitted={submitted}
-              />
-            </div>
+            <TabelLaporanAcc
+              monevData={monevData}
+              setSubmitted={setSubmitted}
+              submitted={submitted}
+            />
           </div>
         </div>
       </div>

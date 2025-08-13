@@ -268,6 +268,24 @@
     "@react-types/checkbox" "3.9.5"
     "@react-types/shared" "3.30.0"
 
+"@heroui/checkbox@^2.3.24":
+  version "2.3.24"
+  resolved "https://registry.yarnpkg.com/@heroui/checkbox/-/checkbox-2.3.24.tgz#07b1a6ad93c5be7951b9568d375dbd9dfbd0cfa3"
+  integrity sha512-H/bcpYGeWB9WFhkkOPojO4ONrz5GIMzfAMYdaKOUFtLVl7B9yVca7HaKdNryAFtNSBd/QQAm/an7gh/OFxIgew==
+  dependencies:
+    "@heroui/form" "2.1.24"
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/shared-utils" "2.1.10"
+    "@heroui/use-callback-ref" "2.1.8"
+    "@heroui/use-safe-layout-effect" "2.1.8"
+    "@react-aria/checkbox" "3.16.0"
+    "@react-aria/focus" "3.21.0"
+    "@react-aria/interactions" "3.25.4"
+    "@react-stately/checkbox" "3.7.0"
+    "@react-stately/toggle" "3.9.0"
+    "@react-types/checkbox" "3.10.0"
+    "@react-types/shared" "3.31.0"
+
 "@heroui/chip@^2.2.17":
   version "2.2.17"
   resolved "https://registry.npmjs.org/@heroui/chip/-/chip-2.2.17.tgz"
@@ -554,6 +572,17 @@
     "@react-aria/utils" "3.29.1"
     "@react-stately/overlays" "3.6.17"
     "@react-types/overlays" "3.8.16"
+
+"@heroui/progress@^2.2.20":
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/@heroui/progress/-/progress-2.2.20.tgz#59c2a1a0f7c47bcdfa950b7f92b1e12f2e224b0b"
+  integrity sha512-TMnMh/TPGDPr2c91tcD5JyWRph74xENLcaV/jIihh9UZpKKLrzoU1rTCjKbqaK7Dz9y5fcgM8vVAZmf7SK3mWA==
+  dependencies:
+    "@heroui/react-utils" "2.1.12"
+    "@heroui/shared-utils" "2.1.10"
+    "@heroui/use-is-mounted" "2.1.8"
+    "@react-aria/progress" "3.4.25"
+    "@react-types/progress" "3.5.14"
 
 "@heroui/radio@^2.3.23":
   version "2.3.24"
@@ -903,6 +932,13 @@
   dependencies:
     "@heroui/use-safe-layout-effect" "2.1.7"
 
+"@heroui/use-callback-ref@2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@heroui/use-callback-ref/-/use-callback-ref-2.1.8.tgz#c586a609949b7bb2e358f4458998dfc242e0fc84"
+  integrity sha512-D1JDo9YyFAprYpLID97xxQvf86NvyWLay30BeVVZT9kWmar6O9MbCRc7ACi7Ngko60beonj6+amTWkTm7QuY/Q==
+  dependencies:
+    "@heroui/use-safe-layout-effect" "2.1.8"
+
 "@heroui/use-clipboard@2.1.8":
   version "2.1.8"
   resolved "https://registry.npmjs.org/@heroui/use-clipboard/-/use-clipboard-2.1.8.tgz"
@@ -951,6 +987,11 @@
   dependencies:
     "@react-aria/ssr" "3.9.9"
 
+"@heroui/use-is-mounted@2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@heroui/use-is-mounted/-/use-is-mounted-2.1.8.tgz#8a42f8d99e3641d872c4013044d24449f48ca616"
+  integrity sha512-DO/Th1vD4Uy8KGhd17oGlNA4wtdg91dzga+VMpmt94gSZe1WjsangFwoUBxF2uhlzwensCX9voye3kerP/lskg==
+
 "@heroui/use-measure@2.1.7":
   version "2.1.7"
   resolved "https://registry.npmjs.org/@heroui/use-measure/-/use-measure-2.1.7.tgz"
@@ -968,6 +1009,11 @@
   version "2.1.7"
   resolved "https://registry.npmjs.org/@heroui/use-safe-layout-effect/-/use-safe-layout-effect-2.1.7.tgz"
   integrity sha512-ZiMc+nVjcE5aArC4PEmnLHSJj0WgAXq3udr7FZaosP/jrRdn5VPcfF9z9cIGNJD6MkZp+YP0XGslrIFKZww0Hw==
+
+"@heroui/use-safe-layout-effect@2.1.8":
+  version "2.1.8"
+  resolved "https://registry.yarnpkg.com/@heroui/use-safe-layout-effect/-/use-safe-layout-effect-2.1.8.tgz#a6798339639a728524185f88473ce24b8d437333"
+  integrity sha512-wbnZxVWCYqk10XRMu0veSOiVsEnLcmGUmJiapqgaz0fF8XcpSScmqjTSoWjHIEWaHjQZ6xr+oscD761D6QJN+Q==
 
 "@heroui/use-scroll-position@2.1.7":
   version "2.1.7"
@@ -1352,6 +1398,23 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/checkbox@3.16.0":
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/checkbox/-/checkbox-3.16.0.tgz#775b3c0bde40bcfa8ab28439ba896088ba489d1b"
+  integrity sha512-XPaMz1/iVBG6EbJOPYlNtvr+q4f0axJeoIvyzWW3ciIdDSX/3jYuFg/sv/b3OQQl389cbQ/WUBQyWre/uXWVEg==
+  dependencies:
+    "@react-aria/form" "^3.1.0"
+    "@react-aria/interactions" "^3.25.4"
+    "@react-aria/label" "^3.7.20"
+    "@react-aria/toggle" "^3.12.0"
+    "@react-aria/utils" "^3.30.0"
+    "@react-stately/checkbox" "^3.7.0"
+    "@react-stately/form" "^3.2.0"
+    "@react-stately/toggle" "^3.9.0"
+    "@react-types/checkbox" "^3.10.0"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/datepicker@3.14.4":
   version "3.14.4"
   resolved "https://registry.npmjs.org/@react-aria/datepicker/-/datepicker-3.14.4.tgz"
@@ -1623,6 +1686,18 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/progress@3.4.25":
+  version "3.4.25"
+  resolved "https://registry.yarnpkg.com/@react-aria/progress/-/progress-3.4.25.tgz#ff33ee73bb3ac4f04a711b02c3b85710693379bb"
+  integrity sha512-KD9Gow+Ip6ZCBdsarR+Hby3c4d99I6L95Ruf7tbCh4ut9i9Dbr+x99OwhpAbT0g549cOyeIqxutPkT+JuzrRuA==
+  dependencies:
+    "@react-aria/i18n" "^3.12.11"
+    "@react-aria/label" "^3.7.20"
+    "@react-aria/utils" "^3.30.0"
+    "@react-types/progress" "^3.5.14"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/radio@3.12.0":
   version "3.12.0"
   resolved "https://registry.npmjs.org/@react-aria/radio/-/radio-3.12.0.tgz"
@@ -1750,6 +1825,18 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/toggle@^3.12.0":
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/@react-aria/toggle/-/toggle-3.12.0.tgz#93e4037be4f52b3b8cf5e4f1e087184cf1afda4b"
+  integrity sha512-JfcrF8xUEa2CbbUXp+WQiTBVwSM/dm21v5kueQlksvLfXG6DGE8/zjM6tJFErrFypAasc1JXyrI4dspLOWCfRA==
+  dependencies:
+    "@react-aria/interactions" "^3.25.4"
+    "@react-aria/utils" "^3.30.0"
+    "@react-stately/toggle" "^3.9.0"
+    "@react-types/checkbox" "^3.10.0"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/toolbar@3.0.0-beta.17":
   version "3.0.0-beta.17"
   resolved "https://registry.npmjs.org/@react-aria/toolbar/-/toolbar-3.0.0-beta.17.tgz"
@@ -1847,6 +1934,17 @@
     "@react-stately/utils" "^3.10.7"
     "@react-types/checkbox" "^3.9.5"
     "@react-types/shared" "^3.30.0"
+    "@swc/helpers" "^0.5.0"
+
+"@react-stately/checkbox@3.7.0", "@react-stately/checkbox@^3.7.0":
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/@react-stately/checkbox/-/checkbox-3.7.0.tgz#4464adc16148885a3a8e7fbdfb94eace75ee5887"
+  integrity sha512-opViVhNvxFVHjXhM4nA/E03uvbLazsIKloXX9JtyBCZAQRUag17dpmkekfIkHvP4o7z7AWFoibD8JBFV1IrMcQ==
+  dependencies:
+    "@react-stately/form" "^3.2.0"
+    "@react-stately/utils" "^3.10.8"
+    "@react-types/checkbox" "^3.10.0"
+    "@react-types/shared" "^3.31.0"
     "@swc/helpers" "^0.5.0"
 
 "@react-stately/collections@3.12.5", "@react-stately/collections@^3.12.5":
@@ -1998,6 +2096,16 @@
     "@react-types/shared" "^3.30.0"
     "@swc/helpers" "^0.5.0"
 
+"@react-stately/toggle@3.9.0", "@react-stately/toggle@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@react-stately/toggle/-/toggle-3.9.0.tgz#f32db5d0ad5cb382add52a77a9025ce3fdf10fd8"
+  integrity sha512-1URd97R5nbFF9Hc1nQBhvln55EnOkLNz6pjtXU7TCnV4tYVbe+tc++hgr5XRt6KAfmuXxVDujlzRc6QjfCn0cQ==
+  dependencies:
+    "@react-stately/utils" "^3.10.8"
+    "@react-types/checkbox" "^3.10.0"
+    "@react-types/shared" "^3.31.0"
+    "@swc/helpers" "^0.5.0"
+
 "@react-stately/tooltip@3.5.5", "@react-stately/tooltip@^3.5.5":
   version "3.5.5"
   resolved "https://registry.npmjs.org/@react-stately/tooltip/-/tooltip-3.5.5.tgz"
@@ -2062,6 +2170,13 @@
   dependencies:
     "@internationalized/date" "^3.8.2"
     "@react-types/shared" "^3.30.0"
+
+"@react-types/checkbox@3.10.0", "@react-types/checkbox@^3.10.0":
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/@react-types/checkbox/-/checkbox-3.10.0.tgz#999933ee1b81feea80d2d9f2d0685be248cb5127"
+  integrity sha512-DJ84ilBDvZddE/Sul97Otee4M6psrPRaJm2a1Bc7M3Y5UKo6d6RGXdcDarRRpbnS7BeAbVanKiMS2ygI9QHh9g==
+  dependencies:
+    "@react-types/shared" "^3.31.0"
 
 "@react-types/checkbox@3.9.5", "@react-types/checkbox@^3.9.5":
   version "3.9.5"
@@ -2142,6 +2257,13 @@
   version "3.9.0"
   resolved "https://registry.npmjs.org/@react-types/overlays/-/overlays-3.9.0.tgz"
   integrity sha512-T2DqMcDN5p8vb4vu2igoLrAtuewaNImLS8jsK7th7OjwQZfIWJn5Y45jSxHtXJUddEg1LkUjXYPSXCMerMcULw==
+  dependencies:
+    "@react-types/shared" "^3.31.0"
+
+"@react-types/progress@3.5.14", "@react-types/progress@^3.5.14":
+  version "3.5.14"
+  resolved "https://registry.yarnpkg.com/@react-types/progress/-/progress-3.5.14.tgz#4ac5e15471c015105169778c5befdb1283735b8e"
+  integrity sha512-GeGrjOeHR/p5qQ1gGlN68jb+lL47kuddxMgdR1iEnAlYGY4OtJoEN/EM5W2ZxJRKPcJmzdcY/p/J0PXa8URbSg==
   dependencies:
     "@react-types/shared" "^3.31.0"
 

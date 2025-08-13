@@ -102,8 +102,19 @@ type DetailLaporan = {
 };
 
 type FullData = {
+  createdAt: Date;
+  updatedAt: Date;
   laporanId: string;
   detailLaporan: DetailLaporan;
+  semesterDetail: {
+    semester: string;
+    tahunAjar: string;
+  };
+  userDetails: {
+    name: string;
+    angkatan: string;
+    prodi: string;
+  };
 };
 
 const isTruthyString = (val: string | null | undefined) =>
@@ -432,220 +443,249 @@ const Page: React.FC = () => {
     return <TabelSkeleton />;
   }
 
-  console.log(fullData);
-  return (
-    <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 xl:px-36">
-      {message === "success" ? (
-        <Alert
-          color="success"
-          description="Berhasil memperbarui laporan"
-          title="Berhasil"
-          variant="faded"
-          isClosable
-        />
-      ) : message && message !== "" ? (
-        <Alert
-          color="danger"
-          description={`Gagal memperbarui laporan, Error ${message}`}
-          title="Gagal"
-          variant="faded"
-          isClosable
-        />
-      ) : null}
+  if (!loading) {
+    console.log(fullData);
 
-      <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
-        <div className="text-xl md:text-2xl font-bold">
-          A. LAPORAN KEGIATAN AKADEMIK
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">IPS & IPK</div>
-          <TabelAcademicReports
-            setAcademicReports={setAcademicReports}
-            academicReports={academicReports}
-            academicReportsBukti={academicReportsBukti}
-            setAcademicReportsBukti={setAcademicReportsBukti}
+    return (
+      <div className="flex flex-col gap-2 md:gap-4 py-2 md:py-4 px-2 md:px-6 xl:px-36">
+        {message === "success" ? (
+          <Alert
+            color="success"
+            description="Berhasil memperbarui laporan"
+            title="Berhasil"
+            variant="faded"
+            isClosable
           />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Kegiatan Akademik</div>
-          <TambahAcademicActivities
-            academicActivitiesBukti={academicActivitiesBukti}
-            setAcademicActivitiesBukti={setAcademicActivitiesBukti}
-            setAcademicActivities={setAcademicActivities}
-            academicActivities={academicActivities}
+        ) : message && message !== "" ? (
+          <Alert
+            color="danger"
+            description={`Gagal memperbarui laporan, Error ${message}`}
+            title="Gagal"
+            variant="faded"
+            isClosable
           />
-          <TabelAcademicActivities
-            academicActivitiesBukti={academicActivitiesBukti}
-            setAcademicActivitiesBukti={setAcademicActivitiesBukti}
-            idAcademicActivities={idAcademicActivities}
-            setIdAcademicActivities={setIdAcademicActivities}
-            setAcademicActivities={setAcademicActivities}
-            academicActivities={academicActivities}
-          />
-        </div>
-      </div>
+        ) : null}
 
-      {/* B. Non Akademik */}
-      <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
-        <div className="text-xl md:text-2xl font-bold">
-          B. LAPORAN KEGIATAN NON AKADEMIK
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">
-            Prestasi yang diraih selama semester ini
+        <div className="flex flex-row bg-white rounded-xl p-3 lg:p-12 justify-between">
+          <div className="flex flex-col gap-2">
+            <div className="">
+              Nama mahasiswa : {fullData?.userDetails.name}
+            </div>
+            <div className="">Angkatan : {fullData?.userDetails.angkatan}</div>
+            <div className="">Prodi : {fullData?.userDetails.prodi}</div>
           </div>
-          <TambahStudentsAchievements
-            studentAchievementsBukti={studentAchievementsBukti}
-            setStudentAchievementsBukti={setStudentAchievementsBukti}
-            setStudentsAchievements={setStudentAchievements}
-            studentsAchievements={studentAchievements}
-          />
-          <TabelStudentsAchievements
-            studentAchievementsBukti={studentAchievementsBukti}
-            setStudentAchievementsBukti={setStudentAchievementsBukti}
-            idStudentAchievements={idStudentAchievements}
-            setIdStudentAchievements={setIdStudentAchievements}
-            setStudentsAchievements={setStudentAchievements}
-            studentsAchievements={studentAchievements}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Kegiatan organisasi mahasiswa</div>
-          <TambahOrganizationActivities
-            organizationActivities={organizationActivities}
-            setOrganizationActivities={setOrganizationActivities}
-          />
-          <TabelOrganizationActivities
-            idOrganizationActivities={idOrganizationActivities}
-            setIdOrganizationActivities={setIdOrganizationActivities}
-            organizationActivities={organizationActivities}
-            setOrganizationActivities={setOrganizationActivities}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">
-            Kegiatan kepanitiaan & penugasan selama satu semester
+          <div className="flex flex-col gap-2">
+            <div className="">
+              Laporan semester : {academicReports?.[0]?.semester}
+            </div>
+            <div className="">
+              Tahun Ajaran : {fullData?.semesterDetail.tahunAjar}
+            </div>
+            <div className="">{fullData?.semesterDetail.semester}</div>
           </div>
-          <TambahCommitteActivities
-            committeeActivities={committeeActivities}
-            setCommitteeActivities={setCommitteeActivities}
-          />
-          <TabelCommitteeActivities
-            idCommitteeActivities={idCommitteeActivities}
-            setIdCommitteeActivities={setIdCommitteeActivities}
-            committeeActivities={committeeActivities}
-            setCommitteeActivities={setCommitteeActivities}
-          />
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Kegiatan mandiri selama satu semester</div>
-          <TambahIndependentActivities
-            independentActivities={independentActivities}
-            setIndependentActivities={setIndependentActivities}
-          />
-          <TabelIndependentActivities
-            idIndependentActivities={idIndependentActivities}
-            setIdIndependentActivities={setIdIndependentActivities}
-            independentActivities={independentActivities}
-            setIndependentActivities={setIndependentActivities}
-          />
-        </div>
-      </div>
 
-      {/* C. Evaluasi */}
-      <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
-        <div className="text-xl md:text-2xl font-bold">C. EVALUASI</div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Faktor Pendukung</div>
-          <SupportFactorsTextArea
-            studentEvaluations={studentEvaluations}
-            supportFactors={supportFactors}
-            setSupportFactors={setSupportFactors}
-          />
+        <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
+          <div className="text-xl md:text-2xl font-bold">
+            A. LAPORAN KEGIATAN AKADEMIK
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">IPS & IPK</div>
+            <TabelAcademicReports
+              setAcademicReports={setAcademicReports}
+              academicReports={academicReports}
+              academicReportsBukti={academicReportsBukti}
+              setAcademicReportsBukti={setAcademicReportsBukti}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Kegiatan Akademik</div>
+            <TambahAcademicActivities
+              academicActivitiesBukti={academicActivitiesBukti}
+              setAcademicActivitiesBukti={setAcademicActivitiesBukti}
+              setAcademicActivities={setAcademicActivities}
+              academicActivities={academicActivities}
+            />
+            <TabelAcademicActivities
+              academicActivitiesBukti={academicActivitiesBukti}
+              setAcademicActivitiesBukti={setAcademicActivitiesBukti}
+              idAcademicActivities={idAcademicActivities}
+              setIdAcademicActivities={setIdAcademicActivities}
+              setAcademicActivities={setAcademicActivities}
+              academicActivities={academicActivities}
+            />
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Faktor Penghambat</div>
-          <BarrierFactorsTextArea
-            studentEvaluations={studentEvaluations}
-            setBarrierFactors={setBarrierFactors}
-            barrierFactors={barrierFactors}
-          />
-        </div>
-      </div>
 
-      {/* D. Target Semester Depan */}
-      <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
-        <div className="text-xl md:text-2xl font-bold">
-          D. Target Semester Depan
+        {/* B. Non Akademik */}
+        <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
+          <div className="text-xl md:text-2xl font-bold">
+            B. LAPORAN KEGIATAN NON AKADEMIK
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">
+              Prestasi yang diraih selama semester ini
+            </div>
+            <TambahStudentsAchievements
+              studentAchievementsBukti={studentAchievementsBukti}
+              setStudentAchievementsBukti={setStudentAchievementsBukti}
+              setStudentsAchievements={setStudentAchievements}
+              studentsAchievements={studentAchievements}
+            />
+            <TabelStudentsAchievements
+              studentAchievementsBukti={studentAchievementsBukti}
+              setStudentAchievementsBukti={setStudentAchievementsBukti}
+              idStudentAchievements={idStudentAchievements}
+              setIdStudentAchievements={setIdStudentAchievements}
+              setStudentsAchievements={setStudentAchievements}
+              studentsAchievements={studentAchievements}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Kegiatan organisasi mahasiswa</div>
+            <TambahOrganizationActivities
+              organizationActivities={organizationActivities}
+              setOrganizationActivities={setOrganizationActivities}
+            />
+            <TabelOrganizationActivities
+              idOrganizationActivities={idOrganizationActivities}
+              setIdOrganizationActivities={setIdOrganizationActivities}
+              organizationActivities={organizationActivities}
+              setOrganizationActivities={setOrganizationActivities}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">
+              Kegiatan kepanitiaan & penugasan selama satu semester
+            </div>
+            <TambahCommitteActivities
+              committeeActivities={committeeActivities}
+              setCommitteeActivities={setCommitteeActivities}
+            />
+            <TabelCommitteeActivities
+              idCommitteeActivities={idCommitteeActivities}
+              setIdCommitteeActivities={setIdCommitteeActivities}
+              committeeActivities={committeeActivities}
+              setCommitteeActivities={setCommitteeActivities}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Kegiatan mandiri selama satu semester</div>
+            <TambahIndependentActivities
+              independentActivities={independentActivities}
+              setIndependentActivities={setIndependentActivities}
+            />
+            <TabelIndependentActivities
+              idIndependentActivities={idIndependentActivities}
+              setIdIndependentActivities={setIdIndependentActivities}
+              independentActivities={independentActivities}
+              setIndependentActivities={setIndependentActivities}
+            />
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">IPS & IPK</div>
-          {!targetNextSemester ? (
-            <TambahTargetNextSemester
-              semester={semester}
+
+        {/* C. Evaluasi */}
+        <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
+          <div className="text-xl md:text-2xl font-bold">C. EVALUASI</div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Faktor Pendukung</div>
+            <SupportFactorsTextArea
+              studentEvaluations={studentEvaluations}
+              supportFactors={supportFactors}
+              setSupportFactors={setSupportFactors}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Faktor Penghambat</div>
+            <BarrierFactorsTextArea
+              studentEvaluations={studentEvaluations}
+              setBarrierFactors={setBarrierFactors}
+              barrierFactors={barrierFactors}
+            />
+          </div>
+        </div>
+
+        {/* D. Target Semester Depan */}
+        <div className="flex flex-col gap-2 bg-white rounded-xl p-3 lg:p-12">
+          <div className="text-xl md:text-2xl font-bold">
+            D. Target Semester Depan
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">IPS & IPK</div>
+            {!targetNextSemester ? (
+              <TambahTargetNextSemester
+                semester={semester}
+                targetNextSemester={targetNextSemester}
+                setTargetNextSemester={setTargetNextSemester}
+              />
+            ) : null}
+            <TabelTargetNextSemester
               targetNextSemester={targetNextSemester}
               setTargetNextSemester={setTargetNextSemester}
             />
-          ) : null}
-          <TabelTargetNextSemester
-            targetNextSemester={targetNextSemester}
-            setTargetNextSemester={setTargetNextSemester}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Kegiatan Akademik</div>
-          <TambahTargetAcademicActivities
-            targetAcademicActivities={targetAcademicActivities}
-            setTargetAcademicActivities={setTargetAcademicActivities}
-          />
-          <TabelTargetAcademicActivities
-            idTargetAcademicActivities={idTargetAcademicActivities}
-            setIdTargetAcademicActivities={setIdTargetAcademicActivities}
-            targetAcademicActivities={targetAcademicActivities}
-            setTargetAcademicActivities={setTargetAcademicActivities}
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">
-            Prestasi yang diraih selama semester ini
           </div>
-          <TambahTargetAchievements
-            targetAchievements={targetAchievements}
-            setTargetAchievements={setTargetAchievements}
-          />
-          <TabelTargetAchievements
-            idTargetAchievements={idTargetAchievements}
-            setIdTargetAchievements={setIdTargetAchievements}
-            targetAchievements={targetAchievements}
-            setTargetAchievements={setTargetAchievements}
-          />
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Kegiatan Akademik</div>
+            <TambahTargetAcademicActivities
+              targetAcademicActivities={targetAcademicActivities}
+              setTargetAcademicActivities={setTargetAcademicActivities}
+            />
+            <TabelTargetAcademicActivities
+              idTargetAcademicActivities={idTargetAcademicActivities}
+              setIdTargetAcademicActivities={setIdTargetAcademicActivities}
+              targetAcademicActivities={targetAcademicActivities}
+              setTargetAcademicActivities={setTargetAcademicActivities}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">
+              Prestasi yang diraih selama semester ini
+            </div>
+            <TambahTargetAchievements
+              targetAchievements={targetAchievements}
+              setTargetAchievements={setTargetAchievements}
+            />
+            <TabelTargetAchievements
+              idTargetAchievements={idTargetAchievements}
+              setIdTargetAchievements={setIdTargetAchievements}
+              targetAchievements={targetAchievements}
+              setTargetAchievements={setTargetAchievements}
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <div className="text-lg">Kegiatan mandiri selama satu semester</div>
+            <TambahTargetIndependentActivities
+              targetIndependentActivities={targetIndependentActivities}
+              setTargetIndependentActivities={setTargetIndependentActivities}
+            />
+            <TabelTargetIndependentActivities
+              idTargetIndependentActivities={idTargetIndependentActivities}
+              setIdTargetIndependentActivities={
+                setIdTargetIndependentActivities
+              }
+              targetIndependentActivities={targetIndependentActivities}
+              setTargetIndependentActivities={setTargetIndependentActivities}
+            />
+          </div>
         </div>
-        <div className="flex flex-col gap-2">
-          <div className="text-lg">Kegiatan mandiri selama satu semester</div>
-          <TambahTargetIndependentActivities
-            targetIndependentActivities={targetIndependentActivities}
-            setTargetIndependentActivities={setTargetIndependentActivities}
-          />
-          <TabelTargetIndependentActivities
-            idTargetIndependentActivities={idTargetIndependentActivities}
-            setIdTargetIndependentActivities={setIdTargetIndependentActivities}
-            targetIndependentActivities={targetIndependentActivities}
-            setTargetIndependentActivities={setTargetIndependentActivities}
-          />
-        </div>
-      </div>
 
-      <div className="flex flex-row gap-4 w-full">
-        <Pengajuan
-          laporanId={fullData?.laporanId ?? ""}
-          setMessage={setMessage}
-        />
-        <Button size="lg" className="w-full" color="primary" onPress={saveData}>
-          Simpan
-        </Button>
+        <div className="flex flex-row gap-4 w-full">
+          <Pengajuan
+            laporanId={fullData?.laporanId ?? ""}
+            setMessage={setMessage}
+          />
+          <Button
+            size="lg"
+            className="w-full"
+            color="primary"
+            onPress={saveData}
+          >
+            Simpan
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Page;

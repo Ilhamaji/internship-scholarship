@@ -3,10 +3,13 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { login } from "@/lib/auth";
+import { Input } from "@heroui/input";
+import { Checkbox } from "@heroui/checkbox";
 
 export default function page() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -22,57 +25,57 @@ export default function page() {
   };
 
   return (
-    <div className="flex flex-row h-screen">
-      <div className="invisible hidden lg:visible lg:flex w-full bg-gradient-to-t from-[#09697E] to-white"></div>
-      <div className="flex w-full h-full">
-        <div className="flex flex-col m-auto gap-10 p-8 md:p-0 w-full">
-          <div className="w-50 m-auto">
-            <img src="/icon/logo.svg" className="" alt="" />
-          </div>
-          {error !== "" ? <div className="mx-auto">{error}</div> : ""}
-          <div className="flex p-4 m-auto md:p-8 border rounded-lg w-full md:w-96 lg:w-[30vw]">
-            <form onSubmit={(e) => handleLogin(e)} className="w-full block">
-              <div className="">
-                <label htmlFor="identifier" className="font-bold">
-                  NIM
-                </label>
-                <input
-                  type="text"
-                  name="identifier"
-                  id="identifier"
-                  placeholder="Masukkan NIM anda"
-                  className="px-4 py-2 border w-full"
+    <div className="flex w-full h-screen bg-neutral-100">
+      <div className="flex flex-row w-full mx-20 py-20 rounded-lg">
+        <div className="invisible hidden lg:visible lg:flex w-full bg-gradient-to-t from-[#09697E] to-white rounded-l-lg"></div>
+        <div className="flex w-full h-full bg-white rounded-lg lg:rounded-l-none lg:rounded-r-lg">
+          <div className="flex flex-col m-auto gap-10 p-8 md:p-0 w-full ">
+            <div className="w-50 m-auto">
+              <img src="/icon/logo.svg" className="" alt="" />
+            </div>
+            {error !== "" ? <div className="mx-auto">{error}</div> : ""}
+            <div className="flex p-4 m-auto md:p-8 rounded-lg w-full md:w-96 lg:w-[30vw]">
+              <form
+                onSubmit={(e) => handleLogin(e)}
+                className="flex flex-col gap-4 w-full"
+              >
+                <Input
+                  label="NIM"
+                  labelPlacement="outside"
+                  type="nim"
+                  name="nim"
+                  id="nim"
+                  errorMessage="Masukkan nim dengan benar!"
+                  placeholder="Masukkan nim anda"
                   onChange={(e) => setIdentifier(e.target.value)}
                   required
                 />
-              </div>
-              <div className="mt-6">
-                <label htmlFor="password" className="font-bold">
-                  Password
-                </label>
-                <input
-                  type="password"
+                <Input
+                  label="Password"
+                  labelPlacement="outside"
+                  type={isPasswordShown ? "text" : "password"}
                   name="password"
                   id="password"
+                  errorMessage="Masukkan password dengan benar!"
                   placeholder="Masukkan password anda"
-                  className="px-4 py-2 border w-full"
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-              </div>
-              <div className="flex justify-self-end">
-                <a href="" className="text-sm font-bold">
-                  Lupa password ?
-                </a>
-              </div>
-              <br />
-              <button
-                type="submit"
-                className="w-full bg-[#1D7D94] text-white py-2 rounded-lg"
-              >
-                Login
-              </button>
-            </form>
+                <Checkbox
+                  size="sm"
+                  onChange={(e) => setIsPasswordShown(e.target.checked)}
+                >
+                  Tampilkan
+                </Checkbox>
+                <br />
+                <button
+                  type="submit"
+                  className="w-full bg-[#1D7D94] text-white py-2 rounded-lg"
+                >
+                  Login
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

@@ -28,8 +28,7 @@ export default function App({
   const [ips, setIps] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const tambahLaporanHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const tambahLaporanHandler = async () => {
     setLoading(true);
 
     // 1️⃣ Buat object academicReports
@@ -77,11 +76,16 @@ export default function App({
 
   return (
     <>
-      <Button onPress={onOpen}>Tambah Laporan</Button>
+      <Button
+        className="flex w-20 bg-[#09697E] text-white font-bold"
+        onPress={onOpen}
+      >
+        +
+      </Button>
       <Modal placement="auto" isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
-            <Form onSubmit={tambahLaporanHandler}>
+            <>
               <ModalHeader className="flex flex-col gap-1">
                 Tambah Laporan Monev
               </ModalHeader>
@@ -136,11 +140,15 @@ export default function App({
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" type="submit">
+                <Button
+                  color="primary"
+                  type="submit"
+                  onPress={tambahLaporanHandler}
+                >
                   Simpan
                 </Button>
               </ModalFooter>
-            </Form>
+            </>
           )}
         </ModalContent>
       </Modal>

@@ -15,13 +15,16 @@ export default function content() {
       <div className="flex flex-row w-full items-center justify-center lg:px-24 xl:px-36 text-sm md:text-base mb-8 md:mb-16">
         <div className="px-6">
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-            placeat excepturi quo ducimus vel molestias, quaerat id velit itaque
-            quae eius tenetur eum mollitia autem temporibus, neque ut ex
-            aliquid? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Quo, et unde, nesciunt iure tempora fugit ipsa tempore numquam
-            molestias minus doloribus cumque debitis perspiciatis earum tenetur
-            nisi quas cum architecto?
+            Beasiswa adalah bentuk bantuan finansial yang diberikan kepada
+            individu, baik pelajar maupun mahasiswa, sebagai dukungan untuk
+            meringankan beban biaya pendidikan dan membantu mereka melanjutkan
+            studi. Di Tiga Serangkai University, terdapat beberapa program
+            beasiswa yang ditawarkan sebagai wujud komitmen perguruan tinggi
+            dalam mendukung pemerataan akses pendidikan. Beberapa di antaranya
+            adalah beasiswa KIP Kuliah, yang ditujukan bagi mahasiswa
+            berprestasi dari keluarga kurang mampu, serta beasiswa Solo Peduli,
+            yang berfokus pada pemberian bantuan bagi mahasiswa yang membutuhkan
+            dukungan tambahan untuk menyelesaikan pendidikan mereka.
           </p>
         </div>
       </div>
@@ -40,7 +43,7 @@ export default function content() {
             Jenis Beasiswa
           </div>
         </div>
-        <div className="block md:flex flex-row gap-4">
+        <div className="block md:grid grid-cols-2 gap-4">
           <div className="flex flex-col items-center">
             <Image
               src={"/icon/hat.svg"}
@@ -50,10 +53,9 @@ export default function content() {
               Beasiswa KIP-K
             </div>
             <p className="text-sm md:text-base">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque
-              aliquid ea aut nostrum, assumenda dolor, nesciunt quaerat
-              repudiandae maiores voluptate quae, blanditiis quibusdam
-              recusandae nihil reprehenderit adipisci omnis laborum in?
+              Beasiswa KIP-K (Kartu Indonesia Pintar) Kuliah adalah bantuan
+              biaya pendidikan dari pemerintah untuk mahasiswa yang memiliki
+              potensi akademik baik tetapi berasal dari keluarga kurang mampu
             </p>
           </div>
           <div className="flex flex-col items-center">
@@ -65,10 +67,9 @@ export default function content() {
               Beasiswa Solo Peduli
             </div>
             <p className="text-sm md:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-              voluptatem sint reprehenderit iste. Temporibus aliquid, amet nihil
-              dignissimos pariatur optio iste veritatis fuga quas quia est
-              possimus, veniam praesentium accusamus.
+              Beasiswa Solo Peduli adalah bantuan pendidikan yang diberikan
+              kepada anak-anak asuh Solo Peduli dan kepada pelajar
+              maupun mahasiswa
             </p>
           </div>
         </div>

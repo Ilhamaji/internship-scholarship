@@ -4,7 +4,7 @@ import ClientProvider from "@/components/dashboard/root/provider/clientProvider"
 import MonevProvider from "@/components/dashboard/mahasiswa/root/provider/monevProvider";
 
 export const metadata: Metadata = {
-  title: "Dashboard | Web Monitoring TSU",
+  title: "Riwayat Laporan | Web Monitoring TSU",
   description:
     "Website ini adalah website monitoring untuk mahasiswa yang menerima beasiswa di Tiga Serangkai University.",
   icons: {

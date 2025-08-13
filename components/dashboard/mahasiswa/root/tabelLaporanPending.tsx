@@ -42,7 +42,7 @@ export default function App({
       </TableHeader>
       <TableBody>
         {monevData.map((item: any) =>
-          item.status === "Draft" ? (
+          item.status === "Pending" ? (
             <TableRow key={item.id}>
               <TableCell>{item.semesterId}</TableCell>
               <TableCell>{item.semesterDetail.tahunAjar}</TableCell>
